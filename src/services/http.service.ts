@@ -116,5 +116,3 @@ abstract class HttpService {
 
 }
 export default HttpService;
-
-//abstract prevents to make classes

@@ -1,13 +1,10 @@
 import { get } from "@/config/axios.config";
-import { setLoggedInUser } from "@/reducer/chat-reducer";
 import React, { createContext, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }: Readonly<{ children: React.ReactNode }>) => {
 
-    const dispatch = useDispatch();
 
     // const {data,isLoading,error}=useGetLoggedInUser() as {data:any,isLoading:boolean,error:any};
     const [data, setData] = useState<any>();
@@ -26,7 +23,6 @@ export const AuthProvider = ({ children }: Readonly<{ children: React.ReactNode 
                 }) as any
                 setData(response.data.detail)
 
-                dispatch(setLoggedInUser(response.data.detail))  // setting logged in user via reducer
             }
 
         } catch (exception) {
