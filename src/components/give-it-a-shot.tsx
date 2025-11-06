@@ -7,21 +7,25 @@ export default function GiveItAShot() {
     const [direction, setDirection] = useState<"prev" | "next">("next")
 
 
+    console.log(direction)
     const products = [
         {
             id: 1,
             name: "SACHETS",
             image: "/mugshotsachet.png",
+            prop: 'contain'
         },
         {
             id: 2,
             name: "POTS",
-            image: "/pots.png",
+            image: "/mightypot.png",
+            prop: 'cover'
         },
         {
             id: 3,
             name: "MIGHTY POTS",
-            image: "/mightypots.png",
+            image: "/pot.png",
+            prop: 'cover'
         },
     ]
 
@@ -32,16 +36,17 @@ export default function GiveItAShot() {
     ]
 
     const nextSlide = () => {
-        setCurrentIndex((prev) => (prev + 1) % sachets.length)
+        setCurrentIndex((prev) => (prev + 1) % products.length)
     }
     const prevSlide = () => {
-        setDirection("prev")
         setCurrentIndex((prev) => (prev - 1 + products.length) % products.length)
     }
+    const getPrevIndex = () => (currentIndex - 1 + products.length) % products.length
+    const getNextIndex = () => (currentIndex + 1) % products.length
 
     return (
-        <section className="bg-[#C6211D] py-10 -top-[300px]  relative overflow ">
-            <img src='swoosh2.svg' className="absolute inset-0 mt-8 self-center justify-self-center scale-[.65]  z-20 " />
+        <section className="bg-[#C6211D] py-10  relative overflow ">
+            <img src='swoosh2.svg' className="absolute inset-0 mt-8 self-center justify-self-center scale-[.65]  z-20 pointer-events-none" />
 
             <div className="max-w-6xl mx-auto px-4 w-full relative">
                 <div className=" mt-10 mb-16 bg-transparent flex justify-center  items-center">
@@ -51,25 +56,39 @@ export default function GiveItAShot() {
 
                 {/* //carousel container */}
                 <div className="relative h-96 flex items-center justify-center mb-20">
-                    {/* Carousel content */}
                     <div className="relative w-full max-w-md">
-                        {/* Product image with fade transition */}
-                        <div className="flex justify-center mb-2">
+                        <div className="flex justify-center items-center gap-8 px-4 mb-2 ">
+                            {/* <div className="h-[360px] w-72 flex items-center justify-center flex-shrink-0 opacity-50 transition-all duration-300">
+                                <img
+                                    src={products[getPrevIndex()].image || '/placeholder.svg'}
+                                    alt="Previous Image"
+                                    className="w-full h-full object-contain "
+                                />
+
+                            </div> */}
                             <div
-                                className="relative mt-4 h-[360px] w-72 flex items-center justify-center transition-opacity duration-500"
+                                className="relative mt-4h-[360px] w-72 flex items-center justify-center overflow transition-opacity duration-500"
                                 key={currentIndex}
                             >
                                 <img
                                     src={products[currentIndex].image || "/placeholder.svg"}
                                     alt={products[currentIndex].name}
-                                    className="w-full h-full object-contain drop-shadow-2xl animate-in fade-in duration-500 z-20"
+                                    className={`w-full h-[360px] object-${products[currentIndex].prop} drop-shadow-2xl overflow animate-in fade-in duration-500 z-20`}
                                 />
                             </div>
+                            {/* <div className="h-[360px] w-72 flex items-center justify-center flex-shrink-0 opacity-50 transition-all duration-300">
+                                <img
+                                    src={products[getPrevIndex()].image || '/placeholder.svg'}
+                                    alt="Previous Image"
+                                    className="w-full h-full object-contain "
+                                />
+
+                            </div> */}
 
                         </div>
 
                         {/* Controls */}
-                        <div className="flex items-center justify-center mt z-100">
+                        <div className="flex items-center justify-center mt z-100 ">
                             <button
                                 onClick={prevSlide}
                                 className="text-white text-4xl hover:text-green-400 transition-colors duration-200 p-2"

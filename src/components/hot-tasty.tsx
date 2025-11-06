@@ -14,16 +14,16 @@ export default function HotTastyConvenient() {
 
                 {/* Orange section */}
                 <div className="bg-[#FF8000] py-16 relative z-0">
-                    <div className="max-w-6xl mx-auto px-4">
+                    <div className="max-w-7xl mx-auto px-4">
                         <div className="grid md:grid-cols-2 gap-12 items-center">
                             {/* Text content */}
                             <div>
-                                <h2 className="text-5xl md:text-6xl font-bold text-white mb-8 drop-shadow-lg leading-tight">
+                                <h2 className="text-[48px] leading-10 font-bold font-brando text-white mb-8 drop-shadow-lg ">
                                     HOT, TASTY
                                     <br />
                                     AND CONVENIENT
                                 </h2>
-                                <p className="text-white text-lg leading-relaxed">
+                                <p className="text-white font-bold text-2xl leading-8 font-gothic">
                                     Whether you're looking for a quick delicious lunch or a healthy snack to fill an after school or
                                     pre/post gym hunger gap, Mug Shot will fill you up with tasty goodness in less than 5 minutes.
                                 </p>

@@ -10,8 +10,8 @@ import OurRange from "@/components/our-range"
 const Home = () => {
     return (
         <>
-            <main className="min-h-screen w-full overflow-x-hidden">
-                
+            <main className="min-h-screen  w-full overflow-x-hidden">
+
                 <Header />
                 {/* <HeroSection /> */}
                 <GiveItAShot />

@@ -98,3 +98,40 @@
 .container {
   @apply px-4 mx-auto sm:px-6 lg:px-8;
 }
+
+@font-face {
+  font-family: 'Gothic';
+  src: url('/fonts/tradegothic-boldcondtwenty-webfont.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Turbinado';
+  src: url('/fonts/font.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Brando';
+  src: url('/fonts/brandonprinted-one-webfont.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Hide scrollbar but keep scroll functionality */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Smooth dragging feel */
+.grabbing {
+  cursor: grabbing !important;
+  user-select: none;
+}

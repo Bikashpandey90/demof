@@ -13,9 +13,18 @@ export default {
 					'Poppins',
 					'sans-serif'
 				],
-				inter:
+				gothic: [
+					'Gothic',
+					'sans-serif'
+				],
+				turbinado:
 					[
-						'Inter',
+						'Turbinado',
+						'sans-serif'
+					],
+				brando:
+					[
+						'Brando',
 						'sans-serif'
 					],
 
