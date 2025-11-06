@@ -1,5 +1,4 @@
 "use client"
-import WaveTransition from "./wave-transition"
 
 export default function HeroSection() {
     return (
@@ -30,7 +29,6 @@ export default function HeroSection() {
                 </div>
             </div>
 
-            <WaveTransition fromColor="bg-stone-200" toColor="bg-white" />
         </section>
     )
 }
