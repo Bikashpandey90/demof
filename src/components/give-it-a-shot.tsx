@@ -4,10 +4,10 @@ import { useState } from "react"
 
 export default function GiveItAShot() {
     const [currentIndex, setCurrentIndex] = useState(0)
-    const [direction, setDirection] = useState<"prev" | "next">("next")
+    // const [direction, setDirection] = useState<"prev" | "next">("next")
 
 
-    console.log(direction)
+    // console.log(direction)
     const products = [
         {
             id: 1,
@@ -29,11 +29,7 @@ export default function GiveItAShot() {
         },
     ]
 
-    const sachets = [
-        { id: 1, name: "Product 1" },
-        { id: 2, name: "Product 2" },
-        { id: 3, name: "Product 3" },
-    ]
+
 
     const nextSlide = () => {
         setCurrentIndex((prev) => (prev + 1) % products.length)
@@ -41,8 +37,8 @@ export default function GiveItAShot() {
     const prevSlide = () => {
         setCurrentIndex((prev) => (prev - 1 + products.length) % products.length)
     }
-    const getPrevIndex = () => (currentIndex - 1 + products.length) % products.length
-    const getNextIndex = () => (currentIndex + 1) % products.length
+    // const getPrevIndex = () => (currentIndex - 1 + products.length) % products.length
+    // const getNextIndex = () => (currentIndex + 1) % products.length
 
     return (
         <section className="bg-[#C6211D] py-10  relative overflow ">

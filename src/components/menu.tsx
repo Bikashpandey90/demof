@@ -67,7 +67,7 @@ export default function AnimatedMenu({ isOpen, onClose }: AnimatedMenuProps) {
                 <div className="fixed inset-0 flex justify-center">
                     <img
                         src="/smoosh-menu.svg"
-                        className="absolute top-0 w-3/4 md:w-[60%] mt-6 md:mt-10 flex self-center items-center hidden lg:flex"
+                        className="absolute top-0 w-3/4 md:w-[60%] mt-6 md:mt-10  self-center items-center hidden lg:flex"
                     />
                 </div>
 
