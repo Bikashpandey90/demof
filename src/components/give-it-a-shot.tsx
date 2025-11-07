@@ -11,8 +11,8 @@ export default function GiveItAShot() {
         {
             id: 1,
             name: "SACHETS",
-            image: "/mugshotsachet.png",
-            prop: "contain",
+            image: "/darjeeling.svg",
+            prop: "cover",
             color: "red",
         },
         {
