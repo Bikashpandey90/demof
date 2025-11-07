@@ -63,7 +63,12 @@ export default function GiveItAShot() {
 
             <div className="max-w-6xl mx-auto px-3 sm:px-4 w-full relative">
                 <div className="mt-32 sm:mt-10 mb-8 sm:mb-16 bg-transparent flex justify-center items-center">
-                    <img src="/giveitashot2.png" alt="Mug Shot sachet" className="scale-[2] sm:scale-100 md:scale-125" />
+                    {/* <img src="/giveitashot2.png" alt="Mug Shot sachet" className="scale-[2] sm:scale-100 md:scale-125" /> */}
+                    <span className="text-white text-[90px] rotate-[-10deg] text-center leading-[1] tracking-tighter font-brando">
+                        INDIA'S #1
+                        <br></br>
+                        MOMO BRAND
+                    </span>
                 </div>
 
                 <div className="relative h-64 sm:h-80 md:h-96 flex items-center justify-center mb-12 sm:mb-20">

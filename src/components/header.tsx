@@ -15,7 +15,7 @@ export default function Header() {
                 <div className="flex items-center gap-3">
                     <div className="w-[80px] p-2 sm:w-[150px] md:w-[200px] h-auto sm:my-2 flex items-center justify-center">
                         <img
-                            src="/mugshotlogo.png"
+                            src="/momo.png"
                             alt="logo"
                             className="w-full h-auto object-contain"
                         />
