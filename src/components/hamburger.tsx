@@ -6,7 +6,7 @@ interface HamburgerIconProps {
 
 export default function HamburgerIcon({ isOpen }: HamburgerIconProps) {
     return (
-        <div className="w-30 h-30 flex flex-col bg-transparent  justify-center items-center gap-2 cursor-pointer">
+        <div className="w-30 h-30 flex flex-col  bg-transparent  justify-center items-center gap-2 cursor-pointer">
             <div
                 className="w-[50px] h-2 bg-white  transition-all duration-300 origin-center"
                 style={{

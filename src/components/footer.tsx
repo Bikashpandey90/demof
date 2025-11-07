@@ -12,10 +12,10 @@ export default function Footer() {
                 />
             </div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 sm:mt-20">
+            <div className="max-w-7xl mx-auto  px-4 sm:px-6 lg:px py-2 mt-10 sm:mt-20">
                 {/* Top section - Links and social */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-                    <div className="md:col-span-2">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 ">
+                    <div className="md:col-span-2 ">
                         <nav className="flex flex-wrap gap-4 sm:gap-6 text-base sm:text-lg md:text-xl leading-6 sm:leading-7 font-gothic font-bold">
                             <a href="#" className="hover:opacity-80 transition-opacity">
                                 Terms & Conditions
