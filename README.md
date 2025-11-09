@@ -48,3 +48,4 @@
 - max size 5mb -10mb
 - localstorage,sessionstorage
 - setItem(key,value) .getItem(key) .removeItem(key) .clear()
+
