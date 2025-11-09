@@ -14,9 +14,8 @@ const Home = () => {
     const handleCategoryClick = (category: string) => {
         setSelectedCategory(category)
 
-        // Smooth scroll to OurRange section
         if (ourRangeRef.current) {
-            ourRangeRef.current.scrollIntoView({ behavior: "smooth", block: "start" })
+            ourRangeRef.current.scrollIntoView({ behavior: "smooth", block: "end" })
         }
     }
     return (
@@ -26,7 +25,6 @@ const Home = () => {
             <main className="min-h-screen  w-full overflow-x-hidden">
 
                 <Header />
-                {/* <HeroSection /> */}
                 <GiveItAShot onCategoryClick={handleCategoryClick} />
                 <HotTastyConvenient />
                 <div ref={ourRangeRef}>

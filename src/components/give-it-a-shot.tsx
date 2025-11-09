@@ -18,14 +18,16 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
     const categories = [
         {
             id: 1,
-            name: "SACHETS",
-            image: "/mugshotsachet.png",
-            prop: "contain",
-            bgColor: "bg-[#C6211D]",
-            bowl: "/bowl.png",
-            tomatoes: "/tomatoes.png",
-            swooshInnerColor: "#94C68D",
-            swooshOuterColor: "#459941",
+            name: "MIGHTY POTS",
+            // image: "/pot.png",
+            image: '/darjeeling.png',
+
+            prop: "cover",
+            bgColor: "bg-[#F8B400]",
+            bowl: "/yellowbowl.png",
+            tomatoes: "/onion.png",
+            swooshInnerColor: "#FDA922",
+            swooshOuterColor: "#914C25",
         },
         {
             id: 2,
@@ -40,15 +42,18 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
         },
         {
             id: 3,
-            name: "MIGHTY POTS",
-            image: "/pot.png",
-            prop: "cover",
-            bgColor: "bg-[#F8B400]",
-            bowl: "/yellowbowl.png",
-            tomatoes: "/onion.png",
-            swooshInnerColor: "#FDA922",
-            swooshOuterColor: "#914C25",
+            name: "SACHETS",
+            image: "/mugshotsachet.png",
+            // image: '/darjeeling.png',
+            prop: "contain",
+            bgColor: "bg-[#C6211D]",
+            bowl: "/bowl.png",
+            tomatoes: "/tomatoes.png",
+            swooshInnerColor: "#94C68D",
+            swooshOuterColor: "#459941",
         },
+
+
     ]
 
     useEffect(() => {
@@ -118,7 +123,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                         loop={false}
                         autoplay
                         onComplete={() => setAnimationComplete(true)}
-                        className="absolute m-2 sm:m-4 md:mt-14 lg:mt-0 md:m-10 inset-0 mt-60 sm:mt-8 self-center justify-self-center scale-100 sm:scale-75 md:scale-[.65] z-20 pointer-events-none"
+                        className="absolute  m-2 sm:m-4 md:mt-14 lg:mt-0 md:m-10 inset-0 mt-60 sm:mt-8 self-center justify-self-center scale-100 sm:scale-75 md:scale-[.65] z-20 pointer-events-none"
                     />
                 )}
                 {animationComplete && (
@@ -131,8 +136,22 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                 )}
 
                 <div className="max-w-6xl mx-auto px-3 sm:px-4 w-full relative">
-                    <div className="mt-32 sm:mt-10 lg:mt-2  mb-8 md:mb-0 bg-black sm:mb-16 bg-transparent flex justify-end items-center">
-                        <img src="/giveitashot2.png" alt="Mug Shot sachet" className="scale-[2] sm:scale-100 md:scale-125" />
+                    <div className="mt-32 sm:mt-10 lg:mt-2  mb-8 md:mb-0 bg-black sm:mb-16 bg-transparent flex-col flex justify-center items-center">
+                        {/* <img src="/giveitashot2.png" alt="Mug Shot sachet" className="scale-[2] sm:scale-100 md:scale-125" /> */}
+
+
+                        <div className="flex flex-col items-center justify-center mt-6 sm:mt-6 mb-4">
+                            <span className="font-brando rotate-[-10deg] sm:rotate-[-12deg] lg:rotate-[-10deg] text-white leading-10 text-[48px] sm:text-[42px] md:text-[72px] lg:text-[120px] flex items-center justify-center max-w-full">
+                                INDIA's #1
+                            </span>
+
+                            <span className="font-brando rotate-[-10deg] sm:rotate-[-12deg] lg:rotate-[-10deg] text-white leading-2 text-[58px] sm:text-[56px] md:text-[96px] lg:text-[150px] text-center flex items-center justify-center max-w-full">
+                                MOMO
+                            </span>
+                        </div>
+
+
+
                     </div>
 
                     <div className="relative h-64 sm:h-80 md:h-96 flex items-center justify-center mb-12 sm:mb-20">

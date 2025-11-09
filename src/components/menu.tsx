@@ -60,7 +60,10 @@ export default function AnimatedMenu({ isOpen, onClose }: AnimatedMenuProps) {
                     }}
                 >
                     <div className="w-20 h-20 ml-2 sm:ml-10 md:w-40 md:h-40 mt-6 lg:w-[200px] lg:h-[200px] z-30 rounded-full flex items-center">
-                        <img src="/mugshotlogo.png" alt="Mug shot logo" />
+                        <img
+                            // src="/mugshotlogo.png"
+                            src="/momo.png"
+                            alt="Mug shot logo" />
                     </div>
                 </div>
 
