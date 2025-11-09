@@ -5,17 +5,33 @@ import GiveItAShot from "@/components/give-it-a-shot"
 import Header from "@/components/header"
 import HotTastyConvenient from "@/components/hot-tasty"
 import OurRange from "@/components/our-range"
+import { useRef, useState } from "react"
 
 const Home = () => {
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+    const ourRangeRef = useRef<HTMLDivElement>(null)
+
+    const handleCategoryClick = (category: string) => {
+        setSelectedCategory(category)
+
+        // Smooth scroll to OurRange section
+        if (ourRangeRef.current) {
+            ourRangeRef.current.scrollIntoView({ behavior: "smooth", block: "start" })
+        }
+    }
     return (
+
         <>
+
             <main className="min-h-screen  w-full overflow-x-hidden">
 
                 <Header />
                 {/* <HeroSection /> */}
-                <GiveItAShot />
+                <GiveItAShot onCategoryClick={handleCategoryClick} />
                 <HotTastyConvenient />
-                <OurRange />
+                <div ref={ourRangeRef}>
+                    <OurRange activeCategory={selectedCategory} />
+                </div>
                 <FollowUs />
                 <GetInTouch />
                 <Footer />

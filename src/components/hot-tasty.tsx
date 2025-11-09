@@ -3,12 +3,12 @@
 export default function HotTastyConvenient() {
     return (
         <>
-            <img
+            {/* <img
                 src="/bg-header-top.png"
                 alt="Top irregular edge"
                 className="bg-[#C6211D] w-full h-auto block  -mt-[1px] z-100 pointer-events-none"
                 style={{ display: "block", margin: 0, padding: 0, lineHeight: 0 }}
-            />
+            /> */}
             <section className="relative w-full overflow-hidden">
                 {/* Orange section */}
                 <div className="bg-[#FF8000] py-8 md:py-16 relative z-0">

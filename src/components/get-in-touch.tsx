@@ -42,6 +42,8 @@ export default function GetInTouch() {
                 className=" bg-transparent w-full h-auto block -mb-[1px] z-30 pointer-events-none"
                 style={{ display: "block", margin: 0, padding: 0, lineHeight: 0 }}
             />
+
+
         </>
     )
 }

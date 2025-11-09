@@ -2,11 +2,14 @@
 
 import type React from "react"
 
-import { useState } from "react"
-import { useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { ChevronDown } from "lucide-react"
 
-export default function OurRange() {
+interface OurRangeProps {
+    activeCategory?: string | null
+}
+
+export default function OurRange({ activeCategory }: OurRangeProps) {
     const products = [
         { id: 1, name: "Chicken", image: "/products/blue.png", category: "SACHETS" },
         { id: 2, name: "Beef", image: "/products/pink.png", category: "POTS" },
@@ -24,10 +27,16 @@ export default function OurRange() {
     ]
 
     const categories = ["POTS", "SACHETS", "MIGHTY POTS"]
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(activeCategory || null)
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     const sliderRef = useRef<HTMLDivElement>(null)
     const dropdownRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        if (activeCategory) {
+            setSelectedCategory(activeCategory)
+        }
+    }, [activeCategory])
 
     // Drag logic
     const handleMouseDown = (e: React.MouseEvent) => {
@@ -104,7 +113,9 @@ export default function OurRange() {
                                     <button
                                         key={category}
                                         onClick={() => handleCategorySelect(category)}
-                                        className={`w-full text-left px-4 py-3 font-bold text-lg transition-colors uppercase tracking-wider ${selectedCategory === category ? "bg-[#FF8000] text-white" : "bg-[#FF8000] text-white hover:bg-gray-100"
+                                        className={`w-full text-left px-4 py-3 font-bold text-lg transition-colors uppercase tracking-wider ${selectedCategory === category
+                                                ? "bg-[#FF8000] text-white"
+                                                : "bg-[#FF8000] text-white hover:bg-gray-100"
                                             } first:rounded-t-xl last:rounded-b-xl`}
                                     >
                                         {category}
