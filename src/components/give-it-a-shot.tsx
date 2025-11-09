@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import Lottie from "lottie-react"
+import SwooshSVG from "./swoosh-svg"
 
 interface GiveItAShotProps {
     onCategoryClick?: (category: string) => void
@@ -14,12 +15,6 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
     const [animationComplete, setAnimationComplete] = useState(false)
     const lottieRef = useRef<any>(null)
 
-    useEffect(() => {
-        if (lottieRef.current) {
-            lottieRef.current.setSpeed(0.5)
-        }
-    }, [])
-
     const categories = [
         {
             id: 1,
@@ -29,6 +24,8 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
             bgColor: "bg-[#C6211D]",
             bowl: "/bowl.png",
             tomatoes: "/tomatoes.png",
+            swooshInnerColor: "#94C68D",
+            swooshOuterColor: "#459941",
         },
         {
             id: 2,
@@ -38,6 +35,8 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
             bgColor: "bg-[#3B863B]",
             bowl: "/greenbowl.png",
             tomatoes: "/broc.png",
+            swooshInnerColor: "#96C423",
+            swooshOuterColor: "#56B22D",
         },
         {
             id: 3,
@@ -47,8 +46,16 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
             bgColor: "bg-[#F8B400]",
             bowl: "/yellowbowl.png",
             tomatoes: "/onion.png",
+            swooshInnerColor: "#FDA922",
+            swooshOuterColor: "#914C25",
         },
     ]
+
+    useEffect(() => {
+        if (lottieRef.current) {
+            lottieRef.current.setSpeed(0.5)
+        }
+    }, [])
 
     const leftIndex = (currentIndex - 1 + categories.length) % categories.length
     const middleIndex = currentIndex
@@ -71,7 +78,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
 
     useEffect(() => {
         if (isTransitioning) {
-            const timer = setTimeout(() => setIsTransitioning(false), 600)
+            const timer = setTimeout(() => setIsTransitioning(false), 700)
             return () => clearTimeout(timer)
         }
     }, [isTransitioning])
@@ -85,8 +92,24 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
 
     return (
         <>
+            <style>{`
+                @keyframes slideIn {
+                    from {
+                        opacity: 0;
+                        transform: scale(0.95);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: scale(1);
+                    }
+                }
+
+                .carousel-slide {
+                    transition: all 700ms cubic-bezier(0.34, 1.56, 0.64, 1);
+                }
+            `}</style>
             <section
-                className={`${categories[middleIndex].bgColor} py-6 sm:py-10 relative overflow transition-colors duration-600`}
+                className={`${categories[middleIndex].bgColor} py-6 sm:py-10 relative overflow transition-colors duration-700`}
             >
                 {animationData && !animationComplete && (
                     <Lottie
@@ -99,11 +122,12 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                     />
                 )}
                 {animationComplete && (
-                    <img
-                        src="/swoosh2.svg"
-                        alt="Swoosh transition"
-                        className="absolute m-2 sm:m-4 md:mt-14 lg:mt-0 md:m-10 inset-0 mt-60 sm:mt-8 self-center justify-self-center scale-100 sm:scale-75 md:scale-[.65] z-20 pointer-events-none"
-                    />
+                    <div className="absolute m-2 sm:m-4 md:mt-14 lg:mt-0 md:m-10 inset-0 mt-60 sm:mt-8 self-center justify-self-center scale-100 sm:scale-75 md:scale-[.65] z-20 pointer-events-none">
+                        <SwooshSVG
+                            innerColor={categories[middleIndex].swooshInnerColor}
+                            outerColor={categories[middleIndex].swooshOuterColor}
+                        />
+                    </div>
                 )}
 
                 <div className="max-w-6xl mx-auto px-3 sm:px-4 w-full relative">
@@ -117,8 +141,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                                 <img
                                     src={categories[leftIndex].image || "/placeholder.svg"}
                                     alt="left carousel item"
-                                    className={`w-[45%] h-[45%] object-cover mt-36 sm:mt-0 scale-[1.25] sm:scale-100 drop-shadow-2xl overflow place-self-end items-center z-20 transition-all duration-600 ease-out ${isTransitioning ? "opacity-0 scale-75" : "opacity-100 scale-100"
-                                        }`}
+                                    className={`carousel-slide w-[45%] h-[45%] object-cover mt-36 sm:mt-0 scale-[1.25] sm:scale-100 drop-shadow-2xl overflow place-self-end items-center z-20 ${isTransitioning ? "" : ""}`}
                                 />
                                 <div className="flex justify-center items-center gap-4 sm:gap-8 px-2 sm:px-4 mb-2 ">
                                     <div
@@ -129,16 +152,14 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                                             src={categories[middleIndex].image || "/placeholder.svg"}
                                             alt={categories[middleIndex].name}
                                             onClick={handleCategoryImageClick}
-                                            className={`w-full h-full mt-36 sm:mt-0 object-${categories[middleIndex].prop} scale-[1.25] sm:scale-[1.1] z-20 transition-all duration-600 ease-out cursor-pointer ${isTransitioning ? "opacity-0 scale-95" : "opacity-100 scale-100"
-                                                }`}
+                                            className={`carousel-slide w-full h-full mt-36 sm:mt-0 object-${categories[middleIndex].prop} scale-[1.25] sm:scale-[1.1] z-20 cursor-pointer ${isTransitioning ? "" : ""}`}
                                         />
                                     </div>
                                 </div>
                                 <img
                                     src={categories[rightIndex].image || "/placeholder.svg"}
                                     alt="right carousel item"
-                                    className={`w-[45%] h-[45%] mt-36 sm:mt-0 object-cover drop-shadow-2xl overflow place-self-end z-20 transition-all duration-600 ease-out ${isTransitioning ? "opacity-0 scale-75" : "opacity-100 scale-100"
-                                        }`}
+                                    className={`carousel-slide w-[45%] h-[45%] mt-36 sm:mt-0 object-cover drop-shadow-2xl overflow place-self-end z-20 ${isTransitioning ? "" : ""}`}
                                 />
                             </div>
 
@@ -152,7 +173,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                                 </button>
 
                                 <div className="text-white text-center">
-                                    <div className="font-bold text-2xl sm:text-2xl md:text-3xl leading-7 rounded-lg font-gothic px-4 sm:px-8 py-2 sm:py-3 bg-transparent transition-all duration-400">
+                                    <div className="font-bold text-2xl sm:text-2xl md:text-3xl leading-7 rounded-lg font-gothic px-4 sm:px-8 py-2 sm:py-3 bg-transparent transition-all duration-700">
                                         {categories[middleIndex].name.toUpperCase()}
                                     </div>
                                 </div>
@@ -178,19 +199,19 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                     <img
                         src={categories[middleIndex].bowl || "/placeholder.svg"}
                         alt="bowl"
-                        className="w-80 sm:w-96 md:w-[650px] absolute ml-12 sm:ml-24 md:ml-48 top-0 z-10 transition-all duration-600"
+                        className="w-80 sm:w-96 md:w-[650px] absolute ml-12 sm:ml-24 md:ml-48 top-0 z-10 transition-all duration-700"
                     />
                     <img
                         src={categories[middleIndex].tomatoes || "/placeholder.svg"}
                         alt="tomatoes"
-                        className="absolute right-0 top-4 sm:top-8 md:top-10 w-40 sm:w-64 md:w-[300px] z-0 transition-all duration-600"
+                        className="absolute right-0 top-4 sm:top-8 md:top-10 w-40 sm:w-64 md:w-[300px] z-0 transition-all duration-700"
                     />
                 </div>
             </section>
             <img
                 src="/bg-header-top.png"
                 alt="Top irregular edge"
-                className={`${categories[middleIndex].bgColor} w-full scale-[1.2] h-auto block  -mt-[1px] z-100 pointer-events-none`}
+                className={`${categories[middleIndex].bgColor} w-full scale-[1.2] h-auto block  -mt-[1px] z-100 pointer-events-none transition-colors duration-700`}
                 style={{ display: "block", margin: 0, padding: 0, lineHeight: 0 }}
             />
         </>
