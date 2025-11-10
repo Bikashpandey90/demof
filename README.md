@@ -49,3 +49,5 @@
 - localstorage,sessionstorage
 - setItem(key,value) .getItem(key) .removeItem(key) .clear()
 
+
+
