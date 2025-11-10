@@ -2,7 +2,8 @@
 
 import type React from "react"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
+import { useInView } from "react-intersection-observer"
 import NeuButton from "./button"
 
 export default function FollowUs() {
@@ -19,10 +20,46 @@ export default function FollowUs() {
     const [startX, setStartX] = useState(0)
     const [scrollLeft, setScrollLeft] = useState(0)
 
-    const handleMouseDown = (e: React.MouseEvent) => {
+    console.log(scrollLeft)
+
+    const [headingRevealed, setHeadingRevealed] = useState(false)
+    const [descriptionRevealed, setDescriptionRevealed] = useState(false)
+    const [postsRevealed, setPostsRevealed] = useState(false)
+
+    const lastScrollY = useRef(0)
+    const [isScrollingDown, setIsScrollingDown] = useState(true)
+
+    const { ref: headingRef, inView: headingInView } = useInView({ threshold: 0.3 })
+    const { ref: descriptionRef, inView: descriptionInView } = useInView({ threshold: 0.3 })
+    const { ref: postsContainerRef, inView: postsInView } = useInView({ threshold: 0.2 })
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY
+            setIsScrollingDown(currentScrollY > lastScrollY.current)
+            lastScrollY.current = currentScrollY
+        }
+
+        window.addEventListener("scroll", handleScroll, { passive: true })
+        return () => window.removeEventListener("scroll", handleScroll)
+    }, [])
+
+    useEffect(() => {
+        if (headingInView && isScrollingDown) setHeadingRevealed(true)
+    }, [headingInView, isScrollingDown])
+
+    useEffect(() => {
+        if (descriptionInView && isScrollingDown) setDescriptionRevealed(true)
+    }, [descriptionInView, isScrollingDown])
+
+    useEffect(() => {
+        if (postsInView && isScrollingDown) setPostsRevealed(true)
+    }, [postsInView, isScrollingDown])
+
+    // Declare mouse and touch event handlers
+    const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
         setIsScrolling(true)
-        setStartX(e.pageX - (scrollContainerRef.current?.offsetLeft || 0))
-        setScrollLeft(scrollContainerRef.current?.scrollLeft || 0)
+        setStartX(e.clientX - scrollContainerRef.current!.scrollLeft)
     }
 
     const handleMouseLeave = () => {
@@ -33,25 +70,23 @@ export default function FollowUs() {
         setIsScrolling(false)
     }
 
-    const handleMouseMove = (e: React.MouseEvent) => {
-        if (!isScrolling || !scrollContainerRef.current) return
-        e.preventDefault()
-        const x = e.pageX - (scrollContainerRef.current?.offsetLeft || 0)
-        const walk = (x - startX) * 1.5
-        scrollContainerRef.current.scrollLeft = scrollLeft - walk
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (isScrolling) {
+            setScrollLeft(e.clientX - startX)
+            scrollContainerRef.current!.scrollLeft = e.clientX - startX
+        }
     }
 
-    const handleTouchStart = (e: React.TouchEvent) => {
+    const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
         setIsScrolling(true)
-        setStartX(e.touches[0].pageX - (scrollContainerRef.current?.offsetLeft || 0))
-        setScrollLeft(scrollContainerRef.current?.scrollLeft || 0)
+        setStartX(e.touches[0].clientX - scrollContainerRef.current!.scrollLeft)
     }
 
-    const handleTouchMove = (e: React.TouchEvent) => {
-        if (!isScrolling || !scrollContainerRef.current) return
-        const x = e.touches[0].pageX - (scrollContainerRef.current?.offsetLeft || 0)
-        const walk = (x - startX) * 1.5
-        scrollContainerRef.current.scrollLeft = scrollLeft - walk
+    const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+        if (isScrolling) {
+            setScrollLeft(e.touches[0].clientX - startX)
+            scrollContainerRef.current!.scrollLeft = e.touches[0].clientX - startX
+        }
     }
 
     return (
@@ -62,28 +97,57 @@ export default function FollowUs() {
                 className="bg-transparent w-full scale-125 h-auto block z-100 pointer-events-none"
                 style={{ display: "block", margin: 0, padding: 0, lineHeight: 0 }}
             />
-            <section className="bg-[#249F95] py-8 sm:py-12 md:py-16 relative overflow-hidden">
-                <div className="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8">
-                    <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl leading-tight sm:leading-snug md:leading-normal lg:leading-[96px] font-script text-white text-center mb-4 sm:mb-6 md:mb-8 drop-shadow-lg font-turbinado">
+            <section className="bg-[#249F95] py-8 sm:py-12 md:py-16 relative overflow ">
+                <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2
+                        ref={headingRef}
+                        className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl leading-tight sm:leading-snug md:leading-normal lg:leading-[96px] font-script text-white text-center mb-4 sm:mb-6 md:mb-8 drop-shadow-lg font-turbinado transition-all duration-1000"
+                        style={{
+                            opacity: headingRevealed ? 1 : 0,
+                            transform: headingRevealed ? "translateY(0)" : "translateY(30px)",
+                        }}
+                    >
                         Follow us
                     </h2>
 
-                    <p className="text-white text-center text-lg sm:text-xl md:text-2xl leading-6 sm:leading-7 md:leading-8 font-gothic font-bold mb-3 sm:mb-4">
+                    <p
+                        ref={descriptionRef}
+                        className="text-white text-center text-lg sm:text-xl md:text-2xl leading-6 sm:leading-7 md:leading-8 font-gothic font-bold mb-3 sm:mb-4 transition-all duration-1000"
+                        style={{
+                            opacity: descriptionRevealed ? 1 : 0,
+                            transform: descriptionRevealed ? "translateY(0)" : "translateY(30px)",
+                            transitionDelay: "100ms",
+                        }}
+                    >
                         Take a moment and check out our social.
                     </p>
 
-                    <p className="text-white text-center mb-8 sm:mb-10 md:mb-12 font-gothic font-bold text-lg sm:text-xl md:text-2xl leading-6 sm:leading-7 md:leading-8">
+                    <p
+                        className="text-white text-center mb-8 sm:mb-10 md:mb-16 font-gothic font-bold text-lg sm:text-xl md:text-2xl leading-6 sm:leading-7 md:leading-8 transition-all duration-1000"
+                        style={{
+                            opacity: descriptionRevealed ? 1 : 0,
+                            transform: descriptionRevealed ? "translateY(0)" : "translateY(30px)",
+                            transitionDelay: "200ms",
+                        }}
+                    >
                         If you're grabbing a quick lunch at work, or snacking on a delicious pot
                         <br />
                         on the go, share your experiences with us and join the community.
                     </p>
 
-                    <div className="flex justify-center mb-8 sm:mb-12 md:mb-16">
+                    <div
+                        className="flex justify-center mb-8 sm:mb-12 md:mb-16 transition-all duration-1000"
+                        style={{
+                            opacity: descriptionRevealed ? 1 : 0,
+                            transform: descriptionRevealed ? "translateY(0)" : "translateY(30px)",
+                            transitionDelay: "300ms",
+                        }}
+                    >
                         <NeuButton color={"#249F95"}>CONNECT</NeuButton>
                     </div>
 
                     <div
-                        ref={scrollContainerRef}
+                        ref={postsContainerRef}
                         onMouseDown={handleMouseDown}
                         onMouseLeave={handleMouseLeave}
                         onMouseUp={handleMouseUp}
@@ -91,9 +155,13 @@ export default function FollowUs() {
                         onTouchStart={handleTouchStart}
                         onTouchMove={handleTouchMove}
                         onTouchEnd={() => setIsScrolling(false)}
-                        className="pb-4 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing select-none scroll-smooth"
+                        className="pb-4 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing select-none scroll-smooth transition-all duration-1000"
+                        style={{
+                            opacity: postsRevealed ? 1 : 0,
+                            transform: postsRevealed ? "translateY(0)" : "translateY(30px)",
+                        }}
                     >
-                        <div className="flex gap-2 sm:gap-3 md:gap-4 justify-center min-w-max px-4">
+                        <div className="flex gap-2 sm:gap-3 md:gap-4 justify-center min-w-max px-4 ">
                             {posts.map((post) => (
                                 <div key={post.id} className="relative flex-shrink-0">
                                     <img

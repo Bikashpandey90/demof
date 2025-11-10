@@ -14,19 +14,19 @@ export default function HamburgerIcon({ isOpen }: HamburgerIconProps) {
       `}
         >
             <div
-                className="w-[50px] h-2 bg-white transition-all duration-300 origin-center"
+                className="w-[50px] h-2 rounded-xl bg-white transition-all duration-300 origin-center"
                 style={{
                     transform: isOpen ? "rotate(45deg) translate(10px, 10px)" : "rotate(0deg)",
                 }}
             />
             <div
-                className="w-[50px] h-2 bg-white transition-all duration-300"
+                className="w-[50px] rounded-xl h-2 bg-white transition-all duration-300"
                 style={{
                     opacity: isOpen ? 0 : 1,
                 }}
             />
             <div
-                className="w-[50px] h-2 bg-white transition-all duration-300 origin-center"
+                className="w-[50px] h-2 rounded-xl bg-white transition-all duration-300 origin-center"
                 style={{
                     transform: isOpen ? "rotate(-45deg) translate(12px, -12px)" : "rotate(0deg)",
                 }}

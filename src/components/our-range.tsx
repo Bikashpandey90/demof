@@ -3,6 +3,7 @@
 import type React from "react"
 
 import { useState, useRef, useEffect } from "react"
+import { useInView } from "react-intersection-observer"
 import { ChevronDown } from "lucide-react"
 
 interface OurRangeProps {
@@ -31,6 +32,46 @@ export default function OurRange({ activeCategory }: OurRangeProps) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     const sliderRef = useRef<HTMLDivElement>(null)
     const dropdownRef = useRef<HTMLDivElement>(null)
+
+    const [headingRevealed, setHeadingRevealed] = useState(false)
+    const [descriptionRevealed, setDescriptionRevealed] = useState(false)
+    const [sliderRevealed, setSliderRevealed] = useState(false)
+    const [categoriesRevealed, setCategoriesRevealed] = useState(false)
+
+    const lastScrollY = useRef(0)
+    const [isScrollingDown, setIsScrollingDown] = useState(true)
+
+    const { ref: headingRef, inView: headingInView } = useInView({ threshold: 0.3 })
+    const { ref: descriptionRef, inView: descriptionInView } = useInView({ threshold: 0.3 })
+    const { ref: sliderContainerRef, inView: sliderInView } = useInView({ threshold: 0.2 })
+    const { ref: categoriesRef, inView: categoriesInView } = useInView({ threshold: 0.3 })
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY
+            setIsScrollingDown(currentScrollY > lastScrollY.current)
+            lastScrollY.current = currentScrollY
+        }
+
+        window.addEventListener("scroll", handleScroll, { passive: true })
+        return () => window.removeEventListener("scroll", handleScroll)
+    }, [])
+
+    useEffect(() => {
+        if (headingInView && isScrollingDown) setHeadingRevealed(true)
+    }, [headingInView, isScrollingDown])
+
+    useEffect(() => {
+        if (descriptionInView && isScrollingDown) setDescriptionRevealed(true)
+    }, [descriptionInView, isScrollingDown])
+
+    useEffect(() => {
+        if (sliderInView && isScrollingDown) setSliderRevealed(true)
+    }, [sliderInView, isScrollingDown])
+
+    useEffect(() => {
+        if (categoriesInView && isScrollingDown) setCategoriesRevealed(true)
+    }, [categoriesInView, isScrollingDown])
 
     useEffect(() => {
         if (activeCategory) {
@@ -79,17 +120,39 @@ export default function OurRange({ activeCategory }: OurRangeProps) {
     return (
         <section className="bg-[#C6211D] py-8 md:py-16 relative overflow-hidden">
             <div className="w-full mx-auto">
-                <h2 className="text-5xl md:text-7xl leading-[3rem] md:leading-[6rem] font-bold text-white text-center mb-4 md:mb-8 drop-shadow-lg font-turbinado">
+                <h2
+                    ref={headingRef}
+                    className="text-5xl md:text-7xl leading-[3rem] md:leading-[6rem] font-bold text-white text-center mb-4 md:mb-8 drop-shadow-lg font-turbinado transition-all duration-1000"
+                    style={{
+                        opacity: headingRevealed ? 1 : 0,
+                        transform: headingRevealed ? "translateY(0)" : "translateY(30px)",
+                    }}
+                >
                     Our range
                 </h2>
 
-                <p className="text-white text-center text-sm sm:text-lg md:text-2xl mb-3 md:mb-4 font-gothic leading-6 md:leading-9 font-bold px-4">
+                <p
+                    ref={descriptionRef}
+                    className="text-white text-center text-sm sm:text-lg md:text-2xl mb-3 md:mb-4 font-gothic leading-6 md:leading-9 font-bold px-4 transition-all duration-1000"
+                    style={{
+                        opacity: descriptionRevealed ? 1 : 0,
+                        transform: descriptionRevealed ? "translateY(0)" : "translateY(30px)",
+                        transitionDelay: "100ms",
+                    }}
+                >
                     When you're on the go, take time out for a few delicious minutes with Mug Shot, the
                     <br className="hidden sm:block" />
                     warm, comforting, convenient flavour-packed snack.
                 </p>
 
-                <p className="text-white text-center text-sm sm:text-lg md:text-2xl mb-8 md:mb-16 font-bold font-gothic leading-6 md:leading-9 px-4">
+                <p
+                    className="text-white text-center text-sm sm:text-lg md:text-2xl mb-8 md:mb-16 font-bold font-gothic leading-6 md:leading-9 px-4 transition-all duration-1000"
+                    style={{
+                        opacity: descriptionRevealed ? 1 : 0,
+                        transform: descriptionRevealed ? "translateY(0)" : "translateY(30px)",
+                        transitionDelay: "200ms",
+                    }}
+                >
                     For the perfect pick me up. Wherever you're heading.
                 </p>
 
@@ -114,8 +177,8 @@ export default function OurRange({ activeCategory }: OurRangeProps) {
                                         key={category}
                                         onClick={() => handleCategorySelect(category)}
                                         className={`w-full text-left px-4 py-3 font-bold text-lg transition-colors uppercase tracking-wider ${selectedCategory === category
-                                                ? "bg-[#FF8000] text-white"
-                                                : "bg-[#FF8000] text-white hover:bg-gray-100"
+                                            ? "bg-[#FF8000] text-white"
+                                            : "bg-[#FF8000] text-white hover:bg-gray-100"
                                             } first:rounded-t-xl last:rounded-b-xl`}
                                     >
                                         {category}
@@ -126,28 +189,44 @@ export default function OurRange({ activeCategory }: OurRangeProps) {
                     </div>
                 </div>
 
-                {/* Draggable product slider */}
                 <div
-                    ref={sliderRef}
-                    onMouseDown={handleMouseDown}
-                    className="overflow-x-scroll scrollbar-hide cursor-grab active:cursor-grabbing select-none pb-6 md:pb-8 mb-8 md:mb-12"
+                    ref={sliderContainerRef}
+                    style={{
+                        opacity: sliderRevealed ? 1 : 0,
+                        transform: sliderRevealed ? "translateY(0)" : "translateY(30px)",
+                        transition: "all 1000ms",
+                    }}
                 >
-                    <div className="flex gap-4 md:gap-6 px-4 md:px-8 w-max">
-                        {filteredProducts.map((product) => (
-                            <div key={product.id} className="flex flex-col  items-center flex-shrink-0">
-                                <div className="w-32 h-48 md:w-[220px] md:h-80 flex items-center justify-center">
-                                    <img
-                                        src={product.image || "/placeholder.svg"}
-                                        alt={product.name}
-                                        className="h-48 md:h-80 w-auto pointer-events-none"
-                                    />
+                    <div
+                        ref={sliderRef}
+                        onMouseDown={handleMouseDown}
+                        className="overflow-x-scroll scrollbar-hide cursor-grab active:cursor-grabbing select-none pb-6 md:pb-8 mb-8 md:mb-12"
+                    >
+                        <div className="flex gap-4 md:gap-6 px-4 md:px-8 w-max">
+                            {filteredProducts.map((product) => (
+                                <div key={product.id} className="flex flex-col  items-center flex-shrink-0">
+                                    <div className="w-32 h-48 md:w-[220px] md:h-80 flex items-center justify-center">
+                                        <img
+                                            src={product.image || "/placeholder.svg"}
+                                            alt={product.name}
+                                            className="h-48 md:h-80 w-auto pointer-events-none"
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
                 </div>
 
-                <div className="px-4 md:px-8">
+                <div
+                    ref={categoriesRef}
+                    className="px-4 md:px-8 transition-all duration-1000"
+                    style={{
+                        opacity: categoriesRevealed ? 1 : 0,
+                        transform: categoriesRevealed ? "translateY(0)" : "translateY(30px)",
+                        transitionDelay: "100ms",
+                    }}
+                >
                     <div className="hidden md:flex justify-center gap-6 md:gap-12">
                         {categories.map((category) => (
                             <button

@@ -53,13 +53,13 @@ export default function AnimatedMenu({ isOpen, onClose }: AnimatedMenuProps) {
                 />
 
                 <div
-                    className={`absolute top-4 left-4 md:top-8 md:left-8 transition-all duration-500 ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-75"
+                    className={`absolute top-4 left-4 md:top-0 md:left-8 transition-all duration-500 ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-75"
                         }`}
                     style={{
                         transitionDelay: isOpen ? "150ms" : "0ms",
                     }}
                 >
-                    <div className="w-20 h-20 ml-2 sm:ml-10 md:w-40 md:h-40 mt-6 lg:w-[200px] lg:h-[200px] z-30 rounded-full flex items-center">
+                    <div className="w-20 h-20 ml-2 sm:ml-10 md:w-32 md:h-40 mt-6 md:mt-2 lg:w-[200px] lg:h-[200px] z-30 rounded-full flex items-center">
                         <img
                             // src="/mugshotlogo.png"
                             src="/momo.png"
@@ -88,7 +88,7 @@ export default function AnimatedMenu({ isOpen, onClose }: AnimatedMenuProps) {
                                     <NavLink
                                         key={item.href}
                                         to={item.href}
-                                        className={`text-white text-center font-bold font-gothic text-5xl md:text-5xl lg:text-6xl leading-tight md:leading-[56px] transition-all duration-300 hover:scale-110 hover:text-[#C6211D] ${isOpen ? "opacity-100" : "opacity-0"
+                                        className={`text-white -rotate-3 text-center font-bold font-gothic text-5xl md:text-5xl lg:text-6xl leading-tight md:leading-[56px] transition-all duration-300 hover:scale-110 hover:text-[#C6211D] ${isOpen ? "opacity-100" : "opacity-0"
                                             }`}
                                         style={{
                                             transitionDelay: isOpen ? `${300 + index * 50}ms` : "0ms",

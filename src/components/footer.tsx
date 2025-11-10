@@ -1,20 +1,68 @@
 "use client"
 
 import { Facebook, Instagram } from "lucide-react"
+import { useInView } from "react-intersection-observer"
+import { useState, useEffect, useRef } from "react"
 
 export default function Footer() {
+    const [imageRevealed, setImageRevealed] = useState(false)
+    const [navRevealed, setNavRevealed] = useState(false)
+    const [infoRevealed, setInfoRevealed] = useState(false)
+
+    const lastScrollY = useRef(0)
+    const [isScrollingDown, setIsScrollingDown] = useState(true)
+
+    const { ref: imageRef, inView: imageInView } = useInView({ threshold: 0.3 })
+    const { ref: navRef, inView: navInView } = useInView({ threshold: 0.3 })
+    const { ref: infoRef, inView: infoInView } = useInView({ threshold: 0.3 })
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY
+            setIsScrollingDown(currentScrollY > lastScrollY.current)
+            lastScrollY.current = currentScrollY
+        }
+
+        window.addEventListener("scroll", handleScroll, { passive: true })
+        return () => window.removeEventListener("scroll", handleScroll)
+    }, [])
+
+    useEffect(() => {
+        if (imageInView && isScrollingDown) setImageRevealed(true)
+    }, [imageInView, isScrollingDown])
+
+    useEffect(() => {
+        if (navInView && isScrollingDown) setNavRevealed(true)
+    }, [navInView, isScrollingDown])
+
+    useEffect(() => {
+        if (infoInView && isScrollingDown) setInfoRevealed(true)
+    }, [infoInView, isScrollingDown])
+
     return (
         <footer className="bg-[#FF8000] text-white relative overflow -z-10">
             <div className="bg-[url('/paper-bg.png')] bg-cover bg-center  sm:bg-cover flex items-center justify-center translate-y-[-50px] -z-10 py-20 sm:py-12">
                 <img
+                    ref={imageRef}
                     src="/betteroff.png"
-                    className="h-[100%] w-[100%] sm:h-[80%] sm:w-[80%] p-4 sm:p-16 md:p-32 self-center justify-self-center"
+                    className="h-[100%] w-[100%] sm:h-[80%] sm:w-[80%] p-4 sm:p-16 md:p-32 self-center justify-self-center transition-all duration-1000"
+                    style={{
+                        opacity: imageRevealed ? 1 : 0,
+                        transform: imageRevealed ? "translateY(0)" : "translateY(30px)",
+                    }}
                 />
             </div>
 
-            <div className="max-w-7xl mx-auto  px-4 sm:px-6 lg:px py-2 mt-10 sm:mt-20">
+            <div className="max-w-7xl mx-auto  px-4 sm:px-6 lg:py-2 py-2 mt-10 sm:mt-20">
                 {/* Top section - Links and social */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 ">
+                <div
+                    ref={navRef}
+                    className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 transition-all duration-1000"
+                    style={{
+                        opacity: navRevealed ? 1 : 0,
+                        transform: navRevealed ? "translateY(0)" : "translateY(30px)",
+                    }}
+                >
                     <div className="md:col-span-2 ">
                         <nav className="flex flex-wrap gap-4 sm:gap-6 text-base sm:text-lg md:text-xl leading-6 sm:leading-7 font-gothic font-bold">
                             <a href="#" className="hover:opacity-80 transition-opacity">
@@ -69,7 +117,15 @@ export default function Footer() {
                 </div>
 
                 {/* Company info */}
-                <div className="mb-4 font-gothic font-bold text-sm sm:text-base leading-5 sm:leading-6">
+                <div
+                    ref={infoRef}
+                    className="mb-4 font-gothic font-bold text-sm sm:text-base leading-5 sm:leading-6 transition-all duration-1000"
+                    style={{
+                        opacity: infoRevealed ? 1 : 0,
+                        transform: infoRevealed ? "translateY(0)" : "translateY(30px)",
+                        transitionDelay: "100ms",
+                    }}
+                >
                     <p className="font-bold mb">Symington's Ltd</p>
                     <p className="text-sm sm:text-base">(part of Princes Limited)</p>
                     <p className="text-sm sm:text-base">Thornes Farm Business Park,</p>

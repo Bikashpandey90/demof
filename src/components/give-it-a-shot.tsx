@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { useInView } from "react-intersection-observer"
 import Lottie from "lottie-react"
 import SwooshSVG from "./swoosh-svg"
 
@@ -14,6 +15,15 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
     const [isTransitioning, setIsTransitioning] = useState(false)
     const [animationComplete, setAnimationComplete] = useState(false)
     const lottieRef = useRef<any>(null)
+    const [autoPlayEnabled, setAutoPlayEnabled] = useState(true)
+    const autoPlayTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+    const lastScrollY = useRef(0)
+    const [isScrollingDown, setIsScrollingDown] = useState(true)
+
+    const { ref: takeAShotRef, inView: takeAShotInView } = useInView({ threshold: 0.3 })
+    const { ref: bowlRef, inView: bowlInView } = useInView({ threshold: 0.3 })
+    const { ref: tomatoesRef, inView: tomatoesInView } = useInView({ threshold: 0.3 })
 
     const categories = [
         {
@@ -21,7 +31,6 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
             name: "MIGHTY POTS",
             // image: "/pot.png",
             image: '/darjeeling.png',
-
             prop: "cover",
             bgColor: "bg-[#F8B400]",
             bowl: "/yellowbowl.png",
@@ -44,7 +53,6 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
             id: 3,
             name: "SACHETS",
             image: "/mugshotsachet.png",
-            // image: '/darjeeling.png',
             prop: "contain",
             bgColor: "bg-[#C6211D]",
             bowl: "/bowl.png",
@@ -52,8 +60,6 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
             swooshInnerColor: "#94C68D",
             swooshOuterColor: "#459941",
         },
-
-
     ]
 
     useEffect(() => {
@@ -62,6 +68,33 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
         }
     }, [])
 
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY
+            setIsScrollingDown(currentScrollY > lastScrollY.current)
+            lastScrollY.current = currentScrollY
+        }
+
+        window.addEventListener("scroll", handleScroll, { passive: true })
+        return () => window.removeEventListener("scroll", handleScroll)
+    }, [])
+
+    useEffect(() => {
+        if (takeAShotInView && isScrollingDown) setTakeAShotRevealed(true)
+    }, [takeAShotInView, isScrollingDown])
+
+    useEffect(() => {
+        if (bowlInView && isScrollingDown) setBowlRevealed(true)
+    }, [bowlInView, isScrollingDown])
+
+    useEffect(() => {
+        if (tomatoesInView && isScrollingDown) setTomatoesRevealed(true)
+    }, [tomatoesInView, isScrollingDown])
+
+    const [takeAShotRevealed, setTakeAShotRevealed] = useState(false)
+    const [bowlRevealed, setBowlRevealed] = useState(false)
+    const [tomatoesRevealed, setTomatoesRevealed] = useState(false)
+
     const leftIndex = (currentIndex - 1 + categories.length) % categories.length
     const middleIndex = currentIndex
     const rightIndex = (currentIndex + 1) % categories.length
@@ -69,10 +102,12 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
     const nextSlide = () => {
         setIsTransitioning(true)
         setCurrentIndex((prev) => (prev + 1) % categories.length)
+        setAutoPlayEnabled(false)
     }
     const prevSlide = () => {
         setIsTransitioning(true)
         setCurrentIndex((prev) => (prev - 1 + categories.length) % categories.length)
+        setAutoPlayEnabled(false)
     }
 
     const handleCategoryImageClick = () => {
@@ -94,6 +129,26 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
             .then((data) => setAnimationData(data))
             .catch((err) => console.error("Failed to load Lottie:", err))
     }, [])
+
+    useEffect(() => {
+        if (!autoPlayEnabled) {
+            if (autoPlayTimeoutRef.current) {
+                clearTimeout(autoPlayTimeoutRef.current)
+            }
+            return
+        }
+
+        autoPlayTimeoutRef.current = setTimeout(() => {
+            setCurrentIndex((prev) => (prev + 1) % categories.length)
+            setIsTransitioning(true)
+        }, 5000)
+
+        return () => {
+            if (autoPlayTimeoutRef.current) {
+                clearTimeout(autoPlayTimeoutRef.current)
+            }
+        }
+    }, [currentIndex, autoPlayEnabled, categories.length])
 
     return (
         <>
@@ -123,7 +178,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                         loop={false}
                         autoplay
                         onComplete={() => setAnimationComplete(true)}
-                        className="absolute  m-2 sm:m-4 md:mt-14 lg:mt-0 md:m-10 inset-0 mt-60 sm:mt-8 self-center justify-self-center scale-100 sm:scale-75 md:scale-[.65] z-20 pointer-events-none"
+                        className="absolute m-2 sm:m-4 md:mt-14 lg:mt-0 md:m-10 inset-0 mt-60 sm:mt-8 self-center justify-self-center scale-100 sm:scale-75 md:scale-[.65] z-20 pointer-events-none"
                     />
                 )}
                 {animationComplete && (
@@ -136,9 +191,8 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                 )}
 
                 <div className="max-w-6xl mx-auto px-3 sm:px-4 w-full relative">
-                    <div className="mt-32 sm:mt-10 lg:mt-2  mb-8 md:mb-0 bg-black sm:mb-16 bg-transparent flex-col flex justify-center items-center">
+                    <div className="mt-32 sm:mt-10 lg:mt-2 mb-8 md:mb-0 bg-black sm:mb-16 bg-transparent flex-col flex justify-center items-center">
                         {/* <img src="/giveitashot2.png" alt="Mug Shot sachet" className="scale-[2] sm:scale-100 md:scale-125" /> */}
-
 
                         <div className="flex flex-col items-center justify-center mt-6 sm:mt-6 mb-4">
                             <span className="font-brando rotate-[-10deg] sm:rotate-[-12deg] lg:rotate-[-10deg] text-white leading-10 text-[48px] sm:text-[42px] md:text-[72px] lg:text-[120px] flex items-center justify-center max-w-full">
@@ -149,20 +203,17 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                                 MOMO
                             </span>
                         </div>
-
-
-
                     </div>
 
                     <div className="relative h-64 sm:h-80 md:h-96 flex items-center justify-center mb-12 sm:mb-20">
-                        <div className="flex flex-col justify-center items-center w-full ">
-                            <div className="relative w-full md:mt-20 justify-center gap-64  items-center flex max-w-md ">
+                        <div className="flex flex-col justify-center items-center w-full">
+                            <div className="relative w-full md:mt-20 justify-center gap-64 items-center flex max-w-md">
                                 <img
                                     src={categories[leftIndex].image || "/placeholder.svg"}
                                     alt="left carousel item"
                                     className={`carousel-slide w-[45%] h-[45%] object-cover mt-36 sm:mt-0 scale-[1.25] sm:scale-100 drop-shadow-2xl overflow place-self-end items-center z-20 ${isTransitioning ? "" : ""}`}
                                 />
-                                <div className="flex justify-center items-center gap-4 sm:gap-8 px-2 sm:px-4 mb-2 ">
+                                <div className="flex justify-center items-center gap-4 sm:gap-8 px-2 sm:px-4 mb-2">
                                     <div
                                         className="relative h-56 sm:h-72 md:h-[360px] w-40 sm:w-60 md:w-72 flex items-center justify-center overflow"
                                         key="carousel-container"
@@ -188,11 +239,23 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                                     className="text-white text-2xl sm:text-3xl md:text-4xl hover:text-green-400 transition-colors duration-200 p-1 sm:p-2"
                                     aria-label="Previous product"
                                 >
-                                    ❮
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18.05" height="33.097" viewBox="0 0 18.05 33.097">
+                                        <path
+                                            id="Path_499"
+                                            data-name="Path 499"
+                                            d="M-2579.919,661.509l-7.614-7.447-7.613-7.447,7.613-7.447,7.614-7.447"
+                                            transform="translate(2596.315 -630.066)"
+                                            fill="none"
+                                            stroke="#fff"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2.339"
+                                        ></path>
+                                    </svg>
                                 </button>
 
                                 <div className="text-white text-center">
-                                    <div className="font-bold text-2xl sm:text-2xl md:text-3xl leading-7 rounded-lg font-gothic px-4 sm:px-8 py-2 sm:py-3 bg-transparent transition-all duration-700">
+                                    <div className="font-bold text-2xl sm:text-3xl md:text-3xl lg:text-[40px] leading-10 rounded-lg font-gothic px-4 sm:px-8 py-2 sm:py-3 bg-transparent transition-all duration-700">
                                         {categories[middleIndex].name.toUpperCase()}
                                     </div>
                                 </div>
@@ -202,35 +265,66 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                                     className="text-white text-2xl sm:text-3xl md:text-4xl hover:text-green-400 transition-colors duration-200 p-1 sm:p-2"
                                     aria-label="Next product"
                                 >
-                                    ❯
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18.05" height="33.097" viewBox="0 0 18.05 33.097">
+                                        <path
+                                            id="Path_500"
+                                            data-name="Path 500"
+                                            d="M-2425.92,661.509l7.614-7.447,7.613-7.447-7.613-7.447-7.614-7.447"
+                                            transform="translate(2427.574 -630.066)"
+                                            fill="none"
+                                            stroke="#fff"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2.339"
+                                        ></path>
+                                    </svg>
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="relative mt-32   sm:mt-16 flex flex-col items-center justify-end h-48 sm:h-80 md:h-[300px] lg:h-[320px] z-10">
+                <div className="relative mt-32 sm:mt-16 flex flex-col items-center justify-end h-48 sm:h-80 md:h-[300px] lg:h-[320px] z-10">
                     <img
+                        ref={takeAShotRef}
                         src="/takeamugshot.png"
                         alt="take a mug shot"
-                        className="absolute top-0 left-8 hidden md:hidden lg:block sm:block sm:left-20 md:left-10 lg:left-10  sm:-top-8 md:-top-10 w-32 sm:w-48 md:w-[250px] lg:w-[350px] z-0"
+                        className="absolute top-0 left-8 hidden md:hidden lg:block sm:block sm:left-20 md:left-10 lg:left-10 sm:-top-8 md:-top-10 w-32 sm:w-48 md:w-[250px] lg:w-[350px] z-0 transition-all duration-1000"
+                        style={{
+                            opacity: takeAShotRevealed ? 1 : 0,
+                            transform: takeAShotRevealed ? "translateY(0)" : "translateY(30px)",
+                        }}
                     />
                     <img
+                        ref={bowlRef}
                         src={categories[middleIndex].bowl || "/placeholder.svg"}
                         alt="bowl"
                         className="w-80 sm:w-96 md:w-[650px] absolute ml-12 sm:ml-24 md:ml-48 top-0 z-10 transition-all duration-700"
+                        style={{
+                            opacity: bowlRevealed ? 1 : 0,
+                            transform: bowlRevealed ? "translateY(0)" : "translateY(30px)",
+                            transitionDuration: "1000ms",
+                            transitionDelay: "100ms",
+                        }}
                     />
                     <img
+                        ref={tomatoesRef}
                         src={categories[middleIndex].tomatoes || "/placeholder.svg"}
                         alt="tomatoes"
                         className="absolute right-0 top-4 sm:top-8 md:top-10 w-40 sm:w-64 md:w-[300px] z-0 transition-all duration-700"
+                        style={{
+                            opacity: tomatoesRevealed ? 1 : 0,
+                            transform: tomatoesRevealed ? "translateY(0)" : "translateY(30px)",
+                            transitionDuration: "1000ms",
+                            transitionDelay: "200ms",
+                        }}
                     />
                 </div>
             </section>
             <img
                 src="/bg-header-top.png"
                 alt="Top irregular edge"
-                className={`${categories[middleIndex].bgColor} w-full scale-[1.2] h-auto block  -mt-[1px] z-100 pointer-events-none transition-colors duration-700`}
+                className={`${categories[middleIndex].bgColor} w-full scale-[1.2] h-auto block -mt-[1px] z-100 pointer-events-none transition-colors duration-700`}
                 style={{ display: "block", margin: 0, padding: 0, lineHeight: 0 }}
             />
         </>
