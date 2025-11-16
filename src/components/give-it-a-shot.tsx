@@ -66,7 +66,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
         if (lottieRef.current) {
             lottieRef.current.setSpeed(0.5)
         }
-    }, [])
+    }, [lottieRef])
 
     useEffect(() => {
         const handleScroll = () => {
@@ -194,7 +194,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                     <div className="mt-32 sm:mt-10 lg:mt-2 mb-8 md:mb-0 bg-black sm:mb-16 bg-transparent flex-col flex justify-center items-center">
                         {/* <img src="/giveitashot2.png" alt="Mug Shot sachet" className="scale-[2] sm:scale-100 md:scale-125" /> */}
 
-                        <div className="flex flex-col items-center justify-center mt-6 sm:mt-6 mb-4">
+                        <div className="flex flex-col items-center justify-center mt-2 lg:mt-8 sm:mt-6 mb-4">
                             <span className="font-brando rotate-[-10deg] sm:rotate-[-12deg] lg:rotate-[-10deg] text-white leading-10 text-[48px] sm:text-[42px] md:text-[72px] lg:text-[120px] flex items-center justify-center max-w-full">
                                 INDIA's #1
                             </span>

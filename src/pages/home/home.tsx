@@ -8,7 +8,7 @@ import OurRange from "@/components/our-range"
 import { useRef, useState } from "react"
 
 const Home = () => {
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+    const [selectedCategory, setSelectedCategory] = useState<string | 'SACHETS'>('SACHETS')
     const ourRangeRef = useRef<HTMLDivElement>(null)
 
     const handleCategoryClick = (category: string) => {

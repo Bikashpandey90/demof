@@ -6,7 +6,6 @@ export const AuthContext = createContext({});
 export const AuthProvider = ({ children }: Readonly<{ children: React.ReactNode }>) => {
 
 
-    // const {data,isLoading,error}=useGetLoggedInUser() as {data:any,isLoading:boolean,error:any};
     const [data, setData] = useState<any>();
     const [isLoading, setIsLoading] = useState(true);
 
@@ -39,10 +38,7 @@ export const AuthProvider = ({ children }: Readonly<{ children: React.ReactNode 
         getLoggedInUser()
     }, [])
 
-    // useEffect(()=>{
-    //     //token set => user populate
 
-    // },[])
 
     useEffect(() => {
 

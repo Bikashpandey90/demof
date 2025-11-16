@@ -120,7 +120,14 @@
   font-style: normal;
 }
 
-/* Hide scrollbar but keep scroll functionality */
+@font-face {
+  font-family: 'Bourton';
+  src: url('/fonts/bourtonhandbase-webfont.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
@@ -130,7 +137,6 @@
   scrollbar-width: none;
 }
 
-/* Smooth dragging feel */
 .grabbing {
   cursor: grabbing !important;
   user-select: none;

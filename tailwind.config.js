@@ -27,6 +27,12 @@ export default {
 						'Brando',
 						'sans-serif'
 					],
+				bourton:
+					[
+						'Bourton',
+						'sans-serif'
+					],
+
 
 			},
 			borderRadius: {

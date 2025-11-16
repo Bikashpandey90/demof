@@ -1,16 +1,16 @@
-const NeuButton = ({ children, color }: { children: string; color: string }) => {
+const NeuButton = ({ children, color, className, shadow }: { children: string; color: string, className?: string | 'bg-[#FF8000]  text-white', shadow?: string | '#FF8000' }) => {
     return (
         <button
             style={{
-                boxShadow: `2px 2px 0px ${color}, 6px 6px 0px #FF8000`,
+                boxShadow: `2px 2px 0px ${color}, 6px 6px 0px ${shadow}`,
                 borderColor: color,
             }}
-            className={`
+            className={`${className}
                 px-8 py-2 
-                text-2xl 
                 font-bold 
-                bg-[#FF8000] 
-                text-white 
+                font-bourton
+                text-3xl
+                leading-8
                 w-fit 
                 transition-all
                 rounded-xl
@@ -19,7 +19,7 @@ const NeuButton = ({ children, color }: { children: string; color: string }) => 
                 hover:translate-x-1
                 hover:translate-y-1
                 uppercase
-                tracking-wider
+               
             `}
         >
             {children}
