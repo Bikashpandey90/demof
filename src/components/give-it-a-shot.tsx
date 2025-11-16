@@ -19,7 +19,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
     const autoPlayTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
     const [dragStart, setDragStart] = useState(0)
-    const [dragEnd, setDragEnd] = useState(0)
+    // const [dragEnd, setDragEnd] = useState(0)
     const [dragOffset, setDragOffset] = useState(0)
     const [isDragging, setIsDragging] = useState(false)
     const carouselRef = useRef<HTMLDivElement>(null)
