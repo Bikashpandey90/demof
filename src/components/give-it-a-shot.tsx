@@ -18,6 +18,12 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
     const [autoPlayEnabled, setAutoPlayEnabled] = useState(true)
     const autoPlayTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
+    const [dragStart, setDragStart] = useState(0)
+    const [dragEnd, setDragEnd] = useState(0)
+    const [dragOffset, setDragOffset] = useState(0)
+    const [isDragging, setIsDragging] = useState(false)
+    const carouselRef = useRef<HTMLDivElement>(null)
+
     const lastScrollY = useRef(0)
     const [isScrollingDown, setIsScrollingDown] = useState(true)
 
@@ -25,16 +31,13 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
     const { ref: bowlRef, inView: bowlInView } = useInView({ threshold: 0.3 })
     const { ref: tomatoesRef, inView: tomatoesInView } = useInView({ threshold: 0.3 })
 
-
     const categories = [
         {
             id: 1,
             name: "MOMOS",
-            // image: "/pot.png",
             image: '/darjeeling.png',
             prop: "cover",
             bgColor: "bg-[#F8B400]",
-            // bowl: "/yellowbowl.png",
             bowl: '/newbowl3.png',
             tomatoes: "/onion.png",
             swooshInnerColor: "#FDA922",
@@ -112,6 +115,39 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
         setAutoPlayEnabled(false)
     }
 
+    const handleDragStart = (e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
+        const position = 'touches' in e ? e.touches[0].clientX : (e as React.MouseEvent).clientX
+        setDragStart(position)
+        setIsDragging(true)
+        setDragOffset(0)
+    }
+
+    const handleDragMove = (e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
+        if (!isDragging) return
+        const position = 'touches' in e ? e.touches[0].clientX : (e as React.MouseEvent).clientX
+        setDragOffset(position - dragStart)
+    }
+
+    const handleDragEnd = (e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
+        const position = 'changedTouches' in e ? e.changedTouches[0].clientX : (e as React.MouseEvent).clientX
+        handleSwipe(position)
+        setIsDragging(false)
+        setDragOffset(0)
+    }
+
+    const handleSwipe = (endPosition: number) => {
+        const distance = endPosition - dragStart
+        const threshold = 50 // minimum pixels to trigger slide change
+
+        if (Math.abs(distance) > threshold) {
+            if (distance < 0) {
+                nextSlide()
+            } else {
+                prevSlide()
+            }
+        }
+    }
+
     const handleCategoryImageClick = () => {
         if (onCategoryClick) {
             onCategoryClick(categories[middleIndex].name)
@@ -169,6 +205,10 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                 .carousel-slide {
                     transition: all 700ms cubic-bezier(0.34, 1.56, 0.64, 1);
                 }
+
+                .carousel-slide-dragging {
+                    transition: none;
+                }
             `}</style>
             <section
                 className={`${categories[middleIndex].bgColor} py-6 sm:py-10 relative overflow transition-colors duration-700`}
@@ -194,8 +234,6 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
 
                 <div className="max-w-6xl mx-auto px-3 sm:px-4 w-full relative">
                     <div className="mt-32 sm:mt-10 lg:mt-2 mb-8 md:mb-0 bg-black sm:mb-16 bg-transparent flex-col flex justify-center items-center">
-                        {/* <img src="/giveitashot2.png" alt="Mug Shot sachet" className="scale-[2] sm:scale-100 md:scale-125" /> */}
-
                         <div className="flex flex-col items-start justify-start   mt-2 lg:mt-8 sm:mt-6 mb-4">
                             <span className="  font-brando rotate-[-10deg] sm:rotate-[-12deg] lg:rotate-[-10deg] text-white leading-10 text-[48px] sm:text-[42px] md:text-[72px] lg:text-[100px] flex   items-center justify-center max-w-full">
                                 INDIA's #1
@@ -206,13 +244,27 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                         </div>
                     </div>
 
-                    <div className="relative h-64 sm:h-80 md:h-96 flex items-center justify-center mb-12 sm:mb-20">
+                    <div
+                        ref={carouselRef}
+                        className="relative h-64 sm:h-80 md:h-96 flex items-center justify-center mb-12 sm:mb-20 cursor-grab active:cursor-grabbing select-none"
+                        onMouseDown={handleDragStart}
+                        onMouseMove={handleDragMove}
+                        onMouseUp={handleDragEnd}
+                        onMouseLeave={handleDragEnd}
+                        onTouchStart={handleDragStart}
+                        onTouchMove={handleDragMove}
+                        onTouchEnd={handleDragEnd}
+                    >
                         <div className="flex flex-col justify-center items-center w-full">
                             <div className="relative w-full md:mt-20 justify-center gap-64 items-center flex max-w-md">
                                 <img
                                     src={categories[leftIndex].image || "/placeholder.svg"}
                                     alt="left carousel item"
-                                    className={`carousel-slide w-[45%] h-[45%] object-cover mt-36 sm:mt-0 scale-[1.25] sm:scale-100 drop-shadow-2xl overflow place-self-end items-center z-20 ${isTransitioning ? "" : ""}`}
+                                    className={`${isDragging ? 'carousel-slide-dragging' : 'carousel-slide'} w-[45%] h-[45%] object-cover mt-36 sm:mt-0 scale-[1.25] sm:scale-100 drop-shadow-2xl overflow place-self-end items-center z-20`}
+                                    style={{
+                                        transform: `translateX(${isDragging ? dragOffset * 0.2 : 0}px)`,
+                                    }}
+                                    draggable={false}
                                 />
                                 <div className="flex justify-center items-center gap-4 sm:gap-8 px-2 sm:px-4 mb-2">
                                     <div
@@ -223,14 +275,22 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                                             src={categories[middleIndex].image || "/placeholder.svg"}
                                             alt={categories[middleIndex].name}
                                             onClick={handleCategoryImageClick}
-                                            className={`carousel-slide w-full h-full mt-36 sm:mt-0 object-${categories[middleIndex].prop} scale-[1.25] sm:scale-[1.1] z-20 cursor-pointer ${isTransitioning ? "" : ""}`}
+                                            className={`${isDragging ? 'carousel-slide-dragging' : 'carousel-slide'} w-full h-full mt-36 sm:mt-0 object-${categories[middleIndex].prop} scale-[1.25] sm:scale-[1.1] z-20 cursor-pointer`}
+                                            style={{
+                                                transform: `translateX(${isDragging ? dragOffset * 0.5 : 0}px)`,
+                                            }}
+                                            draggable={false}
                                         />
                                     </div>
                                 </div>
                                 <img
                                     src={categories[rightIndex].image || "/placeholder.svg"}
                                     alt="right carousel item"
-                                    className={`carousel-slide w-[45%] h-[45%] mt-36 sm:mt-0 object-cover drop-shadow-2xl overflow place-self-end z-20 ${isTransitioning ? "" : ""}`}
+                                    className={`${isDragging ? 'carousel-slide-dragging' : 'carousel-slide'} w-[45%] h-[45%] mt-36 sm:mt-0 object-cover drop-shadow-2xl overflow place-self-end z-20`}
+                                    style={{
+                                        transform: `translateX(${isDragging ? dragOffset * 0.2 : 0}px)`,
+                                    }}
+                                    draggable={false}
                                 />
                             </div>
 

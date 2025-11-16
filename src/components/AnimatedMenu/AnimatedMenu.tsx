@@ -1,9 +1,8 @@
-import "./Menu.css";
+import "./menu.css";
 import { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import CustomEase from "gsap/CustomEase";
 import { useGSAP } from "@gsap/react";
-import { useNavigate, useLocation } from "react-router-dom";
 
 gsap.registerPlugin(CustomEase);
 CustomEase.create("hop", ".15, 1, .25, 1");
@@ -15,8 +14,6 @@ interface AnimatedMenuProps {
 
 const AnimatedMenu = ({ isOpen, onClose }: AnimatedMenuProps) => {
   const [isAnimating, setIsAnimating] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation();
 
   const menuRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
@@ -30,6 +27,7 @@ const AnimatedMenu = ({ isOpen, onClose }: AnimatedMenuProps) => {
   const closeBtnRef = useRef<HTMLParagraphElement>(null);
 
   const menuItemsRef = useRef<HTMLDivElement>(null);
+  const menuImagesRef = useRef<HTMLDivElement>(null);
   const menuFooterColsRef = useRef<HTMLDivElement>(null);
 
   const currentStateRef = useRef(false);
@@ -52,6 +50,11 @@ const AnimatedMenu = ({ isOpen, onClose }: AnimatedMenuProps) => {
         y: "100%",
       });
 
+      const imageCards = menuRef.current.querySelectorAll(".menu-images .image-card");
+      gsap.set(imageCards, {
+        y: "100%",
+      });
+
       const footerRevealers = menuRef.current.querySelectorAll(".menu-footer .revealer p, .menu-footer .revealer a");
       gsap.set(footerRevealers, {
         y: "100%",
@@ -59,20 +62,6 @@ const AnimatedMenu = ({ isOpen, onClose }: AnimatedMenuProps) => {
     },
     { scope: menuRef }
   );
-
-  const navigateTo = (path: string) => {
-    if (isAnimating) return;
-
-    if (location.pathname === path) {
-      closeMenu();
-      return;
-    }
-
-    closeMenu();
-    setTimeout(() => {
-      navigate(path);
-    }, 750);
-  };
 
   const openMenu = () => {
     if (isAnimating || currentStateRef.current) return;
@@ -129,6 +118,18 @@ const AnimatedMenu = ({ isOpen, onClose }: AnimatedMenuProps) => {
         "<"
       );
 
+      const imageCards = menuRef.current.querySelectorAll(".menu-images .image-card");
+      tl.to(
+        imageCards,
+        {
+          y: "0%",
+          duration: 1,
+          stagger: 0.08,
+          ease: "power3.out",
+        },
+        "<"
+      );
+
       const footerRevealers = menuRef.current.querySelectorAll(".menu-footer .revealer p, .menu-footer .revealer a");
       tl.to(
         footerRevealers,
@@ -156,7 +157,6 @@ const AnimatedMenu = ({ isOpen, onClose }: AnimatedMenuProps) => {
       },
     });
 
-    // Hide logo + close button
     tl.to([overlayLogoRef.current, closeBtnRef.current], {
       y: "-100%",
       duration: 0.6,
@@ -164,13 +164,13 @@ const AnimatedMenu = ({ isOpen, onClose }: AnimatedMenuProps) => {
       ease: "power3.inOut",
     });
 
-    // Hide links
     if (menuRef.current) {
       const links = menuRef.current.querySelectorAll(".menu-overlay-items .revealer a");
+      const imageCards = menuRef.current.querySelectorAll(".menu-images .image-card");
       const footer = menuRef.current.querySelectorAll(".menu-footer .revealer p, .menu-footer .revealer a");
 
       tl.to(
-        [...links, ...footer],
+        [...links, ...imageCards, ...footer],
         {
           y: "-100%",
           duration: 0.55,
@@ -181,7 +181,6 @@ const AnimatedMenu = ({ isOpen, onClose }: AnimatedMenuProps) => {
       );
     }
 
-    // Smooth clipPath close
     tl.to(
       menuOverlayRef.current,
       {
@@ -192,7 +191,6 @@ const AnimatedMenu = ({ isOpen, onClose }: AnimatedMenuProps) => {
       "-=0.25"
     );
 
-    // Reset AFTER animation completes
     tl.add(() => {
       gsap.delayedCall(0.05, () => {
         gsap.set(menuOverlayRef.current, {
@@ -203,14 +201,14 @@ const AnimatedMenu = ({ isOpen, onClose }: AnimatedMenuProps) => {
 
         if (menuRef.current) {
           const links = menuRef.current.querySelectorAll(".menu-overlay-items .revealer a");
+          const imageCards = menuRef.current.querySelectorAll(".menu-images .image-card");
           const footer = menuRef.current.querySelectorAll(".menu-footer .revealer p, .menu-footer .revealer a");
 
-          gsap.set([...links, ...footer], { y: "100%" });
+          gsap.set([...links, ...imageCards, ...footer], { y: "100%" });
         }
       });
     });
 
-    // Bring back nav items smoothly
     tl.to(
       [navLogoRef.current, menuBtnRef.current, cartBtnRef.current],
       {
@@ -223,7 +221,6 @@ const AnimatedMenu = ({ isOpen, onClose }: AnimatedMenuProps) => {
     );
   };
 
-
   useEffect(() => {
     if (isOpen && !currentStateRef.current) {
       openMenu();
@@ -232,29 +229,31 @@ const AnimatedMenu = ({ isOpen, onClose }: AnimatedMenuProps) => {
     }
   }, [isOpen]);
 
+  const products = [
+    { id: 1, name: "Product 1", image: "/products/green.png" },
+    { id: 2, name: "Product 2", image: "/products/pink.png" },
+    { id: 3, name: "Product 3", image: "/products/red.png" },
+    { id: 4, name: "Product 4", image: "/products/blue.png" },
+  ];
+
   return (
     <div className="menu" ref={menuRef}>
       <div className="nav" ref={navRef}>
         <div className="nav-logo">
           <div className="revealer">
-            <a
-              href="/"
-              ref={navLogoRef}
-              onClick={(e) => {
-                e.preventDefault();
-              }}
-            >
+            <a href="/" ref={navLogoRef}>
+              {/* MomoGuys */}
             </a>
           </div>
         </div>
         <div className="nav-items">
           <div className="nav-menu-toggle-open">
             <div className="revealer" onClick={openMenu}>
+              {/* Menu */}
             </div>
           </div>
           <div className="nav-cart-btn">
-            <div className="revealer">
-            </div>
+            <div className="revealer"></div>
           </div>
         </div>
       </div>
@@ -262,50 +261,41 @@ const AnimatedMenu = ({ isOpen, onClose }: AnimatedMenuProps) => {
         <div className="menu-overlay-nav">
           <div className="menu-overlay-nav-logo">
             <div className="revealer">
-              <a
-                href="/"
-                ref={overlayLogoRef}
-                onClick={(e) => {
-                  e.preventDefault();
-                  navigateTo("/");
-                }}
-              >
+              <a href="/" ref={overlayLogoRef}>
                 MomoGuys
               </a>
             </div>
           </div>
           <div className="menu-overlay-nav-toggle-close">
-            <div className="revealer" onClick={closeMenu}>
-            </div>
+            <div className="revealer" onClick={closeMenu}>Close</div>
           </div>
         </div>
         <div className="menu-overlay-items" ref={menuItemsRef}>
           <div className="revealer">
-            <a href="/" onClick={(e) => { e.preventDefault(); navigateTo("/"); }}>
-              Index
-            </a>
+            <a href="/">Index</a>
           </div>
           <div className="revealer">
-            <a href="/catalogue" onClick={(e) => { e.preventDefault(); navigateTo("/catalogue"); }}>
-              Catalogue
-            </a>
+            <a href="/catalogue">Catalogue</a>
           </div>
           <div className="revealer">
-            <a href="/info" onClick={(e) => { e.preventDefault(); navigateTo("/info"); }}>
-              Info
-            </a>
+            <a href="/info">Info</a>
           </div>
           <div className="revealer">
-            <a href="/archive" onClick={(e) => { e.preventDefault(); navigateTo("/archive"); }}>
-              Archive
-            </a>
+            <a href="/archive">Archive</a>
           </div>
           <div className="revealer">
-            <a href="/editorial" onClick={(e) => { e.preventDefault(); navigateTo("/editorial"); }}>
-              Editorial
-            </a>
+            <a href="/editorial">Editorial</a>
           </div>
         </div>
+
+        <div className="menu-images" ref={menuImagesRef}>
+          {products.map((product) => (
+            <div key={product.id} className="image-card">
+              <img src={product.image || "/placeholder.svg"} alt={product.name} />
+            </div>
+          ))}
+        </div>
+
         <div className="menu-footer" ref={menuFooterColsRef}>
           <div className="menu-footer-col">
             <div className="revealer">

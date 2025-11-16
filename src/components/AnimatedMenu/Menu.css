@@ -51,6 +51,8 @@
   will-change: transform, clip-path;
   pointer-events: none;
   z-index: 2;
+  display: flex;
+  align-items: flex-start;
 }
 
 .menu-overlay-nav-logo a,
@@ -99,18 +101,68 @@
 }
 
 .menu-overlay-items {
-  padding: 25vh 1em 1em 1em;
+  padding: 15vh 2em 1em 1em;
+  flex: 1;
+  overflow: hidden;
 }
 
 .menu-overlay-items a {
   font-size: 3rem;
 }
 
+.menu-images {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 40%;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5em;
+  padding: 6em 1.5em 1em 1.5em;
+  overflow-y: auto;
+}
 
+.image-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  aspect-ratio: 1;
+  transform: translateY(100%);
+}
+
+.image-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
 
 @media (max-width: 900px) {
   .nav-cart-btn {
     display: flex;
     justify-content: flex-end;
+  }
+
+  /* Adjust layout for smaller screens */
+  .menu-images {
+    width: 50%;
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+
+  /* Stack images below menu items on mobile */
+  .menu-overlay {
+    flex-direction: column;
+  }
+
+  .menu-images {
+    position: static;
+    width: 100%;
+    height: auto;
+    padding: 1.5em;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
