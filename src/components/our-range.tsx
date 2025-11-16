@@ -15,32 +15,32 @@ export default function OurRange({ activeCategory }: OurRangeProps) {
         { id: 1, name: "Chicken", image: "/products/blue.png", category: "SACHETS" },
         { id: 2, name: "Beef", image: "/products/pink.png", category: "POTS" },
         { id: 3, name: "Prawn", image: "/products/yellow.png", category: "POTS" },
-        { id: 4, name: "BBQ", image: "/products/yellow2.png", category: "MIGHTY POTS" },
+        { id: 4, name: "BBQ", image: "/products/yellow2.png", category: "MOMOS" },
         { id: 5, name: "Spicy", image: "/products/brown.png", category: "SACHETS" },
         { id: 6, name: "Tomato", image: "/products/purple.png", category: "POTS" },
-        { id: 7, name: "Herbs", image: "/products/yellow3.png", category: "MIGHTY POTS" },
+        { id: 7, name: "Herbs", image: "/products/yellow3.png", category: "MOMOS" },
         { id: 8, name: "Chicken", image: "/products/blue2.png", category: "SACHETS" },
         { id: 9, name: "Spicy", image: "/products/brown2.png", category: "POTS" },
-        { id: 10, name: "Chicken", image: "/products/skyblue.png", category: "MIGHTY POTS" },
+        { id: 10, name: "Chicken", image: "/products/skyblue.png", category: "MOMOS" },
         { id: 11, name: "Chicken", image: "/products/lightgreen.png", category: "SACHETS" },
         { id: 12, name: "Chicken", image: "/products/red.png", category: "POTS" },
-        { id: 13, name: "Chicken", image: "/products/green.png", category: "MIGHTY POTS" },
+        { id: 13, name: "Chicken", image: "/products/green.png", category: "MOMOS" },
         { id: 1, name: "Chicken", image: "/products/blue.png", category: "SACHETS" },
         { id: 2, name: "Beef", image: "/products/pink.png", category: "POTS" },
         { id: 3, name: "Prawn", image: "/products/yellow.png", category: "POTS" },
-        { id: 4, name: "BBQ", image: "/products/yellow2.png", category: "MIGHTY POTS" },
+        { id: 4, name: "BBQ", image: "/products/yellow2.png", category: "MOMOS" },
         { id: 5, name: "Spicy", image: "/products/brown.png", category: "SACHETS" },
         { id: 6, name: "Tomato", image: "/products/purple.png", category: "POTS" },
-        { id: 7, name: "Herbs", image: "/products/yellow3.png", category: "MIGHTY POTS" },
+        { id: 7, name: "Herbs", image: "/products/yellow3.png", category: "MOMOS" },
         { id: 8, name: "Chicken", image: "/products/blue2.png", category: "SACHETS" },
         { id: 9, name: "Spicy", image: "/products/brown2.png", category: "POTS" },
-        { id: 10, name: "Chicken", image: "/products/skyblue.png", category: "MIGHTY POTS" },
+        { id: 10, name: "Chicken", image: "/products/skyblue.png", category: "MOMOS" },
         { id: 11, name: "Chicken", image: "/products/lightgreen.png", category: "SACHETS" },
         { id: 12, name: "Chicken", image: "/products/red.png", category: "POTS" },
-        { id: 13, name: "Chicken", image: "/products/green.png", category: "MIGHTY POTS" },
+        { id: 13, name: "Chicken", image: "/products/green.png", category: "MOMOS" },
     ]
 
-    const categories = ["POTS", "SACHETS", "MIGHTY POTS"]
+    const categories = ["POTS", "SACHETS", "MOMOS"]
     const [selectedCategory, setSelectedCategory] = useState<string | null>(activeCategory || null)
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     const sliderRef = useRef<HTMLDivElement>(null)

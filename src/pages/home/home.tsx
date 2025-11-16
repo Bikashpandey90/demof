@@ -4,6 +4,7 @@ import GetInTouch from "@/components/get-in-touch"
 import GiveItAShot from "@/components/give-it-a-shot"
 import Header from "@/components/header"
 import HotTastyConvenient from "@/components/hot-tasty"
+import AnimatedMenu from "@/components/AnimatedMenu/AnimatedMenu"
 import OurRange from "@/components/our-range"
 import { useRef, useState } from "react"
 
@@ -23,6 +24,7 @@ const Home = () => {
         <>
 
             <main className="min-h-screen  w-full overflow-x-hidden">
+
 
                 <Header />
                 <GiveItAShot onCategoryClick={handleCategoryClick} />

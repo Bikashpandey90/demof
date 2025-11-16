@@ -25,15 +25,17 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
     const { ref: bowlRef, inView: bowlInView } = useInView({ threshold: 0.3 })
     const { ref: tomatoesRef, inView: tomatoesInView } = useInView({ threshold: 0.3 })
 
+
     const categories = [
         {
             id: 1,
-            name: "MIGHTY POTS",
+            name: "MOMOS",
             // image: "/pot.png",
             image: '/darjeeling.png',
             prop: "cover",
             bgColor: "bg-[#F8B400]",
-            bowl: "/yellowbowl.png",
+            // bowl: "/yellowbowl.png",
+            bowl: '/newbowl3.png',
             tomatoes: "/onion.png",
             swooshInnerColor: "#FDA922",
             swooshOuterColor: "#914C25",
@@ -194,12 +196,11 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                     <div className="mt-32 sm:mt-10 lg:mt-2 mb-8 md:mb-0 bg-black sm:mb-16 bg-transparent flex-col flex justify-center items-center">
                         {/* <img src="/giveitashot2.png" alt="Mug Shot sachet" className="scale-[2] sm:scale-100 md:scale-125" /> */}
 
-                        <div className="flex flex-col items-center justify-center mt-2 lg:mt-8 sm:mt-6 mb-4">
-                            <span className="font-brando rotate-[-10deg] sm:rotate-[-12deg] lg:rotate-[-10deg] text-white leading-10 text-[48px] sm:text-[42px] md:text-[72px] lg:text-[120px] flex items-center justify-center max-w-full">
+                        <div className="flex flex-col items-start justify-start   mt-2 lg:mt-8 sm:mt-6 mb-4">
+                            <span className="  font-brando rotate-[-10deg] sm:rotate-[-12deg] lg:rotate-[-10deg] text-white leading-10 text-[48px] sm:text-[42px] md:text-[72px] lg:text-[100px] flex   items-center justify-center max-w-full">
                                 INDIA's #1
                             </span>
-
-                            <span className="font-brando rotate-[-10deg] sm:rotate-[-12deg] lg:rotate-[-10deg] text-white leading-2 text-[58px] sm:text-[56px] md:text-[96px] lg:text-[150px] text-center flex items-center justify-center max-w-full">
+                            <span className="font-brando rotate-[-10deg] lg:-mt-7 sm:rotate-[-12deg] lg:rotate-[-10deg] text-white leading-2 text-[58px] sm:text-[56px] md:text-[96px] lg:text-[160px]  flex   items-center justify-center max-w-full">
                                 MOMO
                             </span>
                         </div>
@@ -284,7 +285,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                     </div>
                 </div>
 
-                <div className="relative mt-32 sm:mt-16 flex flex-col items-center justify-end h-48 sm:h-80 md:h-[300px] lg:h-[320px] z-10">
+                <div className="relative mt-32 sm:mt-16 lg:mt-44 flex flex-col items-center justify-end h-48 sm:h-80 md:h-[300px] lg:h-[320px] z-10">
                     <img
                         ref={takeAShotRef}
                         src="/takeamugshot.png"
