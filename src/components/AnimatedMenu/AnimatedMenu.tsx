@@ -1,4 +1,4 @@
-import "./menu.css";
+import "./Menu.css";
 import { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import CustomEase from "gsap/CustomEase";
