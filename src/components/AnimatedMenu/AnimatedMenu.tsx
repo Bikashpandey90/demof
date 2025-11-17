@@ -237,7 +237,7 @@ const AnimatedMenu = ({ isOpen, onClose }: AnimatedMenuProps) => {
   ];
 
   return (
-    <div className="menu" ref={menuRef}>
+    <div className="menu " ref={menuRef}>
       <div className="nav" ref={navRef}>
         <div className="nav-logo">
           <div className="revealer">
@@ -257,9 +257,9 @@ const AnimatedMenu = ({ isOpen, onClose }: AnimatedMenuProps) => {
           </div>
         </div>
       </div>
-      <div className="menu-overlay" ref={menuOverlayRef}>
-        <div className="menu-overlay-nav">
-          <div className="menu-overlay-nav-logo">
+      <div className="menu-overlay " ref={menuOverlayRef}>
+        <div className="menu-overlay-nav ">
+          <div className="menu-overlay-nav-logo ">
             <div className="revealer">
               <a href="/" ref={overlayLogoRef}>
                 MomoGuys
@@ -267,10 +267,12 @@ const AnimatedMenu = ({ isOpen, onClose }: AnimatedMenuProps) => {
             </div>
           </div>
           <div className="menu-overlay-nav-toggle-close">
-            <div className="revealer" onClick={closeMenu}>Close</div>
+            <div className="revealer" onClick={closeMenu}>
+              {/* Close */}
+            </div>
           </div>
         </div>
-        <div className="menu-overlay-items" ref={menuItemsRef}>
+        <div className="menu-overlay-items font-gothic   text-3xl lg:6xl xl:text-7xl  " ref={menuItemsRef}>
           <div className="revealer">
             <a href="/">Index</a>
           </div>
@@ -288,7 +290,9 @@ const AnimatedMenu = ({ isOpen, onClose }: AnimatedMenuProps) => {
           </div>
         </div>
 
-        <div className="menu-images" ref={menuImagesRef}>
+        <div className="menu-images  lg:mr-60 " ref={menuImagesRef} style={{
+          scrollbarWidth: "none"
+        }}>
           {products.map((product) => (
             <div key={product.id} className="image-card">
               <img src={product.image || "/placeholder.svg"} alt={product.name} />

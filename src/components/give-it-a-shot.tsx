@@ -19,7 +19,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
     const autoPlayTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
     const [dragStart, setDragStart] = useState(0)
-    const [dragEnd, setDragEnd] = useState(0)
+    // const [dragEnd, setDragEnd] = useState(0)
     const [dragOffset, setDragOffset] = useState(0)
     const [isDragging, setIsDragging] = useState(false)
     const carouselRef = useRef<HTMLDivElement>(null)
@@ -345,12 +345,12 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                     </div>
                 </div>
 
-                <div className="relative mt-32 sm:mt-16 lg:mt-44 flex flex-col items-center justify-end h-48 sm:h-80 md:h-[300px] lg:h-[320px] z-10">
+                <div className="relative mt-32 sm:mt-16 lg:mt-44 xl:mt-56 flex flex-col items-center justify-end h-48 sm:h-80 md:h-[300px] lg:h-[320px] z-10">
                     <img
                         ref={takeAShotRef}
                         src="/takeamugshot.png"
                         alt="take a mug shot"
-                        className="absolute top-0 left-8 hidden md:hidden lg:block sm:block sm:left-20 md:left-10 lg:left-10 sm:-top-8 md:-top-10 w-32 sm:w-48 md:w-[250px] lg:w-[350px] z-0 transition-all duration-1000"
+                        className="absolute top-0 left-8 hidden md:hidden lg:block sm:block sm:left-20 md:left-10 lg:left-14 xl:left-32 sm:-top-8 md:-top-10 w-32 sm:w-48 md:w-[250px] lg:w-[350px] z-0 transition-all duration-1000"
                         style={{
                             opacity: takeAShotRevealed ? 1 : 0,
                             transform: takeAShotRevealed ? "translateY(0)" : "translateY(30px)",

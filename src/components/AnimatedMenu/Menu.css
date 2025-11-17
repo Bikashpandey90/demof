@@ -4,6 +4,7 @@
   left: 0;
   width: 100vw;
   height: 100svh;
+
   pointer-events: none;
   z-index: 2;
 }
@@ -101,13 +102,13 @@
 }
 
 .menu-overlay-items {
-  padding: 15vh 2em 1em 1em;
+  padding: 25vh 2em 1em 1em;
   flex: 1;
   overflow: hidden;
 }
 
 .menu-overlay-items a {
-  font-size: 3rem;
+  /* font-size: 3rem; */
 }
 
 .menu-images {
@@ -144,7 +145,7 @@
     justify-content: flex-end;
   }
 
-  /* Adjust layout for smaller screens */
+  /* sdjust layout for smaller screens */
   .menu-images {
     width: 50%;
     grid-template-columns: 1fr;
@@ -153,7 +154,7 @@
 
 @media (max-width: 640px) {
 
-  /* Stack images below menu items on mobile */
+  /* stack images below menu items on mobile */
   .menu-overlay {
     flex-direction: column;
   }

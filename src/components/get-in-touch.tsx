@@ -88,7 +88,11 @@ export default function GetInTouch() {
                                     transitionDelay: "200ms",
                                 }}
                             >
-                                <NeuButton color="#C6211D">CONTACT US</NeuButton>
+                                {/* <NeuButton color="#C6211D"> */}
+                                <NeuButton shadow="#FF8A15" className="bg-[#FF8A15]  text-white" color="#C6211D">
+
+
+                                    CONTACT US</NeuButton>
                             </div>
                         </div>
                     </div>

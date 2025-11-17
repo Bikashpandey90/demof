@@ -11,6 +11,7 @@ import Login from "@/pages/login";
 import CategoryForm from "@/pages/admin/addCategory";
 import ProductList from "@/pages/admin/productList";
 import CategoryList from "@/pages/admin/categoryList";
+import PermissionCheck from "./permission.config";
 
 const Routing: FC = () => {
     const router = createBrowserRouter([
@@ -27,7 +28,9 @@ const Routing: FC = () => {
         },
         {
             path: '/admin',
-            element: <MasterLayout />,
+            element:
+
+                <PermissionCheck allowedRole="admin"><MasterLayout /></PermissionCheck>,
             children: [
                 {
                     index: true,

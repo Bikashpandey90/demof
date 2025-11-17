@@ -143,7 +143,8 @@ export default function FollowUs() {
                             transitionDelay: "300ms",
                         }}
                     >
-                        <NeuButton color={"#249F95"}>CONNECT</NeuButton>
+                        <NeuButton shadow="#DFBF0E" className="bg-[#DFBF0E]  text-white" color="#249F95">
+                            CONNECT</NeuButton>
                     </div>
 
                     <div

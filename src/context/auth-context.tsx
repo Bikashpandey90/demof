@@ -20,6 +20,7 @@ export const AuthProvider = ({ children }: Readonly<{ children: React.ReactNode 
                         "Authorization": "Bearer " + localStorage.getItem('token')
                     }
                 }) as any
+
                 setData(response.data.detail)
 
             }
