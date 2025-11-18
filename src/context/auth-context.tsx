@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }: Readonly<{ children: React.ReactNode 
             if (token) {
 
 
-                const response = await get('/me', {
+                const response = await get('/auth/me', {
                     headers: {
                         "Authorization": "Bearer " + localStorage.getItem('token')
                     }

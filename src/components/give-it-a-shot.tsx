@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { useInView } from "react-intersection-observer"
 import Lottie from "lottie-react"
 import SwooshSVG from "./swoosh-svg"
+import categorySvc from "@/services/category.service"
 
 interface GiveItAShotProps {
     onCategoryClick?: (category: string) => void
@@ -19,7 +20,6 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
     const autoPlayTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
     const [dragStart, setDragStart] = useState(0)
-    // const [dragEnd, setDragEnd] = useState(0)
     const [dragOffset, setDragOffset] = useState(0)
     const [isDragging, setIsDragging] = useState(false)
     const carouselRef = useRef<HTMLDivElement>(null)
@@ -34,7 +34,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
     const categories = [
         {
             id: 1,
-            name: "MOMOS",
+            title: "MOMOS",
             image: '/darjeeling.png',
             prop: "cover",
             bgColor: "bg-[#F8B400]",
@@ -45,7 +45,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
         },
         {
             id: 2,
-            name: "POTS",
+            title: "POTS",
             image: "/mightypot.png",
             prop: "cover",
             bgColor: "bg-[#3B863B]",
@@ -56,7 +56,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
         },
         {
             id: 3,
-            name: "SACHETS",
+            title: "SACHETS",
             image: "/mugshotsachet.png",
             prop: "contain",
             bgColor: "bg-[#C6211D]",
@@ -66,6 +66,19 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
             swooshOuterColor: "#459941",
         },
     ]
+
+    const fetchCategories = async () => {
+        try {
+            const response = await categorySvc.getAllCategory()
+            console.log(response)
+
+        } catch (exception) {
+            console.log(exception)
+        }
+    }
+    useEffect(() => {
+        fetchCategories()
+    }, [])
 
     useEffect(() => {
         if (lottieRef.current) {
@@ -150,7 +163,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
 
     const handleCategoryImageClick = () => {
         if (onCategoryClick) {
-            onCategoryClick(categories[middleIndex].name)
+            onCategoryClick(categories[middleIndex].title)
         }
     }
 
@@ -273,7 +286,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                                     >
                                         <img
                                             src={categories[middleIndex].image || "/placeholder.svg"}
-                                            alt={categories[middleIndex].name}
+                                            alt={categories[middleIndex].title}
                                             onClick={handleCategoryImageClick}
                                             className={`${isDragging ? 'carousel-slide-dragging' : 'carousel-slide'} w-full h-full mt-36 sm:mt-0 object-${categories[middleIndex].prop} scale-[1.25] sm:scale-[1.1] z-20 cursor-pointer`}
                                             style={{
@@ -317,7 +330,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
 
                                 <div className="text-white text-center">
                                     <div className="font-bold text-2xl sm:text-3xl md:text-3xl lg:text-[40px] leading-10 rounded-lg font-gothic px-4 sm:px-8 py-2 sm:py-3 bg-transparent transition-all duration-700">
-                                        {categories[middleIndex].name.toUpperCase()}
+                                        {categories[middleIndex].title.toUpperCase()}
                                     </div>
                                 </div>
 

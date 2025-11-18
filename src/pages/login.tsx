@@ -3,7 +3,7 @@
 import NeuButton from "@/components/button";
 import { AuthContext } from "@/context/auth-context";
 import authSvc from "@/services/auth.service";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
@@ -13,7 +13,15 @@ function LoginPage() {
     const { loggedInUser, setLoggedInUser } = useContext(AuthContext) as { loggedInUser: any; setLoggedInUser: Function }
     const navigate = useNavigate()
 
-   
+    useEffect(() => {
+        if (loggedInUser) {
+            setLoggedInUser(loggedInUser)
+            console.log(loggedInUser.role)
+            navigate("/" + loggedInUser?.role)
+        }
+    }, [])
+
+
     const LoginDTO = Yup.object({
         email: Yup.string().email().required("Email is required !"),
         password: Yup.string().required("Password is required ! ")
@@ -37,13 +45,14 @@ function LoginPage() {
 
 
 
+
     return (
         <div className="relative min-h-screen w-full flex flex-col items-center justify-center bg-[#FF8000] p-4 font-sans overflow-hidden">
 
-            <div className=" hidden sm:block lg:block justify-end bg-black items-end z-10 place-self-end self-end justify-self-end">
+            <div className=" hidden sm:block lg:block md:hidden justify-end bg-black items-end z-10 place-self-end self-end justify-self-end">
                 <img
                     src="/smoosh-menu.svg"
-                    className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] md:w-[60%] object-cover object-top"
+                    className="absolute top-0  left-1/2 -translate-x-1/2 w-[80%] md:w-[60%] object-cover object-top"
                     alt="Background design"
                     style={{ transform: 'translateX(-50%)', zIndex: 0 }}
                     onError={(e) => {

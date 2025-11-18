@@ -42,6 +42,16 @@ class ProductService extends HttpService {
             throw exception
         }
     }
+    async fetchProductBySlug(slug: string) {
+        try {
+            const response = await this.getRequest('/products/' + slug + '/by-slug', { auth: false })
+            return response.data
+
+        } catch (exception) {
+            console.log(exception)
+            throw exception
+        }
+    }
 }
 const productSvc = new ProductService()
 export default productSvc

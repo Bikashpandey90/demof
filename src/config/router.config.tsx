@@ -20,7 +20,7 @@ const Routing: FC = () => {
             path: "",
             element: <Home />
         }, {
-            path: '/product',
+            path: '/products/:slug',
             element: <ProductPage />
         }, {
             path: '/login',

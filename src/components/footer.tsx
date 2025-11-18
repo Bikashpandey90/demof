@@ -3,11 +3,14 @@
 import { Facebook, Instagram } from "lucide-react"
 import { useInView } from "react-intersection-observer"
 import { useState, useEffect, useRef } from "react"
+import { SteamEffect } from "./steam-effect"
 
 export default function Footer() {
     const [imageRevealed, setImageRevealed] = useState(false)
     const [navRevealed, setNavRevealed] = useState(false)
     const [infoRevealed, setInfoRevealed] = useState(false)
+    const [isFacebookHovered, setIsFacebookHovered] = useState(false)
+    const [isInstagramHovered, setIsInstagramHovered] = useState(false)
 
     const lastScrollY = useRef(0)
     const [isScrollingDown, setIsScrollingDown] = useState(true)
@@ -102,14 +105,21 @@ export default function Footer() {
                                 href="#"
                                 className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-red-600 flex items-center justify-center text-white hover:bg-red-700 transition-colors hover:scale-110"
                                 aria-label="Instagram"
+                                onMouseEnter={() => setIsInstagramHovered(true)}
+                                onMouseLeave={() => setIsInstagramHovered(false)}
                             >
+                                <SteamEffect isVisible={isInstagramHovered} />
                                 <Instagram className="w-5 h-5 sm:w-6 sm:h-6" />
                             </a>
                             <a
                                 href="#"
                                 className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-red-600 flex items-center justify-center text-white hover:bg-red-700 transition-colors hover:scale-110"
                                 aria-label="Facebook"
+                                onMouseEnter={() => setIsFacebookHovered(true)}
+                                onMouseLeave={() => setIsFacebookHovered(false)}
+
                             >
+                                <SteamEffect isVisible={isFacebookHovered} />
                                 <Facebook className="w-5 h-5 sm:w-6 sm:h-6" />
                             </a>
                         </div>
