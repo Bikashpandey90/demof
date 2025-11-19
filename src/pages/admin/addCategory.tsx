@@ -111,6 +111,10 @@ export default function CategoryForm() {
                             setFormData={setFormData}
                         />
 
+                        {/* <AddCategoryPhoto ref={photoRef} heading={"Add Bowl Image"} />
+                        <AddCategoryPhoto ref={photoRef} heading={"Add Ingridients Image"} /> */}
+
+
                         {error && (
                             <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
                                 {error}

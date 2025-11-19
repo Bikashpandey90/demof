@@ -2,6 +2,9 @@
 
 import categorySvc from "@/services/category.service"
 import { useEffect, useState } from "react"
+import { ColorPicker } from "../colorpicker/ColorPicker"
+
+
 
 interface ProductInformationProps {
     formData: any
@@ -139,25 +142,46 @@ export default function ProductInformation({ formData, setFormData }: ProductInf
                 </div>
             </div>
 
-            <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-3">Colors :</label>
-                <div className="flex gap-3">
-                    {[
-                        { name: "Navy", color: "#1e3a8a" },
-                        { name: "Gold", color: "#fbbf24" },
-                        { name: "Light", color: "#f3f4f6" },
-                        { name: "Orange", color: "#f97316" },
-                        { name: "Green", color: "#10b981" },
-                        { name: "Teal", color: "#14b8a6" },
-                        { name: "Blue", color: "#3b82f6" },
-                    ].map((color) => (
-                        <button
-                            key={color.name}
-                            className="w-8 h-8 rounded-full border-2 border-gray-300 hover:border-gray-500 transition-colors"
-                            style={{ backgroundColor: color.color }}
-                            title={color.name}
-                        />
-                    ))}
+            <div className="grid lg:flex md:flex lg:gap-2  justify-between">
+                <div className="mb-3">
+                    <label className="block text-sm font-medium text-gray-700 mb-3">Primary Color :</label>
+                    <div className="flex gap-3">
+                        {[
+                            { name: "Navy", color: "#1e3a8a" },
+                            { name: "Light", color: "#f3f4f6" },
+                            { name: "Orange", color: "#f97316" },
+
+                        ].map((color) => (
+                            <button
+                                key={color.name}
+                                className="w-8 h-8 rounded-full border-2 border-gray-300 hover:border-gray-500 transition-colors"
+                                style={{ backgroundColor: color.color }}
+                                title={color.name}
+                            />
+
+                        ))}
+                        <ColorPicker defaultValue={'#FF8000'} />
+                    </div>
+                </div>
+                <div className="mb-3">
+                    <label className="block text-sm font-medium text-gray-700 mb-3">Secondary Color :</label>
+                    <div className="flex gap-3">
+                        {[
+                            { name: "Navy", color: "#1e3a8a" },
+                            { name: "Light", color: "#f3f4f6" },
+                            { name: "Orange", color: "#f97316" },
+
+                        ].map((color) => (
+                            <button
+                                key={color.name}
+                                className="w-8 h-8 rounded-full border-2 border-gray-300 hover:border-gray-500 transition-colors"
+                                style={{ backgroundColor: color.color }}
+                                title={color.name}
+                            />
+
+                        ))}
+                        <ColorPicker defaultValue={'#FF8000'} />
+                    </div>
                 </div>
             </div>
 

@@ -5,6 +5,7 @@ import { useInView } from "react-intersection-observer"
 import Lottie from "lottie-react"
 import SwooshSVG from "./swoosh-svg"
 import categorySvc from "@/services/category.service"
+import handleReveal from "@/helper/helper"
 
 interface GiveItAShotProps {
     onCategoryClick?: (category: string) => void
@@ -67,6 +68,17 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
         },
     ]
 
+    // useEffect(() => {
+    //     const isSafari =
+    //         /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+    //     if (isSafari) {
+    //         document.body.style.zoom = "0.75"; // adjust if needed
+    //     } else {
+    //         document.body.style.zoom = "1";
+    //     }
+    // }, []);
+
     const fetchCategories = async () => {
         try {
             const response = await categorySvc.getAllCategory()
@@ -97,17 +109,9 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
         return () => window.removeEventListener("scroll", handleScroll)
     }, [])
 
-    useEffect(() => {
-        if (takeAShotInView && isScrollingDown) setTakeAShotRevealed(true)
-    }, [takeAShotInView, isScrollingDown])
 
-    useEffect(() => {
-        if (bowlInView && isScrollingDown) setBowlRevealed(true)
-    }, [bowlInView, isScrollingDown])
 
-    useEffect(() => {
-        if (tomatoesInView && isScrollingDown) setTomatoesRevealed(true)
-    }, [tomatoesInView, isScrollingDown])
+
 
     const [takeAShotRevealed, setTakeAShotRevealed] = useState(false)
     const [bowlRevealed, setBowlRevealed] = useState(false)
@@ -116,6 +120,13 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
     const leftIndex = (currentIndex - 1 + categories.length) % categories.length
     const middleIndex = currentIndex
     const rightIndex = (currentIndex + 1) % categories.length
+
+    const wasInView = useRef({
+        takeAShot: false,
+        bowl: false,
+        tomatoes: false,
+    });
+
 
     const nextSlide = () => {
         setIsTransitioning(true)
@@ -169,7 +180,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
 
     useEffect(() => {
         if (isTransitioning) {
-            const timer = setTimeout(() => setIsTransitioning(false), 700)
+            const timer = setTimeout(() => setIsTransitioning(false), 5000)
             return () => clearTimeout(timer)
         }
     }, [isTransitioning])
@@ -200,6 +211,25 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
             }
         }
     }, [currentIndex, autoPlayEnabled, categories.length])
+
+    useEffect(() => {
+        const justEnteredTakeAShot = takeAShotInView && !wasInView.current.takeAShot;
+        handleReveal(takeAShotInView, setTakeAShotRevealed, isScrollingDown, justEnteredTakeAShot);
+        wasInView.current.takeAShot = takeAShotInView;
+    }, [takeAShotInView, isScrollingDown]);
+
+    useEffect(() => {
+        const justEnteredBowl = bowlInView && !wasInView.current.bowl;
+        handleReveal(bowlInView, setBowlRevealed, isScrollingDown, justEnteredBowl);
+        wasInView.current.bowl = bowlInView;
+    }, [bowlInView, isScrollingDown]);
+
+    useEffect(() => {
+        const justEnteredTomatoes = tomatoesInView && !wasInView.current.tomatoes;
+        handleReveal(tomatoesInView, setTomatoesRevealed, isScrollingDown, justEnteredTomatoes);
+        wasInView.current.tomatoes = tomatoesInView;
+    }, [tomatoesInView, isScrollingDown]);
+
 
     return (
         <>
@@ -363,7 +393,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                         ref={takeAShotRef}
                         src="/takeamugshot.png"
                         alt="take a mug shot"
-                        className="absolute top-0 left-8 hidden md:hidden lg:block sm:block sm:left-20 md:left-10 lg:left-14 xl:left-32 sm:-top-8 md:-top-10 w-32 sm:w-48 md:w-[250px] lg:w-[350px] z-0 transition-all duration-1000"
+                        className="absolute top-0 left-8 hidden md:hidden lg:block sm:block sm:left-20 md:left-10 lg:left-14 xl:left-36 sm:-top-8 md:-top-10 w-32 sm:w-48 md:w-[250px] lg:w-[350px] z-0 transition-all duration-500"
                         style={{
                             opacity: takeAShotRevealed ? 1 : 0,
                             transform: takeAShotRevealed ? "translateY(0)" : "translateY(30px)",
@@ -373,7 +403,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                         ref={bowlRef}
                         src={categories[middleIndex].bowl || "/placeholder.svg"}
                         alt="bowl"
-                        className="w-80 sm:w-96 md:w-[650px] absolute ml-12 sm:ml-24 md:ml-48 top-0 z-10 transition-all duration-700"
+                        className="w-80 sm:w-96 md:w-[650px] absolute ml-12 sm:ml-24 md:ml-48 top-0 z-10 transition-all duration-500"
                         style={{
                             opacity: bowlRevealed ? 1 : 0,
                             transform: bowlRevealed ? "translateY(0)" : "translateY(30px)",
@@ -385,7 +415,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                         ref={tomatoesRef}
                         src={categories[middleIndex].tomatoes || "/placeholder.svg"}
                         alt="tomatoes"
-                        className="absolute right-0 top-4 sm:top-8 md:top-10 w-40 sm:w-64 md:w-[300px] z-0 transition-all duration-700"
+                        className="absolute right-0 top-4 sm:top-8 md:top-10 w-40 sm:w-64 md:w-[300px] z-0 transition-all duration-500"
                         style={{
                             opacity: tomatoesRevealed ? 1 : 0,
                             transform: tomatoesRevealed ? "translateY(0)" : "translateY(30px)",

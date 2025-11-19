@@ -1,5 +1,7 @@
 "use client"
 
+import { ColorPicker } from "../colorpicker/ColorPicker"
+
 interface ProductInformationProps {
     formData: any
     setFormData: (data: any) => void
@@ -39,17 +41,12 @@ export default function CategoryInformation({ formData, setFormData }: ProductIn
 
             </div>
 
-            <div className="mb-6 flex mt-4 gap-4 justify-between">
-                <label className="block text-sm font-medium text-gray-700 mb-3">Primary Color</label>
+            <div className="mb-6 grid lg:flex mt-4 gap- lg:justify-between">
+                <label className="block text-sm font-medium text-gray-700 mb">Primary Color</label>
                 <div className="flex gap-1">
                     {[
-                        { name: "Navy", color: "#1e3a8a" },
-                        { name: "Gold", color: "#fbbf24" },
-                        { name: "Light", color: "#f3f4f6" },
                         { name: "Orange", color: "#f97316" },
-                        { name: "Green", color: "#10b981" },
                         { name: "Teal", color: "#14b8a6" },
-                        { name: "Blue", color: "#3b82f6" },
                     ].map((color) => (
                         <button
                             key={color.name}
@@ -58,17 +55,15 @@ export default function CategoryInformation({ formData, setFormData }: ProductIn
                             title={color.name}
                         />
                     ))}
+                    <ColorPicker defaultValue={'#ff8000'} />
+
                 </div>
-                <label className="block text-sm font-medium text-gray-700 mb-3">Secondary Color</label>
+                <label className="block text-sm font-medium text-gray-700 mb">Secondary Color</label>
                 <div className="flex gap-1">
                     {[
-                        { name: "Navy", color: "#1e3a8a" },
-                        { name: "Gold", color: "#fbbf24" },
-                        { name: "Light", color: "#f3f4f6" },
+
                         { name: "Orange", color: "#f97316" },
-                        { name: "Green", color: "#10b981" },
                         { name: "Teal", color: "#14b8a6" },
-                        { name: "Blue", color: "#3b82f6" },
                     ].map((color) => (
                         <button
                             key={color.name}
@@ -76,9 +71,32 @@ export default function CategoryInformation({ formData, setFormData }: ProductIn
                             style={{ backgroundColor: color.color }}
                             title={color.name}
                         />
+
                     ))}
+                    <ColorPicker defaultValue={'#ff8000'} />
                 </div>
+                <label className="block text-sm font-medium text-gray-700 mb">Secondary Color</label>
+                <div className="flex gap-1">
+                    {[
+
+                        { name: "Orange", color: "#f97316" },
+                        { name: "Teal", color: "#14b8a6" },
+                    ].map((color) => (
+                        <button
+                            key={color.name}
+                            className="w-8 h-8 rounded-full border-2 border-gray-300 hover:border-gray-500 transition-colors"
+                            style={{ backgroundColor: color.color }}
+                            title={color.name}
+                        />
+
+                    ))}
+                    <ColorPicker defaultValue={'#ff8000'} />
+                </div>
+
             </div>
+
+
+
         </div>
     )
 }
