@@ -19,7 +19,7 @@ export function SteamEffect({ isVisible = true }: { isVisible?: boolean }) {
 
     return (
         <div
-            className={`absolute inset-0 pointer-events-none overflow-visible`}
+            className={`absolute inset-0 pointer-events-none overflow -z-10`}
             style={{
                 transition: 'opacity 300ms ease-in-out',
                 opacity: isVisible ? 1 : 0,

@@ -34,11 +34,8 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
     const categories = [
         {
             id: 1,
-<<<<<<< HEAD
-            title: "MOMOS",
-=======
+            title: "MOMO",
             name: "MOMO",
->>>>>>> 52583431eb00e2d4ab47270111236422fe0fb09f
             image: '/darjeeling.png',
             prop: "cover",
             bgColor: "bg-[#F8B400]",
