@@ -47,7 +47,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
         {
             id: 2,
             title: "POTS",
-            image: "/mightypot.png",
+            image: "/darjeeling.png",
             prop: "cover",
             bgColor: "bg-[#3B863B]",
             bowl: "/greenbowl.png",
@@ -58,7 +58,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
         {
             id: 3,
             title: "SACHETS",
-            image: "/mugshotsachet.png",
+            image: "/darjeeling.png",
             prop: "contain",
             bgColor: "bg-[#C6211D]",
             bowl: "/bowl.png",
@@ -321,6 +321,13 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                                             className={`${isDragging ? 'carousel-slide-dragging' : 'carousel-slide'} w-full h-full mt-36 sm:mt-0 object-${categories[middleIndex].prop} scale-[1.25] sm:scale-[1.1] z-20 cursor-pointer`}
                                             style={{
                                                 transform: `translateX(${isDragging ? dragOffset * 0.5 : 0}px)`,
+                                            }}
+
+                                            onMouseEnter={() => {
+                                                setAutoPlayEnabled(false)
+                                            }}
+                                            onMouseLeave={() => {
+                                                setAutoPlayEnabled(true)
                                             }}
                                             draggable={false}
                                         />
