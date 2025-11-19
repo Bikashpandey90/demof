@@ -1,11 +1,20 @@
 "use client"
 
+import categorySvc from "@/services/category.service"
+import { useEffect, useState } from "react"
+
 interface ProductInformationProps {
     formData: any
     setFormData: (data: any) => void
 }
+interface Category {
+    _id: string,
+    title: string
+}
 
 export default function ProductInformation({ formData, setFormData }: ProductInformationProps) {
+    const [categories, setCategories] = useState<Category[]>([])
+
     const handleInputChange = (field: string, value: string) => {
         setFormData((prev: any) => ({
             ...prev,
@@ -28,6 +37,19 @@ export default function ProductInformation({ formData, setFormData }: ProductInf
             }))
         }
     }
+    const getCategories = async () => {
+        try {
+            const response = await categorySvc.getAllCategory()
+            console.log(response.detail)
+            setCategories(response.detail)
+        } catch (exception) {
+            console.log(exception)
+            throw exception
+        }
+    }
+    useEffect(() => {
+        getCategories()
+    }, [])
 
     return (
         <div className="bg-white border border-gray-200 rounded-lg p-8">
@@ -52,9 +74,14 @@ export default function ProductInformation({ formData, setFormData }: ProductInf
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
                     >
                         <option>Choose a categories</option>
-                        <option>SACHETS</option>
+                        {
+                            categories.map((category) => (
+                                <option key={category?._id} value={category._id}>{category.title}</option>
+                            ))
+                        }
+                        {/* <option>SACHETS</option>
                         <option>POTS</option>
-                        <option>MIGHTY POTS</option>
+                        <option>MIGHTY POTS</option> */}
                     </select>
                 </div>
             </div>

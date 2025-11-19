@@ -92,7 +92,7 @@ export default function AnimatedMenu({ isOpen, onClose }: AnimatedMenuProps) {
                 </div>
 
                 <div
-                    className={`absolute bottom-4 left-4 z-50 rotate-6 md:bottom-8 md:left-12 transition-all duration-500 ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-75"
+                    className={`absolute bottom-4 right-4 z-50 rotate-6 md:bottom-8 md:right-12 transition-all duration-500 ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-75"
                         }`}
                     style={{
                         transitionDelay: isOpen ? "250ms" : "0ms",

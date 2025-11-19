@@ -36,6 +36,8 @@ export default function ProductForm() {
         }
     })
 
+
+
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [success, setSuccess] = useState(false)
@@ -143,6 +145,8 @@ export default function ProductForm() {
             setError(err.message)
         }
     }
+
+
 
     return (
         <div className="min-h-screen bg-transparent">

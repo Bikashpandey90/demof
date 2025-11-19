@@ -46,38 +46,6 @@ export interface DirectionImage {
     _id: string;
 }
 
-const SampleProduct = {
-    image: ['/bluepro.png'],
-    catgory: {
-        title: 'Mug Shot Sachets'
-    },
-    vegNonveg: 'veg',
-    name: 'Salt & Pepper Chilli Beef Flavour Noodles',
-    tagline: 'Dried ribbon noodles in a spicy, salt and pepper beef flavour sauce with red and green pepper.',
-    ingridients: 'Semolina, EGG White, Salt,Maltodextrin, Potato Starch, Natural Flavourings  WHEAT, Garlic Powder, Onion Powder, Sugar, Ground Paprika, Dried Red Pepper, Dried Green Pepper, Salt, Ground Black Pepper, Ground Ginger, BARLEY Malt Extract, Chinese Five Spice[Salt, Star Anise, Sugar, Onion Powder, Garlic Powder, Black Pepper, Cinnamon, Clove, Fennel Seed,Ginger], Dried Jalapeno Pepper, Ground Cayenne.',
-    allergyAdvice: ' Also, may contain milk, soya, mustard and other gluten sources.',
-    nutritionalInfo: {
-        header: ' Once boiling water has been added to this pot it weighs 268g (approx.). This represents one serving. Allvalues below relate to the product when made up with water(i.e.per 100g is a portion of the 268g serving).',
-        footer: '* Reference Intake of an average adult(8400kJ / 2000kcal)',
-        rows: [
-            { values: 'Energy', perValue: '100g', perPacket: '0.3g' },
-            { values: 'Fat', perValue: '100g', perPacket: '0.3g' },
-            { values: 'Carbohydrate', perValue: '100g', perPacket: '0.3g' },
-            { values: 'Energy', perValue: '100g', perPacket: '0.3g' },
-            { values: 'Fat', perValue: '100g', perPacket: '0.3g' },
-            { values: 'Carbohydrate', perValue: '100g', perPacket: '0.3g' },
-        ]
-    },
-    directionImages: [
-        { url: '/directions/empty.svg' },
-        { url: '/directions/fill.svg' },
-        { url: '/directions/stir.svg' },
-        { url: '/directions/enjoy.svg' }
-    ]
-
-}
-
-console.log(SampleProduct)
 
 export default function ProductHero() {
     const [product, setProduct] = useState<ProductDetail>()
@@ -166,8 +134,8 @@ export default function ProductHero() {
                     >
                         <div className="relative w-full lg:max-w-[500px]">
                             <img
-                                src="/bluepro.png"
-                                alt="Mug Shot Salt & Pepper Chilli Beef Noodles"
+                                src={product?.images[0]}
+                                alt={product?.name}
                                 width={400}
                                 height={600}
                                 className="w-full h-auto drop-shadow-2xl"
@@ -186,10 +154,10 @@ export default function ProductHero() {
                             }}
                         >
                             <p className="lg:mt-3 mt-0 text-white text-[20px] leading-[24px] lg:text-[27px] lg:leading-[30px] text-center uppercase font-gothic font-semibold mb-2">
-                                Mug Shot Sachets
+                                {product?.category.title}
                             </p>
                             <h1 className="text-[32px] leading-9 drop-shadow-lg lg:text-[50px] lg:mt-4 max-w-[320px] sm:max-w-full mt-2 text-center lg:leading-[60px] font-bold font-brando text-[#172538] text-balance">
-                                Salt & Pepper Chilli Beef Flavour Noodles
+                                {product?.name}
                             </h1>
                         </div>
 
@@ -201,7 +169,9 @@ export default function ProductHero() {
                                 transitionDelay: "100ms",
                             }}
                         >
-                            Dried ribbon noodles in a spicy, salt and pepper beef flavour sauce with red and green pepper.
+                            {
+                                product?.tagline
+                            }
                         </p>
 
                         <div
@@ -257,23 +227,21 @@ export default function ProductHero() {
 
                         >
                             <p className=" text-lg lg:mt-0 lg:text-2xl leading-[22px] lg:leading-[26px]  mt-6 font-gothic  ">
-                                <span className="font-extrabold">INGREDIENTS</span> Dried Noodles [Durum{" "}
-                                <span className="font-bold">WHEAT</span> Semolina, <span className="font-bold">EGG</span> White, Salt],
-                                Maltodextrin, Potato Starch, Natural Flavourings (contain <span className="font-bold">WHEAT</span>),
-                                Garlic Powder, Onion Powder, Sugar, Ground Paprika, Dried Red Pepper, Dried Green Pepper, Salt, Ground
-                                Black Pepper, Ground Ginger, <span className="font-bold">BARLEY</span> Malt Extract, Chinese Five Spice
-                                [Salt, Star Anise, Sugar, Onion Powder, Garlic Powder, Black Pepper, Cinnamon, Clove, Fennel Seed,
-                                Ginger], Dried Jalapeno Pepper, Ground Cayenne.
+                                <span className="font-extrabold">INGREDIENTS</span>
+                                {product?.ingridients}
                             </p>
 
                             <div className="space-y-1 text-lg leading-[22px] pt-2 font-gothic lg:text-2xl lg:leading-[26px]">
                                 <p className="font-bold ">ALLERGY ADVICE:</p>
                                 <p className="">
-                                    For allergens, including cereals containing gluten, see ingredients in{" "}
+                                    {
+                                        product?.allergyAdvice
+                                    }
+                                    {/* For allergens, including cereals containing gluten, see ingredients in{" "}
                                     <span className="font-bold">BOLD</span>
                                 </p>
                                 <p className="">
-                                    Also, may contain milk, soya, mustard and other gluten sources.
+                                    Also, may contain milk, soya, mustard and other gluten sources. */}
                                 </p>
                             </div>
 
@@ -288,9 +256,10 @@ export default function ProductHero() {
 
                         <div className="space-y-6  text-white">
                             <p className="text-lg  leading-5 font-gothic">
-                                Once boiling water has been added to this pot it weighs 268g (approx.). This represents one serving. All
-                                values below relate to the product when made up with water (i.e. per 100g is a portion of the 268g
-                                serving).
+                                {
+                                    product?.nutritionalInfo.header
+                                }
+
                             </p>
 
                             <div className="space-y-4">
@@ -327,7 +296,9 @@ export default function ProductHero() {
                             </div>
 
                             <p className="text-[16px] lg:text-[18px] leading-[20px] font-gothic pt-4">
-                                *Reference Intake of an average adult (8400kJ / 2000kcal)
+                                {
+                                    product?.nutritionalInfo.footer
+                                }
                             </p>
                         </div>
                     </div>
@@ -354,40 +325,18 @@ export default function ProductHero() {
                         transform: directionsRevealed ? "translateY(0)" : "translateY(30px)",
                     }}>
 
-                    <div className="flex flex-col items-center gap-4">
-                        <div className="lg:w-48 lg:h-48 w-28 h-28  flex items-center justify-center">
-                            <img src='/directions/empty.svg' />
-                        </div>
-                        <p className="text-base leading-6 font-gothic mt-4 max-w-[145px] font-bold text-white text-center">Empty sachet contents into your favourite mug.</p>
-                    </div>
+                    {
+                        product?.directionImages.map((directions, _id) => (
+                            <div className="flex flex-col items-center gap-4" key={directions._id}>
+                                <div className="lg:w-48 lg:h-48 w-28 h-28  flex items-center justify-center">
+                                    <img src={directions.url} />
+                                </div>
+                                <p className="text-base leading-6 font-gothic mt-4 max-w-[145px] font-bold text-white text-center">Empty sachet contents into your favourite mug.</p>
+                            </div>
+                        ))
+                    }
 
-                    <div className="flex flex-col items-center gap-4">
-                        <div className="lg:w-48 lg:h-48 w-28 h-28  flex items-center justify-center">
-                            <img src='/directions/fill.svg' />
 
-                        </div>
-                        <p className="text-base leading-6 font-gothic mt-4 max-w-[145px] font-bold text-white text-center">
-                            Fill your mug halfway with boiling water (approx. 180ml) and stir thoroughly.
-                        </p>
-                    </div>
-
-                    <div className="flex flex-col items-center gap-4">
-                        <div className="lg:w-48 lg:h-48 w-28 h-28  flex items-center justify-center">
-                            <img src='/directions/stir.svg' />
-
-                        </div>
-                        <p className="text-base leading-6 font-gothic mt-4 max-w-[145px] font-bold text-white text-center">
-                            Leave to stand for 5 mins with a stir halfway through. Top up if thinner sauce required.
-                        </p>
-                    </div>
-
-                    <div className="flex flex-col items-center gap-4">
-                        <div className="lg:w-48 lg:h-48 w-28 h-28  flex items-center justify-center">
-                            <img src='/directions/enjoy.svg' />
-
-                        </div>
-                        <p className="text-base leading-6 font-gothic mt-4 max-w-[145px] font-bold text-white text-center">Take a moment. Ammnd Enjoy!</p>
-                    </div>
                 </div>
             </div>
 
