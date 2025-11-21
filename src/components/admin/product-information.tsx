@@ -154,13 +154,34 @@ export default function ProductInformation({ formData, setFormData }: ProductInf
                         ].map((color) => (
                             <button
                                 key={color.name}
-                                className="w-8 h-8 rounded-full border-2 border-gray-300 hover:border-gray-500 transition-colors"
+                                className="w-8 h-8 rounded-full border-2 border-gray-300 hover:border-gray-500"
                                 style={{ backgroundColor: color.color }}
-                                title={color.name}
+                                onClick={() => handleInputChange("primaryColor", color.color)}
                             />
 
                         ))}
-                        <ColorPicker defaultValue={'#FF8000'} />
+                        <ColorPicker
+                            defaultValue={formData.primaryColor}
+                            onChange={(color) => {
+                                let colorValue = typeof color === "string" ? color : (color?.toString?.() ?? "");
+                                let hex = colorValue;
+
+                                if (colorValue.startsWith("rgb")) {
+                                    const [r, g, b] = colorValue
+                                        .replace(/^rgba?\(/, "")
+                                        .replace(/\)/, "")
+                                        .split(",")
+                                        .map((x) => parseInt(x.trim()));
+                                    hex =
+                                        "#" +
+                                        [r, g, b]
+                                            .map((v) => v.toString(16).padStart(2, "0"))
+                                            .join("");
+                                }
+
+                                handleInputChange("primaryColor", hex);
+                            }}
+                        />
                     </div>
                 </div>
                 <div className="mb-3">
@@ -174,13 +195,34 @@ export default function ProductInformation({ formData, setFormData }: ProductInf
                         ].map((color) => (
                             <button
                                 key={color.name}
-                                className="w-8 h-8 rounded-full border-2 border-gray-300 hover:border-gray-500 transition-colors"
+                                className="w-8 h-8 rounded-full border-2 border-gray-300 hover:border-gray-500"
                                 style={{ backgroundColor: color.color }}
-                                title={color.name}
+                                onClick={() => handleInputChange("secondaryColor", color.color)}
                             />
 
                         ))}
-                        <ColorPicker defaultValue={'#FF8000'} />
+                        <ColorPicker
+                            defaultValue={formData.secondaryColor}
+                            onChange={(color) => {
+                                let colorValue = typeof color === "string" ? color : (color?.toString?.() ?? "");
+                                let hex = colorValue;
+
+                                if (colorValue.startsWith("rgb")) {
+                                    const [r, g, b] = colorValue
+                                        .replace(/^rgba?\(/, "")
+                                        .replace(/\)/, "")
+                                        .split(",")
+                                        .map((x) => parseInt(x.trim()));
+                                    hex =
+                                        "#" +
+                                        [r, g, b]
+                                            .map((v) => v.toString(16).padStart(2, "0"))
+                                            .join("");
+                                }
+
+                                handleInputChange("secondaryColor", hex);
+                            }}
+                        />
                     </div>
                 </div>
             </div>

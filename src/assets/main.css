@@ -147,3 +147,27 @@
   width: max-content;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
 }
+
+@keyframes productBounce {
+  0% {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+
+  40% {
+    transform: translateY(-16px);
+    opacity: 1;
+  }
+
+  70% {
+    transform: translateY(6px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.product-bounce {
+  animation: productBounce 0.6s ease-out forwards;
+}

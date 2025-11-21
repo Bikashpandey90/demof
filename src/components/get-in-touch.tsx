@@ -44,7 +44,7 @@ export default function GetInTouch() {
             <img
                 src="/red-top.svg"
                 alt="Top irregular edge"
-                className="bg-[#249F95] w-full h-auto block  -mt-[1px] z-100 pointer-events-none"
+                className="bg-[#ff8000] w-full h-auto block  -mt-[1px] z-100 pointer-events-none"
                 style={{ display: "block", margin: 0, padding: 0, lineHeight: 0 }}
             />
             <section className="relative w-full overflow-hidden">

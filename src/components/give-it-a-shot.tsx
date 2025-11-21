@@ -3,9 +3,11 @@
 import { useEffect, useRef, useState } from "react"
 import { useInView } from "react-intersection-observer"
 import Lottie from "lottie-react"
-import SwooshSVG from "./swoosh-svg"
-import categorySvc from "@/services/category.service"
-import handleReveal from "@/helper/helper"
+// import SwooshSVG from "./swoosh-svg"
+import categorySvc, { CategoryData } from "@/services/category.service"
+import { handleReveal } from "@/helper/helper"
+import MomoSvg from "./momo"
+
 
 interface GiveItAShotProps {
     onCategoryClick?: (category: string) => void
@@ -19,6 +21,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
     const lottieRef = useRef<any>(null)
     const [autoPlayEnabled, setAutoPlayEnabled] = useState(true)
     const autoPlayTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+    const [categories, setCategories] = useState<CategoryData[]>([])
 
     const [dragStart, setDragStart] = useState(0)
     const [dragOffset, setDragOffset] = useState(0)
@@ -32,57 +35,13 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
     const { ref: bowlRef, inView: bowlInView } = useInView({ threshold: 0.3 })
     const { ref: tomatoesRef, inView: tomatoesInView } = useInView({ threshold: 0.3 })
 
-    const categories = [
-        {
-            id: 1,
-            title: "MOMO",
-            image: '/darjeeling.png',
-            prop: "cover",
-            bgColor: "bg-[#F8B400]",
-            bowl: '/newbowl3.png',
-            tomatoes: "/onion.png",
-            swooshInnerColor: "#FDA922",
-            swooshOuterColor: "#914C25",
-        },
-        {
-            id: 2,
-            title: "POTS",
-            image: "/darjeeling.png",
-            prop: "cover",
-            bgColor: "bg-[#3B863B]",
-            bowl: "/greenbowl.png",
-            tomatoes: "/broc.png",
-            swooshInnerColor: "#96C423",
-            swooshOuterColor: "#56B22D",
-        },
-        {
-            id: 3,
-            title: "SACHETS",
-            image: "/darjeeling.png",
-            prop: "contain",
-            bgColor: "bg-[#C6211D]",
-            bowl: "/bowl.png",
-            tomatoes: "/tomatoes.png",
-            swooshInnerColor: "#94C68D",
-            swooshOuterColor: "#459941",
-        },
-    ]
 
-    // useEffect(() => {
-    //     const isSafari =
-    //         /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-
-    //     if (isSafari) {
-    //         document.body.style.zoom = "0.75"; // adjust if needed
-    //     } else {
-    //         document.body.style.zoom = "1";
-    //     }
-    // }, []);
 
     const fetchCategories = async () => {
         try {
             const response = await categorySvc.getAllCategory()
             console.log(response)
+            setCategories(response.detail)
 
         } catch (exception) {
             console.log(exception)
@@ -174,7 +133,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
 
     const handleCategoryImageClick = () => {
         if (onCategoryClick) {
-            onCategoryClick(categories[middleIndex].title)
+            onCategoryClick(categories[middleIndex]?.title)
         }
     }
 
@@ -254,7 +213,10 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                 }
             `}</style>
             <section
-                className={`${categories[middleIndex].bgColor} py-6 sm:py-10 relative overflow transition-colors duration-700`}
+                className={` py-6 sm:py-10 relative overflow transition-colors duration-700`}
+                style={{
+                    backgroundColor: `${categories[middleIndex]?.backgroundColor}`
+                }}
             >
                 {animationData && !animationComplete && (
                     <Lottie
@@ -268,9 +230,13 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                 )}
                 {animationComplete && (
                     <div className="absolute m-2 sm:m-4 md:mt-14 lg:mt-0 md:m-10 inset-0 mt-60 sm:mt-8 self-center justify-self-center scale-100 sm:scale-75 md:scale-[.65] z-20 pointer-events-none">
-                        <SwooshSVG
-                            innerColor={categories[middleIndex].swooshInnerColor}
-                            outerColor={categories[middleIndex].swooshOuterColor}
+                        {/* <SwooshSVG
+                            innerColor={categories[middleIndex]?.secondaryColor}
+                            outerColor={categories[middleIndex]?.primaryColor}
+                        /> */}
+                        <MomoSvg
+                            innerColor={categories[middleIndex]?.secondaryColor}
+                            outerColor={categories[middleIndex]?.primaryColor}
                         />
                     </div>
                 )}
@@ -301,7 +267,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                         <div className="flex flex-col justify-center items-center w-full">
                             <div className="relative w-full md:mt-20 justify-center gap-64 items-center flex max-w-md">
                                 <img
-                                    src={categories[leftIndex].image || "/placeholder.svg"}
+                                    src={categories[leftIndex]?.image || "/placeholder.svg"}
                                     alt="left carousel item"
                                     className={`${isDragging ? 'carousel-slide-dragging' : 'carousel-slide'} w-[45%] h-[45%] object-cover mt-36 sm:mt-0 scale-[1.25] sm:scale-100 drop-shadow-2xl overflow place-self-end items-center z-20`}
                                     style={{
@@ -315,10 +281,10 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                                         key="carousel-container"
                                     >
                                         <img
-                                            src={categories[middleIndex].image || "/placeholder.svg"}
-                                            alt={categories[middleIndex].title}
+                                            src={categories[middleIndex]?.image || "/placeholder.svg"}
+                                            alt={categories[middleIndex]?.title}
                                             onClick={handleCategoryImageClick}
-                                            className={`${isDragging ? 'carousel-slide-dragging' : 'carousel-slide'} w-full h-full mt-36 sm:mt-0 object-${categories[middleIndex].prop} scale-[1.25] sm:scale-[1.1] z-20 cursor-pointer`}
+                                            className={`${isDragging ? 'carousel-slide-dragging' : 'carousel-slide'} w-full h-full mt-36 sm:mt-0 ${categories[middleIndex]?.title === 'SACHETS' ? 'object-contain' : 'object-cover'} scale-[1.25] sm:scale-[1.1] z-20 cursor-pointer`}
                                             style={{
                                                 transform: `translateX(${isDragging ? dragOffset * 0.5 : 0}px)`,
                                             }}
@@ -334,7 +300,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                                     </div>
                                 </div>
                                 <img
-                                    src={categories[rightIndex].image || "/placeholder.svg"}
+                                    src={categories[rightIndex]?.image || "/placeholder.svg"}
                                     alt="right carousel item"
                                     className={`${isDragging ? 'carousel-slide-dragging' : 'carousel-slide'} w-[45%] h-[45%] mt-36 sm:mt-0 object-cover drop-shadow-2xl overflow place-self-end z-20`}
                                     style={{
@@ -367,7 +333,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
 
                                 <div className="text-white text-center">
                                     <div className="font-bold text-2xl sm:text-3xl md:text-3xl lg:text-[40px] leading-10 rounded-lg font-gothic px-4 sm:px-8 py-2 sm:py-3 bg-transparent transition-all duration-700">
-                                        {categories[middleIndex].title.toUpperCase()}
+                                        {categories[middleIndex]?.title.toUpperCase()}
                                     </div>
                                 </div>
 
@@ -408,7 +374,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                     />
                     <img
                         ref={bowlRef}
-                        src={categories[middleIndex].bowl || "/placeholder.svg"}
+                        src={categories[middleIndex]?.bowlImage || "/placeholder.svg"}
                         alt="bowl"
                         className="w-80 sm:w-96 md:w-[650px] absolute ml-12 sm:ml-24 md:ml-48 top-0 z-10 transition-all duration-500"
                         style={{
@@ -420,7 +386,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                     />
                     <img
                         ref={tomatoesRef}
-                        src={categories[middleIndex].tomatoes || "/placeholder.svg"}
+                        src={categories[middleIndex]?.ingridientsImage || "/placeholder.svg"}
                         alt="tomatoes"
                         className="absolute right-0 top-4 sm:top-8 md:top-10 w-40 sm:w-64 md:w-[300px] z-0 transition-all duration-500"
                         style={{
@@ -431,12 +397,15 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                         }}
                     />
                 </div>
-            </section>
+            </section >
             <img
                 src="/bg-header-top.png"
                 alt="Top irregular edge"
-                className={`${categories[middleIndex].bgColor} w-full scale-[1.2] h-auto block -mt-[1px] z-100 pointer-events-none transition-colors duration-700`}
-                style={{ display: "block", margin: 0, padding: 0, lineHeight: 0 }}
+                className={` w-full scale-[1.2] h-auto block -mt-[1px] z-100 pointer-events-none transition-colors duration-700`}
+                style={{
+                    display: "block", margin: 0, padding: 0, lineHeight: 0,
+                    backgroundColor: `${categories[middleIndex]?.backgroundColor}`
+                }}
             />
         </>
     )

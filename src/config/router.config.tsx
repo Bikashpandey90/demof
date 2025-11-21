@@ -12,31 +12,43 @@ import CategoryForm from "@/pages/admin/addCategory";
 import ProductList from "@/pages/admin/productList";
 import CategoryList from "@/pages/admin/categoryList";
 import PermissionCheck from "./permission.config";
+import HomeLayout from "@/layout/homeLayout";
+import CategoryEditPage from "@/pages/admin/editCategory";
+import ButtonPage from "@/pages/buttons/button";
 
 const Routing: FC = () => {
     const router = createBrowserRouter([
         {
-            index: true,
-            path: "",
-            element: <Home />
+            path: "/",
+            element: <HomeLayout />,
+            children: [
+                {
+                    index: true,
+                    element: <Home />
+                },
+                {
+                    path: 'products/:slug',
+                    element: <ProductPage />
+                }
+            ]
         }, {
-            path: '/products/:slug',
-            element: <ProductPage />
-        }, {
+            path: '/buttons',
+            element: <ButtonPage />
+        },
+
+        {
             path: '/login',
             element: <Login />
         },
         {
             path: '/admin',
             element:
-
                 <PermissionCheck allowedRole="admin"><MasterLayout /></PermissionCheck>,
             children: [
                 {
                     index: true,
                     element: <Dashboard />,
                 }, {
-
                     path: 'product',
                     element: <AddProduct />
                 }, {
@@ -48,6 +60,9 @@ const Routing: FC = () => {
                 }, {
                     path: 'categories',
                     element: <CategoryList />
+                }, {
+                    path: 'categories/:id',
+                    element: <CategoryEditPage />
                 }
             ]
         }

@@ -5,46 +5,53 @@ import type React from "react"
 import { useState, useRef, useEffect } from "react"
 import { useInView } from "react-intersection-observer"
 import { ChevronDown } from "lucide-react"
+import { ProductDetail } from "./producthero"
+import productSvc from "@/services/product.service"
+import categorySvc, { CategoryData } from "@/services/category.service"
+import { useNavigate } from "react-router-dom"
 
 interface OurRangeProps {
     activeCategory?: string | null
 }
 
 export default function OurRange({ activeCategory }: OurRangeProps) {
-    const products = [
-        { id: 1, name: "Chicken", image: "/products/blue.png", category: "SACHETS" },
-        { id: 2, name: "Beef", image: "/products/pink.png", category: "POTS" },
-        { id: 3, name: "Prawn", image: "/products/yellow.png", category: "POTS" },
-        { id: 4, name: "BBQ", image: "/products/yellow2.png", category: "MOMOS" },
-        { id: 5, name: "Spicy", image: "/products/brown.png", category: "SACHETS" },
-        { id: 6, name: "Tomato", image: "/products/purple.png", category: "POTS" },
-        { id: 7, name: "Herbs", image: "/products/yellow3.png", category: "MOMOS" },
-        { id: 8, name: "Chicken", image: "/products/blue2.png", category: "SACHETS" },
-        { id: 9, name: "Spicy", image: "/products/brown2.png", category: "POTS" },
-        { id: 10, name: "Chicken", image: "/products/skyblue.png", category: "MOMOS" },
-        { id: 11, name: "Chicken", image: "/products/lightgreen.png", category: "SACHETS" },
-        { id: 12, name: "Chicken", image: "/products/red.png", category: "POTS" },
-        { id: 13, name: "Chicken", image: "/products/green.png", category: "MOMOS" },
-        { id: 1, name: "Chicken", image: "/products/blue.png", category: "SACHETS" },
-        { id: 2, name: "Beef", image: "/products/pink.png", category: "POTS" },
-        { id: 3, name: "Prawn", image: "/products/yellow.png", category: "POTS" },
-        { id: 4, name: "BBQ", image: "/products/yellow2.png", category: "MOMOS" },
-        { id: 5, name: "Spicy", image: "/products/brown.png", category: "SACHETS" },
-        { id: 6, name: "Tomato", image: "/products/purple.png", category: "POTS" },
-        { id: 7, name: "Herbs", image: "/products/yellow3.png", category: "MOMOS" },
-        { id: 8, name: "Chicken", image: "/products/blue2.png", category: "SACHETS" },
-        { id: 9, name: "Spicy", image: "/products/brown2.png", category: "POTS" },
-        { id: 10, name: "Chicken", image: "/products/skyblue.png", category: "MOMOS" },
-        { id: 11, name: "Chicken", image: "/products/lightgreen.png", category: "SACHETS" },
-        { id: 12, name: "Chicken", image: "/products/red.png", category: "POTS" },
-        { id: 13, name: "Chicken", image: "/products/green.png", category: "MOMOS" },
-    ]
+    // const products = [
+    //     { id: 1, name: "Chicken", image: "/products/blue.png", category: "SACHETS" },
+    //     { id: 2, name: "Beef", image: "/products/pink.png", category: "POTS" },
+    //     { id: 3, name: "Prawn", image: "/products/yellow.png", category: "POTS" },
+    //     { id: 4, name: "BBQ", image: "/products/yellow2.png", category: "MOMO" },
+    //     { id: 5, name: "Spicy", image: "/products/brown.png", category: "SACHETS" },
+    //     { id: 6, name: "Tomato", image: "/products/purple.png", category: "POTS" },
+    //     { id: 7, name: "Herbs", image: "/products/yellow3.png", category: "MOMO" },
+    //     { id: 8, name: "Chicken", image: "/products/blue2.png", category: "SACHETS" },
+    //     { id: 9, name: "Spicy", image: "/products/brown2.png", category: "POTS" },
+    //     { id: 10, name: "Chicken", image: "/products/skyblue.png", category: "MOMO" },
+    //     { id: 11, name: "Chicken", image: "/products/lightgreen.png", category: "SACHETS" },
+    //     { id: 12, name: "Chicken", image: "/products/red.png", category: "POTS" },
+    //     { id: 13, name: "Chicken", image: "/products/green.png", category: "MOMO" },
+    //     { id: 1, name: "Chicken", image: "/products/blue.png", category: "SACHETS" },
+    //     { id: 2, name: "Beef", image: "/products/pink.png", category: "POTS" },
+    //     { id: 3, name: "Prawn", image: "/products/yellow.png", category: "POTS" },
+    //     { id: 4, name: "BBQ", image: "/products/yellow2.png", category: "MOMO" },
+    //     { id: 5, name: "Spicy", image: "/products/brown.png", category: "SACHETS" },
+    //     { id: 6, name: "Tomato", image: "/products/purple.png", category: "POTS" },
+    //     { id: 7, name: "Herbs", image: "/products/yellow3.png", category: "MOMO" },
+    //     { id: 8, name: "Chicken", image: "/products/blue2.png", category: "SACHETS" },
+    //     { id: 9, name: "Spicy", image: "/products/brown2.png", category: "POTS" },
+    //     { id: 10, name: "Chicken", image: "/products/skyblue.png", category: "MOMO" },
+    //     { id: 11, name: "Chicken", image: "/products/lightgreen.png", category: "SACHETS" },
+    //     { id: 12, name: "Chicken", image: "/products/red.png", category: "POTS" },
+    //     { id: 13, name: "Chicken", image: "/products/green.png", category: "MOMO" },
+    // ]
 
-    const categories = ["POTS", "SACHETS", "MOMOS"]
+    // const categories = ["POTS", "SACHETS", "MOMO"]
+    const [categories, setCategories] = useState<CategoryData[]>([])
     const [selectedCategory, setSelectedCategory] = useState<string | null>(activeCategory || null)
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     const sliderRef = useRef<HTMLDivElement>(null)
     const dropdownRef = useRef<HTMLDivElement>(null)
+    const [products, setProducts] = useState<ProductDetail[]>([])
+    const navigate = useNavigate()
 
     const [headingRevealed, setHeadingRevealed] = useState(false)
     const [descriptionRevealed, setDescriptionRevealed] = useState(false)
@@ -118,7 +125,7 @@ export default function OurRange({ activeCategory }: OurRangeProps) {
     }
 
     // Filter products based on selected category
-    const filteredProducts = selectedCategory ? products.filter((p) => p.category === selectedCategory) : products
+    const filteredProducts = selectedCategory ? products.filter((p) => p.category?.title === selectedCategory) : products
 
     // Close dropdown on click outside
     const handleDropdownToggle = () => {
@@ -129,6 +136,30 @@ export default function OurRange({ activeCategory }: OurRangeProps) {
         setSelectedCategory(category)
         setIsDropdownOpen(false)
     }
+
+    const fetchProducts = async () => {
+        try {
+            const response = await productSvc.getAllProducts()
+            setProducts(response.data.detail)
+            console.log(response.data.detail)
+
+        } catch (exception) {
+            throw exception
+        }
+    }
+    const fetchCategories = async () => {
+        try {
+            const response = await categorySvc.getAllCategory()
+            setCategories(response.detail)
+
+        } catch (exception) {
+            throw exception
+        }
+    }
+    useEffect(() => {
+        fetchProducts(),
+            fetchCategories()
+    }, [])
 
     return (
         <section className="bg-[#C6211D] py-8 md:py-16 relative overflow-hidden">
@@ -141,7 +172,7 @@ export default function OurRange({ activeCategory }: OurRangeProps) {
                         transform: headingRevealed ? "translateY(0)" : "translateY(30px)",
                     }}
                 >
-                    Our range
+                    Our delicious range
                 </h2>
 
                 <p
@@ -153,9 +184,8 @@ export default function OurRange({ activeCategory }: OurRangeProps) {
                         transitionDelay: "100ms",
                     }}
                 >
-                    When you're on the go, take time out for a few delicious minutes with Mug Shot, the
-                    <br className="hidden sm:block" />
-                    warm, comforting, convenient flavour-packed snack.
+                    All of our products are stored in your local
+                    supermarket's freezer in various flavours.
                 </p>
 
                 <p
@@ -166,7 +196,8 @@ export default function OurRange({ activeCategory }: OurRangeProps) {
                         transitionDelay: "200ms",
                     }}
                 >
-                    For the perfect pick me up. Wherever you're heading.
+                    Enjoy India's most loved delicious flavours of Momoguy's momo in your home,
+                    <br /> prepared in minutes.
                 </p>
 
                 <div className="md:hidden px-4 mb-4 relative mx-14 z-20">
@@ -187,14 +218,14 @@ export default function OurRange({ activeCategory }: OurRangeProps) {
                             <div className="absolute top-full left-0 right-0 bg-white rounded-xl mt-2  ">
                                 {categories.map((category) => (
                                     <button
-                                        key={category}
-                                        onClick={() => handleCategorySelect(category)}
-                                        className={`w-full text-left px-4 py-3 font-bold text-lg transition-colors uppercase tracking-wider ${selectedCategory === category
+                                        key={category._id}
+                                        onClick={() => handleCategorySelect(category?.title)}
+                                        className={`w-full text-left px-4 py-3 font-bold text-lg transition-colors uppercase tracking-wider ${selectedCategory === category?.title
                                             ? "bg-[#FF8000] text-white"
                                             : "bg-[#FF8000] text-white hover:bg-gray-100"
                                             } first:rounded-t-xl last:rounded-b-xl`}
                                     >
-                                        {category}
+                                        {category?.title}
                                     </button>
                                 ))}
                             </div>
@@ -215,16 +246,27 @@ export default function OurRange({ activeCategory }: OurRangeProps) {
                         onMouseDown={handleMouseDown}
                         className="overflow-x-scroll scrollbar-hide cursor-grab active:cursor-grabbing select-none pb-6 md:pb-8 mb-8 md:mb-12"
                     >
-                        <div className="flex gap-4 md:gap-6 px-4 md:px-8 w-max">
+                        <div className="flex gap-4 md:gap-6 px-4 md:px-8 w-max overflow">
                             {filteredProducts.map((product) => (
-                                <div key={product.id} className="flex flex-col  items-center flex-shrink-0">
-                                    <div className="w-32 h-48 md:w-[220px] md:h-80 flex items-center justify-center">
+                                <div key={product._id} className="flex flex-col  items-center flex-shrink-0">
+                                    <div
+                                        className="
+        w-32 h-48 md:w-[220px] md:h-80
+        flex items-center justify-center
+        transition-all duration-300 ease-out
+        active:scale-95
+    "
+                                        onClick={() => navigate("/products/" + product.slug)}
+                                    >
                                         <img
-                                            src={product.image || "/placeholder.svg"}
+                                            src={product.images[0] || "/placeholder.svg"}
                                             alt={product.name}
-                                            className="h-48 md:h-80 w-auto pointer-events-none"
+                                            className={`h-48 md:h-80 w-auto object-contain pointer-events-none
+                                                ${sliderRevealed ? 'product-bounce' : ''}
+                                                `}
                                         />
                                     </div>
+
                                 </div>
                             ))}
                         </div>
@@ -243,11 +285,11 @@ export default function OurRange({ activeCategory }: OurRangeProps) {
                     <div className="hidden md:flex justify-center gap-6 md:gap-12">
                         {categories.map((category) => (
                             <button
-                                key={category}
-                                onClick={() => setSelectedCategory(selectedCategory === category ? null : category)}
+                                key={category._id}
+                                onClick={() => setSelectedCategory(selectedCategory === category?.title ? null : category.title)}
                                 style={{
                                     boxShadow:
-                                        selectedCategory === category
+                                        selectedCategory === category?.title
                                             ? `2px 2px 0px #C6211D, 6px 6px 0px #D97706`
                                             : `2px 2px 0px #C6211D, 6px 6px 0px transparent`,
                                     borderColor: "#C6211D",
@@ -264,10 +306,10 @@ export default function OurRange({ activeCategory }: OurRangeProps) {
                   hover:translate-y-1
                   uppercase
                   tracking-wider
-                  ${selectedCategory === category ? "bg-[#FF8000]" : "bg-[#C6211D]"}
+                  ${selectedCategory === category?.title ? "bg-[#FF8000]" : "bg-[#C6211D]"}
                 `}
                             >
-                                {category}
+                                {category?.title}
                             </button>
                         ))}
                     </div>

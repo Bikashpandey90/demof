@@ -171,6 +171,9 @@ export default function CategoryList() {
                                             <button
                                                 className="rounded p-2 text-orange-400 hover:bg-orange-50 transition-colors"
                                                 title="Edit"
+                                                onClick={() => {
+                                                    navigate(category._id)
+                                                }}
                                             >
                                                 <Edit2 className="h-5 w-5" />
                                             </button>

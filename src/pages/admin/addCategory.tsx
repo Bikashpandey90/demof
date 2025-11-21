@@ -8,7 +8,11 @@ import { useRef, useState } from "react"
 import * as Yup from "yup"
 
 export default function CategoryForm() {
-    const photoRef = useRef<{ getImages: () => any[]; reset: () => void }>(null)
+    // const photoRef = useRef<{ getImages: () => any[]; reset: () => void }>(null)
+    const mainPhotoRef = useRef<{ getImages: () => any[]; reset: () => void }>(null)
+    const bowlPhotoRef = useRef<{ getImages: () => any[]; reset: () => void }>(null)
+    const ingPhotoRef = useRef<{ getImages: () => any[]; reset: () => void }>(null)
+
 
     const [product] = useState({
         name: "Mug Shot Sachet",
@@ -21,6 +25,9 @@ export default function CategoryForm() {
     const [formData, setFormData] = useState({
         productName: "Mug Shot Sachet",
         status: "active",
+        primaryColor: "#ff8000",
+        secondaryColor: "#ff8000",
+        backgroundColor: '#ff8000'
     })
 
     const [loading, setLoading] = useState(false)
@@ -36,24 +43,36 @@ export default function CategoryForm() {
             setLoading(true)
             setError(null)
 
-            const images = photoRef.current?.getImages() || []
+            const mainImage = mainPhotoRef.current?.getImages()[0]
+            const bowlImage = bowlPhotoRef.current?.getImages()[0]
+            const ingImage = ingPhotoRef.current?.getImages()[0]
 
-            if (images.length === 0) {
-                setError("Please upload at least one category image")
+
+
+            if (!mainImage || !mainImage.file) {
+                setError("Please upload at least one main category image")
                 setLoading(false)
                 return
             }
 
+
             const formDataToSend = new FormData()
             formDataToSend.append('title', data.productName)
             formDataToSend.append('status', data.status)
+            formDataToSend.append("primaryColor", data.primaryColor)
+            formDataToSend.append("secondaryColor", data.secondaryColor)
+            formDataToSend.append("backgroundColor", data.backgroundColor)
 
-            if (images.length > 0) {
-                formDataToSend.append('image', images[0].file)
-                // multiple images, uncomment below:
-                // images.forEach((img, index) => {
-                //     formDataToSend.append(`images[${index}]`, img.file)
-                // })
+
+
+            if (mainImage?.file) {
+                formDataToSend.append('image', mainImage.file)
+            }
+            if (bowlImage?.file) {
+                formDataToSend.append('bowlImage', bowlImage.file)
+            }
+            if (ingImage?.file) {
+                formDataToSend.append('ingridientsImage', ingImage.file)
             }
 
             console.log('this is the category being submitted : ', formDataToSend)
@@ -61,6 +80,7 @@ export default function CategoryForm() {
             console.log("Category created:", response)
 
             setSuccess(true)
+
             //add toast here
             // Reset form after success
 
@@ -68,8 +88,14 @@ export default function CategoryForm() {
                 setFormData({
                     productName: "",
                     status: "active",
+                    primaryColor: "#ff8000",
+                    secondaryColor: "#ff8000",
+                    backgroundColor: '#ff8000'
+
                 })
-                photoRef.current?.reset()
+                mainPhotoRef.current?.reset()
+                bowlPhotoRef.current?.reset()
+                ingPhotoRef.current?.reset()
                 setSuccess(false)
             }, 2000)
         } catch (exception: any) {
@@ -104,15 +130,15 @@ export default function CategoryForm() {
                     </div>
 
                     <div className="lg:col-span-2 space-y-6">
-                        <AddCategoryPhoto ref={photoRef} heading={"Add Category Photos"} />
+                        <AddCategoryPhoto ref={mainPhotoRef} heading={"Add Category Photos"} />
 
                         <CategoryInformation
                             formData={formData}
                             setFormData={setFormData}
                         />
 
-                        {/* <AddCategoryPhoto ref={photoRef} heading={"Add Bowl Image"} />
-                        <AddCategoryPhoto ref={photoRef} heading={"Add Ingridients Image"} /> */}
+                        <AddCategoryPhoto ref={bowlPhotoRef} heading={"Add Bowl Image"} />
+                        <AddCategoryPhoto ref={ingPhotoRef} heading={"Add Ingridients Image"} />
 
 
                         {error && (
@@ -132,8 +158,14 @@ export default function CategoryForm() {
                                     setFormData({
                                         productName: "",
                                         status: "Active",
+                                        primaryColor: "#ff8000",
+                                        secondaryColor: "#ff8000",
+                                        backgroundColor: '#ff8000'
                                     })
-                                    photoRef.current?.reset()
+                                    mainPhotoRef.current?.reset()
+                                    bowlPhotoRef.current?.reset()
+                                    ingPhotoRef.current?.reset()
+
                                     setError(null)
                                 }}
                                 className="w-full sm:flex-1 px-4 sm:px-6 py-3 border-2 border-gray-900 text-gray-900 font-semibold rounded-lg hover:bg-gray-50 transition-colors"
@@ -143,7 +175,7 @@ export default function CategoryForm() {
                             <button
                                 onClick={handleSubmit}
                                 disabled={loading}
-                                className="w-full sm:flex-1 px-4 sm:px-6 py-3 bg-[#487FFF] text-white font-semibold rounded-lg hover:bg-orange-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="w-full sm:flex-1 px-4 sm:px-6 py-3 bg-[#487FFF] text-white font-semibold rounded-lg hover:bg-[#487ffa] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 {loading ? "Creating..." : "Create Category"}
                             </button>

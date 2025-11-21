@@ -68,11 +68,11 @@ export default function AnimatedMenu({ isOpen, onClose }: AnimatedMenuProps) {
                         transitionDelay: isOpen ? "150ms" : "0ms",
                     }}
                 >
-                    <div className="w-20 h-20 ml-2 sm:ml-10 md:w-32 md:h-40 mt-6 md:mt-2 lg:w-[200px] lg:h-[200px]  rounded-full items-center">
+                    {/* <div className="w-20 h-20 ml-2 sm:ml-10 md:w-32 md:h-40 mt-6 md:mt-2 lg:w-[200px] lg:h-[200px]  rounded-full items-center">
                         <img
                             src="/momo.png"
                             alt="Mug shot logo" />
-                    </div>
+                    </div> */}
                 </div>
 
                 <div

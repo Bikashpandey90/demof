@@ -44,53 +44,96 @@ export default function CategoryInformation({ formData, setFormData }: ProductIn
             <div className="mb-6 grid lg:flex mt-4 gap- lg:justify-between">
                 <label className="block text-sm font-medium text-gray-700 mb">Primary Color</label>
                 <div className="flex gap-1">
-                    {[
-                        { name: "Orange", color: "#f97316" },
-                        { name: "Teal", color: "#14b8a6" },
-                    ].map((color) => (
-                        <button
-                            key={color.name}
-                            className="w-8 h-8 rounded-full border-2 border-gray-300 hover:border-gray-500 transition-colors"
-                            style={{ backgroundColor: color.color }}
-                            title={color.name}
-                        />
-                    ))}
-                    <ColorPicker defaultValue={'#ff8000'} />
+
+                    <ColorPicker
+                        defaultValue={formData.primaryColor}
+                        onChange={(color) => {
+                            let colorValue = typeof color === "string" ? color : (color?.toString?.() ?? "");
+                            let hex = colorValue;
+
+                            if (colorValue.startsWith("rgb")) {
+                                const [r, g, b] = colorValue
+                                    .replace(/^rgba?\(/, "")
+                                    .replace(/\)/, "")
+                                    .split(",")
+                                    .map((x) => parseInt(x.trim()));
+                                hex =
+                                    "#" +
+                                    [r, g, b]
+                                        .map((v) => v.toString(16).padStart(2, "0"))
+                                        .join("");
+                            }
+
+                            handleInputChange("primaryColor", hex);
+                        }}
+                    />
+
 
                 </div>
                 <label className="block text-sm font-medium text-gray-700 mb">Secondary Color</label>
                 <div className="flex gap-1">
-                    {[
+                    {/* {[
 
                         { name: "Orange", color: "#f97316" },
                         { name: "Teal", color: "#14b8a6" },
                     ].map((color) => (
                         <button
                             key={color.name}
-                            className="w-8 h-8 rounded-full border-2 border-gray-300 hover:border-gray-500 transition-colors"
+                            className="w-8 h-8 rounded-full border-2 border-gray-300 hover:border-gray-500"
                             style={{ backgroundColor: color.color }}
-                            title={color.name}
+                            onClick={() => handleInputChange("secondaryColor", color.color)}
                         />
 
-                    ))}
-                    <ColorPicker defaultValue={'#ff8000'} />
+
+                    ))} */}
+                    <ColorPicker
+                        defaultValue={formData.secondaryColor}
+                        onChange={(color) => {
+                            let colorValue = typeof color === "string" ? color : (color?.toString?.() ?? "");
+                            let hex = colorValue;
+
+                            if (colorValue.startsWith("rgb")) {
+                                const [r, g, b] = colorValue
+                                    .replace(/^rgba?\(/, "")
+                                    .replace(/\)/, "")
+                                    .split(",")
+                                    .map((x) => parseInt(x.trim()));
+                                hex =
+                                    "#" +
+                                    [r, g, b]
+                                        .map((v) => v.toString(16).padStart(2, "0"))
+                                        .join("");
+                            }
+
+                            handleInputChange("secondaryColor", hex);
+                        }}
+                    />
                 </div>
-                <label className="block text-sm font-medium text-gray-700 mb">Secondary Color</label>
+                <label className="block text-sm font-medium text-gray-700 mb">Background Color</label>
                 <div className="flex gap-1">
-                    {[
 
-                        { name: "Orange", color: "#f97316" },
-                        { name: "Teal", color: "#14b8a6" },
-                    ].map((color) => (
-                        <button
-                            key={color.name}
-                            className="w-8 h-8 rounded-full border-2 border-gray-300 hover:border-gray-500 transition-colors"
-                            style={{ backgroundColor: color.color }}
-                            title={color.name}
-                        />
+                    <ColorPicker
+                        defaultValue={formData.backgroundColor}
+                        onChange={(color) => {
+                            let colorValue = typeof color === "string" ? color : (color?.toString?.() ?? "");
+                            let hex = colorValue;
 
-                    ))}
-                    <ColorPicker defaultValue={'#ff8000'} />
+                            if (colorValue.startsWith("rgb")) {
+                                const [r, g, b] = colorValue
+                                    .replace(/^rgba?\(/, "")
+                                    .replace(/\)/, "")
+                                    .split(",")
+                                    .map((x) => parseInt(x.trim()));
+                                hex =
+                                    "#" +
+                                    [r, g, b]
+                                        .map((v) => v.toString(16).padStart(2, "0"))
+                                        .join("");
+                            }
+
+                            handleInputChange("backgroundColor", hex);
+                        }}
+                    />
                 </div>
 
             </div>

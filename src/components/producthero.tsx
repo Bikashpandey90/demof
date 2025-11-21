@@ -5,6 +5,9 @@ import { useInView } from "react-intersection-observer"
 import NeuButton from "./button";
 import productSvc from "@/services/product.service";
 import { useEffect, useState, useRef } from "react";
+import IngridientTop from "./svg/ingridientTop";
+import IngridientBottom from "./svg/ingridientBottom";
+import DirectionBottom from "./svg/directionBottom";
 
 export interface ProductDetail {
     nutritionalInfo: NutritionalInfo;
@@ -13,7 +16,9 @@ export interface ProductDetail {
     slug: string;
     category: {
         title: string
-    }
+    },
+    primaryColor: string | '',
+    secondaryColor: string
     allergyAdvice: string;
     vegNonVeg: string;
     ingridients: string;
@@ -93,20 +98,20 @@ export default function ProductHero() {
     }, [])
 
     useEffect(() => {
-        if (imageInView && isScrollingDown) setImageRevealed(true)
-    }, [imageInView, isScrollingDown])
+        if (imageInView) setImageRevealed(true)
+    }, [imageInView])
 
     useEffect(() => {
-        if (contentInView && isScrollingDown) setContentRevealed(true)
-    }, [contentInView, isScrollingDown])
+        if (contentInView) setContentRevealed(true)
+    }, [contentInView])
 
     useEffect(() => {
-        if (buttonInView && isScrollingDown) setButtonRevealed(true)
-    }, [buttonInView, isScrollingDown])
+        if (buttonInView) setButtonRevealed(true)
+    }, [buttonInView])
 
     useEffect(() => {
-        if (badgesInView && isScrollingDown) setBadgesRevealed(true)
-    }, [badgesInView, isScrollingDown])
+        if (badgesInView) setBadgesRevealed(true)
+    }, [badgesInView])
 
     useEffect(() => {
         if (ingredientsInView && isScrollingDown) setIngredientsRevealed(true)
@@ -122,7 +127,9 @@ export default function ProductHero() {
 
     return (
         <>
-            <main className="min-h-screen bg-[#416BA9] flex items-center justify-center w-full">
+            <main className={`min-h-screen flex items-center justify-center w-full`}
+                style={{ backgroundColor: product?.secondaryColor || '#416BA9' }}
+            >
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-12   justify-items-center mt-16 sm:mt-0 lg:px-2 py-2 lg:py-0 items-center max-w-7xl mx-auto ">
                     <div
                         ref={imageRef}
@@ -156,7 +163,9 @@ export default function ProductHero() {
                             <p className="lg:mt-3 mt-0 text-white text-[20px] leading-[24px] lg:text-[27px] lg:leading-[30px] text-center uppercase font-gothic font-semibold mb-2">
                                 {product?.category.title}
                             </p>
-                            <h1 className="text-[32px] leading-9 drop-shadow-lg lg:text-[50px] lg:mt-4 max-w-[320px] sm:max-w-full mt-2 text-center lg:leading-[60px] font-bold font-brando text-[#172538] text-balance">
+                            <h1 className="text-[32px] leading-9 drop-shadow-lg lg:text-[50px] lg:mt-4 max-w-[320px] sm:max-w-full mt-2 text-center lg:leading-[60px] font-bold font-brando  text-balance"
+                                style={{ color: product?.primaryColor || '[#172538]' }}
+                            >
                                 {product?.name}
                             </h1>
                         </div>
@@ -183,7 +192,14 @@ export default function ProductHero() {
                                 transitionDelay: "200ms",
                             }}
                         >
-                            <NeuButton shadow="#172538" className="bg-[#172538] text-[#416BA9]" color="#416BA9">
+                            <NeuButton shadow={product?.primaryColor || "#172538"} className="bg-[#172538] text-[#416BA9]"
+                                style={{
+                                    backgroundColor: product?.primaryColor || '#416BA9',
+                                    color: product?.secondaryColor || '#416BA9'
+
+
+                                }}
+                                color={product?.secondaryColor || "#416BA9"}>
                                 Buy It Now
                             </NeuButton>
                         </div>
@@ -204,14 +220,20 @@ export default function ProductHero() {
 
                     </div>
                 </div>
-            </main>
+            </main >
 
-            <div className="relative bg-[#416BA9] w-full ">
-                <img src="/product/ingridientTop.svg" className="w-full h-full scale-[1.1]" />
+            <div className="relative w-full "
+                style={{ backgroundColor: product?.secondaryColor || '#416BA9' }}
+            >
+                {/* <img src="/product/ingridientTop.svg" className="w-full h-full scale-[1.1]" /> */}
+                <IngridientTop
+                    color={product?.primaryColor || '#172538'}
+                />
             </div>
 
             <div
-                className="bg-[#172538] flex justify-center items-center w-full mx-auto pb-24 lg:pb-0 transition-all duration-1000"
+                className="flex justify-center items-center w-full mx-auto pb-24 lg:pb-0 transition-all duration-1000"
+                style={{ backgroundColor: product?.primaryColor || '[#172538]' }}
 
             >
                 <div className="grid grid-cols-1 lg:grid-cols-2 mx-8 lg:mx-0 max-w-7xl gap-12 lg:gap-20 transition-all duration-1000"
@@ -221,13 +243,16 @@ export default function ProductHero() {
                         transform: ingredientsRevealed ? "translateY(0)" : "translateY(30px)",
                     }}>
                     <div>
-                        <h2 className="text-3xl lg:text-[40px] leading-[36px] lg:leading-[48px] font-brando font-bold text-[#416BA9] mb-3 uppercase ">Ingredients</h2>
+                        <h2 className="text-3xl lg:text-[40px] leading-[36px] lg:leading-[48px] font-brando font-bold  mb-3 uppercase "
+                            style={{ color: product?.secondaryColor || '#416BA9' }}
+
+                        >Ingredients</h2>
 
                         <div className="space-y-6 text-white"
 
                         >
                             <p className=" text-lg lg:mt-0 lg:text-2xl leading-[22px] lg:leading-[26px]  mt-6 font-gothic  ">
-                                <span className="font-extrabold">INGREDIENTS</span>
+                                <span className="font-extrabold">INGREDIENTS </span>
                                 {product?.ingridients}
                             </p>
 
@@ -250,7 +275,9 @@ export default function ProductHero() {
                     </div>
 
                     <div>
-                        <h2 className="text-3xl leading-[36px] lg:text-[40px] lg:leading-[48px] font-brando  text-[#416BA9] font-bold  mb-3 uppercase ">
+                        <h2 className="text-3xl leading-[36px] lg:text-[40px] lg:leading-[48px] font-brando  font-bold  mb-3 uppercase "
+                            style={{ color: product?.secondaryColor || '#416BA9' }}
+                        >
                             Nutritional Information
                         </h2>
 
@@ -305,8 +332,11 @@ export default function ProductHero() {
                 </div>
             </div>
 
-            <div className="relative bg-[#416BA9] ">
-                <img src="/product/ingridientbottom.svg" className="w-full h-full scale-[1.1]" />
+            <div className="relative "
+                style={{ backgroundColor: product?.secondaryColor || '#416BA9' }}
+            >
+                {/* <img src="/product/ingridientbottom.svg" className="w-full h-full scale-[1.1]" /> */}
+                <IngridientBottom primaryColor={product?.primaryColor || ''} secondaryColor={product?.secondaryColor || ''} />
                 <img
                     src="/product/ready.svg"
                     alt="ready product"
@@ -315,7 +345,9 @@ export default function ProductHero() {
             </div>
 
             <div
-                className="px-6 lg:px-12 place-self-center flex py-16 mx-auto w-full bg-[#416BA9] justify-center items-center"
+                className="px-6 lg:px-12 place-self-center flex py-16 mx-auto w-full justify-center items-center"
+                style={{ backgroundColor: product?.secondaryColor || '#416BA9' }}
+
 
             >
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-32 mt-16 max-w-7xl  transition-all duration-1000 "
@@ -327,7 +359,7 @@ export default function ProductHero() {
 
                     {
                         product?.directionImages.map((directions, _id) => (
-                            <div className="flex flex-col items-center gap-4" key={directions._id}>
+                            <div className="flex flex-col items-center gap-4 " key={directions._id}>
                                 <div className="lg:w-48 lg:h-48 w-28 h-28  flex items-center justify-center">
                                     <img src={directions.url} />
                                 </div>
@@ -341,7 +373,7 @@ export default function ProductHero() {
             </div>
 
             <div className="relative h-20 z-10 bg-[#C6211D]">
-                <img src="/product/directionbottom.svg" className="w-full" />
+                <DirectionBottom color={product?.secondaryColor || "#416BA9"} />
             </div>
         </>
     );

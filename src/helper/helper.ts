@@ -1,4 +1,4 @@
-function handleReveal(inView: boolean, setReveal: any, scrollDown: boolean, justEntered: boolean) {
+export function handleReveal(inView: boolean, setReveal: any, scrollDown: boolean, justEntered: boolean) {
     if (inView) {
         if (scrollDown && justEntered) {
             setReveal(true);
@@ -9,4 +9,16 @@ function handleReveal(inView: boolean, setReveal: any, scrollDown: boolean, just
         setReveal(false);
     }
 }
-export default handleReveal
+
+export function rgbaToHex(rgba: string) {
+    const [r, g, b] = rgba
+        .replace("rgba(", "")
+        .replace("rgb(", "")
+        .replace(")", "")
+        .split(",")
+        .map(Number);
+
+    return "#" + [r, g, b]
+        .map(x => x.toString(16).padStart(2, "0"))
+        .join("");
+}

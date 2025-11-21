@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useRef, useState, useImperativeHandle, forwardRef } from "react"
+import { useRef, useState, useImperativeHandle, forwardRef, useEffect } from "react"
 import { Upload, X, GripVertical } from 'lucide-react'
 
 interface ImagePreview {
@@ -9,12 +9,16 @@ interface ImagePreview {
     file: File
     preview: string
     type: "image" | "svg"
+    defaultImage?: string
 }
 
 export default forwardRef<
     { getImages: () => ImagePreview[]; reset: () => void },
-    { heading: string }
->(function AddProductPhoto({ heading }, ref) {
+    {
+        heading: string;
+        defaultImage?: string
+    }
+>(function AddProductPhoto({ heading, defaultImage }, ref) {
     const [images, setImages] = useState<ImagePreview[]>([])
     const [isDragging, setIsDragging] = useState(false)
     const [draggedItem, setDraggedItem] = useState<string | null>(null)
@@ -29,6 +33,18 @@ export default forwardRef<
             }
         },
     }))
+
+    useEffect(() => {
+        if (defaultImage && images.length === 0) {
+            setImages([{
+                id: "existing-image",
+                file: null as any,
+                preview: defaultImage,
+                type: defaultImage.endsWith(".svg") ? "svg" : "image"
+            }])
+        }
+    }, [defaultImage])
+
 
     const handleFiles = (files: FileList | null) => {
         if (!files) return
@@ -209,4 +225,3 @@ export default forwardRef<
     )
 })
 
-// AddProductPhoto.displayName = 'AddProductPhoto'

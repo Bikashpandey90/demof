@@ -1,8 +1,7 @@
+import BlogPostCarousel from "@/components/blogs"
 import FollowUs from "@/components/follow"
-import Footer from "@/components/footer"
 import GetInTouch from "@/components/get-in-touch"
 import GiveItAShot from "@/components/give-it-a-shot"
-import Header from "@/components/header"
 import HotTastyConvenient from "@/components/hot-tasty"
 // import AnimatedMenu from "@/components/AnimatedMenu/AnimatedMenu"
 import OurRange from "@/components/our-range"
@@ -26,15 +25,15 @@ const Home = () => {
             <main className="min-h-screen  w-full overflow-x-hidden">
 
 
-                <Header />
                 <GiveItAShot onCategoryClick={handleCategoryClick} />
                 <HotTastyConvenient />
                 <div ref={ourRangeRef}>
                     <OurRange activeCategory={selectedCategory} />
                 </div>
+
                 <FollowUs />
+                <BlogPostCarousel />
                 <GetInTouch />
-                <Footer />
             </main>
         </>
     )

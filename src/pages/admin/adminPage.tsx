@@ -56,9 +56,9 @@ const MasterLayout = () => {
                     <Icon icon="radix-icons:cross-2" className="text-xl" />
                 </button>
 
-                <div className="p-6 border-b border-gray-200 dark:border-gray-800 flex justify-between"> {/* CENTER CONTENT */}
+                <div className="p-6 border-b border-gray-200 dark:border-gray-800 flex justify-between">
                     <NavLink to="/" className="flex items-center gap-2">
-                        <img src="/mugshotlogo.png" alt="logo" width={40} height={40} className="w-[40px] h-[40px]" />
+                        <img src="/momo.png" alt="logo" width={40} height={40} className="w-[40px] h-[40px] object-contain" />
                         {!sidebarActive && <span className="font-bold text-lg">Dashboard</span>}
                     </NavLink>
                 </div>
@@ -96,6 +96,17 @@ const MasterLayout = () => {
                     {!sidebarActive && (
                         <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase px-4 py-2">
                             Items Lists
+                        </h3>
+                    )}
+                    <NavItem href="products" label="Products" icon="fe:vector" />
+                    <NavItem href="categories" label="Categories" icon="icon-park-outline:setting-two" />
+
+                    <hr className="my-4 border-gray-200 dark:border-gray-800" />
+
+
+                    {!sidebarActive && (
+                        <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase px-4 py-2">
+                            Edit Items
                         </h3>
                     )}
                     <NavItem href="products" label="Products" icon="fe:vector" />

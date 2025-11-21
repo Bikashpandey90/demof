@@ -47,9 +47,9 @@ export default function HotTastyConvenient() {
                                         transform: headingRevealed ? "translateY(0)" : "translateY(30px)",
                                     }}
                                 >
-                                    HOT, TASTY
+                                    STEAMY, HOT,
                                     <br />
-                                    AND CONVENIENT
+                                    AND TASTY SNACK
                                 </h2>
 
                                 <p
@@ -61,8 +61,9 @@ export default function HotTastyConvenient() {
                                         transitionDelay: "100ms",
                                     }}
                                 >
-                                    Whether you're looking for a quick delicious lunch or a healthy snack to fill an after school or
-                                    pre/post gym hunger gap, Mug Shot will fill you up with tasty goodness in less than 5 minutes.
+                                    Whether you're looking for a quick and delicious snack to satisfy your hunger after work or a meeting,
+                                    Momoguy's chef-driven momo provides an unparalleled flavour that will fill you with tasty goodness in
+                                    less than 7 minutes.
                                 </p>
                             </div>
                         </div>

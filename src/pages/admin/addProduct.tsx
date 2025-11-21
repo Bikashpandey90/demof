@@ -6,11 +6,13 @@ import ProductInformation from "@/components/admin/product-information"
 import ProductPreview from "@/components/admin/product-preview"
 import productSvc from "@/services/product.service"
 import { useRef, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import * as Yup from "yup"
 
 export default function ProductForm() {
     const productImagesRef = useRef<{ getImages: () => any[]; reset: () => void }>(null)
     const directionImagesRef = useRef<{ getImages: () => any[]; reset: () => void }>(null)
+    const navigate = useNavigate()
 
     const [product] = useState({
         name: "Mug Shot Sachet",
@@ -33,7 +35,9 @@ export default function ProductForm() {
             header: "",
             rows: [{ values: "", perValue: "", perPacket: "" }],
             footer: "",
-        }
+        },
+        primaryColor: '#ff8000',
+        secondaryColor: '#ff8000'
     })
 
 
@@ -80,6 +84,9 @@ export default function ProductForm() {
             payload.append('tagline', data.tagline)
             payload.append('ingridients', data.ingridients)
             payload.append('links', data.links)
+            payload.append('primaryColor', data.primaryColor)
+            payload.append('secondaryColor', data.secondaryColor)
+
 
             if (data.tags.length > 0) {
                 payload.append('tags', JSON.stringify(data.tags))
@@ -104,6 +111,9 @@ export default function ProductForm() {
 
             setSuccess(true)
 
+            navigate('/products/' + response.detail.slug)
+
+
             // Reset form after success
             setTimeout(() => {
                 setFormData({
@@ -120,14 +130,16 @@ export default function ProductForm() {
                         header: "",
                         rows: [{ values: "", perValue: "", perPacket: "" }],
                         footer: "",
-                    }
+                    },
+                    primaryColor: '#ff8000',
+                    secondaryColor: '#ff8000'
                 })
                 productImagesRef.current?.reset()
                 directionImagesRef.current?.reset()
                 setSuccess(false)
             }, 2000)
         } catch (exception: any) {
-            console.error("[v0] Error creating product:", exception)
+            console.error("Creating product:", exception)
             setError(exception.error || "Failed to create product")
         } finally {
             setLoading(false)
@@ -136,7 +148,7 @@ export default function ProductForm() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        console.log("[v0] Current formData:", formData)
+        console.log(" Current formData:", formData)
 
         try {
             await ProductDTO.validate(formData)
@@ -199,7 +211,9 @@ export default function ProductForm() {
                                             header: "",
                                             rows: [{ values: "", perValue: "", perPacket: "" }],
                                             footer: "",
-                                        }
+                                        },
+                                        primaryColor: '#ff8000',
+                                        secondaryColor: '#ff8000'
                                     })
                                     productImagesRef.current?.reset()
                                     directionImagesRef.current?.reset()

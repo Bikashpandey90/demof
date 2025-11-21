@@ -9,10 +9,10 @@ import NeuButton from "./button"
 export default function FollowUs() {
     const posts = [
         { id: 1, image: "/posts/download.jpeg" },
-        { id: 2, image: "/posts/download (1).jpeg" },
-        { id: 3, image: "/posts/download (2).jpeg" },
-        { id: 4, image: "/posts/download (3).jpeg" },
-        { id: 5, image: "/posts/download (4).jpeg" },
+        { id: 2, image: "/posts/bags.jpeg" },
+        { id: 3, image: "/posts/pot.jpeg" },
+        { id: 4, image: "/posts/drink.jpeg" },
+        { id: 5, image: "/posts/mug.jpeg" },
     ]
 
     const scrollContainerRef = useRef<HTMLDivElement>(null)
@@ -168,7 +168,7 @@ export default function FollowUs() {
                                     <img
                                         src={post.image || "/placeholder.svg"}
                                         alt="Social post"
-                                        className="w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 object-cover shadow-lg pointer-events-none"
+                                        className="w-40 h-40 sm:w-56 sm:h-56 rounded-xl md:w-72 md:h-72 lg:w-80 lg:h-80 object-cover shadow-lg pointer-events-none"
                                         draggable={false}
                                     />
                                 </div>

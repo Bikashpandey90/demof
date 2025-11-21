@@ -3,10 +3,10 @@
 interface ProductPreviewProps {
     product: {
         name: string
-        category: string
-        price: number
-        discountedPrice: number
+        status: string
         image: string
+        primaryColor: string
+        secondaryColor: string
     }
 }
 
@@ -23,7 +23,7 @@ export default function CategoryPreview({ product }: ProductPreviewProps) {
             </div>
 
             <h2 className="text-lg font-bold text-gray-900 mb-1">{product.name}</h2>
-            <p className="text-sm text-gray-600 mb-4">({product.category})</p>
+            <p className="text-sm text-gray-600 mb-4">({product.status.toUpperCase()})</p>
 
 
 
@@ -32,8 +32,8 @@ export default function CategoryPreview({ product }: ProductPreviewProps) {
                 <p className="text-sm text-gray-700 font-medium mb-3">Primary & Secondary Colors </p>
                 <div className="flex gap-3">
                     {[
-                        { name: "Blue", color: "blue" },
-                        { name: "Navy", color: "#1e3a8a" },
+                        { name: '', color: product.primaryColor },
+                        { name: '', color: product.secondaryColor },
 
 
                     ].map((color) => (
