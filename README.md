@@ -50,3 +50,5 @@
 - setItem(key,value) .getItem(key) .removeItem(key) .clear()
 
 
+
+
