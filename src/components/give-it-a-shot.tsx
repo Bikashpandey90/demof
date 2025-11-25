@@ -284,7 +284,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                                             src={categories[middleIndex]?.image || "/placeholder.svg"}
                                             alt={categories[middleIndex]?.title}
                                             onClick={handleCategoryImageClick}
-                                            className={`${isDragging ? 'carousel-slide-dragging' : 'carousel-slide'} w-full h-full mt-36 sm:mt-0 ${categories[middleIndex]?.title === 'SACHETS' ? 'object-contain' : 'object-cover'} scale-[1.25] sm:scale-[1.1] z-20 cursor-pointer`}
+                                            className={`${isDragging ? 'carousel-slide-dragging' : 'carousel-slide'} w-full h-full mt-36 sm:mt-0 ${categories[middleIndex]?.title.toUpperCase() === 'SACHETS ' ? 'object-contain' : 'object-cover'} scale-[1.25] sm:scale-[1.1] z-20 cursor-pointer`}
                                             style={{
                                                 transform: `translateX(${isDragging ? dragOffset * 0.5 : 0}px)`,
                                             }}

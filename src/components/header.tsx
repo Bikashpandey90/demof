@@ -28,6 +28,7 @@ export default function Header() {
                             src="/momo.png"
                             alt="logo"
                             className="w-full h-auto object-contain"
+
                         />
                     </div>
                 </div>

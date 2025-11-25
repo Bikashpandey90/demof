@@ -15,6 +15,8 @@ import PermissionCheck from "./permission.config";
 import HomeLayout from "@/layout/homeLayout";
 import CategoryEditPage from "@/pages/admin/editCategory";
 import ButtonPage from "@/pages/buttons/button";
+import ProductEditPage from "@/pages/admin/editProduct";
+import BlogsPage from "@/pages/blogs/blogs";
 
 const Routing: FC = () => {
     const router = createBrowserRouter([
@@ -29,12 +31,16 @@ const Routing: FC = () => {
                 {
                     path: 'products/:slug',
                     element: <ProductPage />
+                }, {
+                    path: 'blogs',
+                    element: <BlogsPage />
                 }
             ]
         }, {
             path: '/buttons',
             element: <ButtonPage />
         },
+
 
         {
             path: '/login',
@@ -57,7 +63,12 @@ const Routing: FC = () => {
                 }, {
                     path: 'products',
                     element: <ProductList />
-                }, {
+                },
+                {
+                    path: 'products/:slug',
+                    element: <ProductEditPage />
+                },
+                {
                     path: 'categories',
                     element: <CategoryList />
                 }, {

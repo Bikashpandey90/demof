@@ -1,12 +1,12 @@
 "use client"
 
 import type React from "react"
-import { useRef, useState, forwardRef, useImperativeHandle } from "react"
+import { useRef, useState, forwardRef, useImperativeHandle, useEffect } from "react"
 import { Upload, X, GripVertical } from 'lucide-react'
 
 interface ImagePreview {
     id: string
-    file: File
+    file: File | null
     preview: string
     type: "image" | "svg"
 }
@@ -17,7 +17,7 @@ export interface AddProductPhotoHandle {
 }
 
 const AddProductPhoto = forwardRef(function AddProductPhoto(
-    { heading }: { heading: string },
+    { heading, defaultImages = [] }: { heading: string, defaultImages?: string[] },
     ref: React.Ref<AddProductPhotoHandle>
 ) {
     const [images, setImages] = useState<ImagePreview[]>([])
@@ -99,6 +99,20 @@ const AddProductPhoto = forwardRef(function AddProductPhoto(
         reset: () => setImages([]),
     }))
 
+    useEffect(() => {
+        if (defaultImages && defaultImages.length > 0) {
+            const loaded: ImagePreview[] = defaultImages.map((url) => ({
+                id: `${Date.now()}-${Math.random()}`,
+                file: null,
+                preview: url,
+                type: "image" as const,
+            }))
+            setImages(loaded)
+        }
+    }, [defaultImages])
+
+
+
     return (
         <div className="bg-card border border-border rounded-lg p-6">
             <h3 className="text-base font-semibold text-foreground mb-4">{heading}</h3>
@@ -169,7 +183,7 @@ const AddProductPhoto = forwardRef(function AddProductPhoto(
                                     <img
                                         src={img.preview || "/placeholder.svg"}
                                         alt="Product preview"
-                                        className="w-full h-full object-cover"
+                                        className="w-full h-full object-contain"
                                     />
                                 )}
 

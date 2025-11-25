@@ -1,8 +1,8 @@
 "use client"
 
-import type React from "react"
+import { useRef } from "react"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { useInView } from "react-intersection-observer"
 import NeuButton from "./button"
 
@@ -13,14 +13,9 @@ export default function FollowUs() {
         { id: 3, image: "/posts/pot.jpeg" },
         { id: 4, image: "/posts/drink.jpeg" },
         { id: 5, image: "/posts/mug.jpeg" },
+        { id: 6, image: "/posts/download.jpeg" },
+
     ]
-
-    const scrollContainerRef = useRef<HTMLDivElement>(null)
-    const [isScrolling, setIsScrolling] = useState(false)
-    const [startX, setStartX] = useState(0)
-    const [scrollLeft, setScrollLeft] = useState(0)
-
-    console.log(scrollLeft)
 
     const [headingRevealed, setHeadingRevealed] = useState(false)
     const [descriptionRevealed, setDescriptionRevealed] = useState(false)
@@ -55,39 +50,6 @@ export default function FollowUs() {
     useEffect(() => {
         if (postsInView && isScrollingDown) setPostsRevealed(true)
     }, [postsInView, isScrollingDown])
-
-    // Declare mouse and touch event handlers
-    const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-        setIsScrolling(true)
-        setStartX(e.clientX - scrollContainerRef.current!.scrollLeft)
-    }
-
-    const handleMouseLeave = () => {
-        setIsScrolling(false)
-    }
-
-    const handleMouseUp = () => {
-        setIsScrolling(false)
-    }
-
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (isScrolling) {
-            setScrollLeft(e.clientX - startX)
-            scrollContainerRef.current!.scrollLeft = e.clientX - startX
-        }
-    }
-
-    const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-        setIsScrolling(true)
-        setStartX(e.touches[0].clientX - scrollContainerRef.current!.scrollLeft)
-    }
-
-    const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-        if (isScrolling) {
-            setScrollLeft(e.touches[0].clientX - startX)
-            scrollContainerRef.current!.scrollLeft = e.touches[0].clientX - startX
-        }
-    }
 
     return (
         <div className="bg-[#C6211D]">
@@ -144,31 +106,25 @@ export default function FollowUs() {
                         }}
                     >
                         <NeuButton shadow="#DFBF0E" className="bg-[#DFBF0E]  text-white" color="#249F95">
-                            CONNECT</NeuButton>
+                            CONNECT
+                        </NeuButton>
                     </div>
 
                     <div
                         ref={postsContainerRef}
-                        onMouseDown={handleMouseDown}
-                        onMouseLeave={handleMouseLeave}
-                        onMouseUp={handleMouseUp}
-                        onMouseMove={handleMouseMove}
-                        onTouchStart={handleTouchStart}
-                        onTouchMove={handleTouchMove}
-                        onTouchEnd={() => setIsScrolling(false)}
-                        className="pb-4 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing select-none scroll-smooth transition-all duration-1000"
+                        className="transition-all duration-1000"
                         style={{
                             opacity: postsRevealed ? 1 : 0,
                             transform: postsRevealed ? "translateY(0)" : "translateY(30px)",
                         }}
                     >
-                        <div className="flex gap-2 sm:gap-3 md:gap-4 justify-center min-w-max px-4 ">
+                        <div className="grid grid-cols-3 gap-3 sm:gap-4 md:gap-3 max-w-4xl mx-auto">
                             {posts.map((post) => (
-                                <div key={post.id} className="relative flex-shrink-0">
+                                <div key={post.id} className="relative overflow-hidden rounded-sm">
                                     <img
                                         src={post.image || "/placeholder.svg"}
                                         alt="Social post"
-                                        className="w-40 h-40 sm:w-56 sm:h-56 rounded-xl md:w-72 md:h-72 lg:w-80 lg:h-80 object-cover shadow-lg pointer-events-none"
+                                        className="w-full aspect-square object-cover shadow-lg pointer-events-none hover:scale-105 transition-transform duration-300"
                                         draggable={false}
                                     />
                                 </div>

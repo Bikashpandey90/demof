@@ -185,7 +185,7 @@ export default forwardRef<
                                     <img
                                         src={img.preview || "/placeholder.svg"}
                                         alt="Product preview"
-                                        className="w-full h-full object-cover"
+                                        className="w-full h-full object-contain"
                                     />
                                 )}
 

@@ -52,6 +52,15 @@ class ProductService extends HttpService {
             throw exception
         }
     }
+    async updateProduct(id: string, data: ProductData) {
+        try {
+            const response = await this.patchRequest('/products/' + id, data, { auth: true, file: true })
+            return response.data
+        } catch (exception) {
+            console.log(exception)
+            throw exception
+        }
+    }
 }
 const productSvc = new ProductService()
 export default productSvc

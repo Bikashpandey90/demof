@@ -44,11 +44,11 @@ export default function GetInTouch() {
             <img
                 src="/red-top.svg"
                 alt="Top irregular edge"
-                className="bg-[#ff8000] w-full h-auto block  -mt-[1px] z-100 pointer-events-none"
+                className="bg-[#ff8000] w-fu h-auto block  -mt-[1px] z-100 pointer-events-none"
                 style={{ display: "block", margin: 0, padding: 0, lineHeight: 0 }}
             />
+
             <section className="relative w-full overflow-hidden">
-                {/* Orange section */}
                 <div className="bg-[#C6211D] py-8 relative z-0">
                     <div className="max-w-6xl mx-auto px-4">
                         <div className="max-w-4xl mx-auto px-4 text-center">
@@ -88,7 +88,7 @@ export default function GetInTouch() {
                                     transitionDelay: "200ms",
                                 }}
                             >
-                                {/* <NeuButton color="#C6211D"> */}
+
                                 <NeuButton shadow="#FF8A15" className="bg-[#FF8A15]  text-white" color="#C6211D">
 
 

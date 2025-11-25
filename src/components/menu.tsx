@@ -31,14 +31,13 @@ export default function AnimatedMenu({ isOpen, onClose }: AnimatedMenuProps) {
     }, [isOpen])
 
     const menuItems = [
-        { label: "HOME", href: "#" },
+        { label: "HOME", href: "/" },
         { label: "OUR RANGE", href: "#" },
-        { label: "STOCKISTS", href: "#" },
-        { label: "ABOUT US", href: "#" },
-        { label: "GET IN TOUCH", href: "#" },
+        { label: "BLOGS", href: "/blogs" },
+        { label: "BUTTONS", href: "/buttons" },
+        { label: "LOGIN", href: "/login" },
+
     ]
-
-
     return (
         <>
             <div
@@ -84,7 +83,7 @@ export default function AnimatedMenu({ isOpen, onClose }: AnimatedMenuProps) {
                 >
                     <div className="w-16 h-16 -rotate-6  lg:w-80  lg:h-80 md:w-24 md:h-24 hidden lg:block xl:block rounded-lg overflow">
                         <img
-                            src="/products/packet2.png"
+                            src="/packet2.png"
                             alt="Product showcase"
                             className="w-full h-full  object-contain"
                         />
@@ -100,7 +99,7 @@ export default function AnimatedMenu({ isOpen, onClose }: AnimatedMenuProps) {
                 >
                     <div className="w-16 h-16 lg:w-80 lg:h-80 md:w-24 md:h-24  rounded-lg hidden lg:block xl:block  overflow ">
                         <img
-                            src="/products/packet3.png"
+                            src="/packet3.png"
                             alt="Product showcase"
                             className="w-full h-full object-contain"
                         />
