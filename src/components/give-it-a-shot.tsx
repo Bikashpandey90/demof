@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { useInView } from "react-intersection-observer"
-import Lottie from "lottie-react"
+// import Lottie from "lottie-react"
 // import SwooshSVG from "./swoosh-svg"
 import categorySvc, { CategoryData } from "@/services/category.service"
 import { handleReveal } from "@/helper/helper"
@@ -17,7 +17,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
     const [currentIndex, setCurrentIndex] = useState(0)
     const [animationData, setAnimationData] = useState(null)
     const [isTransitioning, setIsTransitioning] = useState(false)
-    const [animationComplete, setAnimationComplete] = useState(false)
+    // const [animationComplete, setAnimationComplete] = useState(false)
     const lottieRef = useRef<any>(null)
     const [autoPlayEnabled, setAutoPlayEnabled] = useState(true)
     const autoPlayTimeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -56,6 +56,8 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
             lottieRef.current.setSpeed(0.5)
         }
     }, [lottieRef])
+
+    console.log(animationData)
 
     useEffect(() => {
         const handleScroll = () => {
@@ -218,7 +220,8 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                     backgroundColor: `${categories[middleIndex]?.backgroundColor}`
                 }}
             >
-                {animationData && !animationComplete && (
+
+                {/* {animationData && !animationComplete && (
                     <Lottie
                         lottieRef={lottieRef}
                         animationData={animationData}
@@ -227,19 +230,19 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                         onComplete={() => setAnimationComplete(true)}
                         className="absolute m-2 sm:m-4 md:mt-14 lg:mt-0 md:m-10 inset-0 mt-60 sm:mt-8 self-center justify-self-center scale-100 sm:scale-75 md:scale-[.65] z-20 pointer-events-none"
                     />
-                )}
-                {animationComplete && (
-                    <div className="absolute m-2 sm:m-4 md:mt-14 lg:mt-0 md:m-10 inset-0 mt-60 sm:mt-8 self-center justify-self-center scale-100 sm:scale-75 md:scale-[.65] z-20 pointer-events-none">
-                        {/* <SwooshSVG
+                )} */}
+                {/* {animationComplete && ( */}
+                <div className="absolute m-2 sm:m-4 md:mt-14 lg:mt-0 md:m-10 inset-0 mt-60 sm:mt-8 self-center justify-self-center scale-100 sm:scale-75 md:scale-[.65] z-20 pointer-events-none">
+                    {/* <SwooshSVG
                             innerColor={categories[middleIndex]?.secondaryColor}
                             outerColor={categories[middleIndex]?.primaryColor}
                         /> */}
-                        <MomoSvg
-                            innerColor={categories[middleIndex]?.secondaryColor}
-                            outerColor={categories[middleIndex]?.primaryColor}
-                        />
-                    </div>
-                )}
+                    <MomoSvg
+                        innerColor={categories[middleIndex]?.secondaryColor}
+                        outerColor={categories[middleIndex]?.primaryColor}
+                    />
+                </div>
+                {/* )} */}
 
                 <div className="max-w-6xl mx-auto px-3 sm:px-4 w-full relative">
                     <div className="mt-32 sm:mt-10 lg:mt-2 mb-8 md:mb-0 bg-black sm:mb-16 bg-transparent flex-col flex justify-center items-center">
