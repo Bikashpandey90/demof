@@ -9,12 +9,16 @@ import { useInView } from "react-intersection-observer";
 const NewFooter = () => {
 
     const [imageRevealed, setImageRevealed] = useState(false)
+    const [footerLogoRevealed, setFooterLogoRevealed] = useState(false)
+    const [footerContentRevealed, setFooterContentRevealed] = useState(false)
 
 
     const lastScrollY = useRef(0)
     const [isScrollingDown, setIsScrollingDown] = useState(true)
 
     const { ref: imageRef, inView: imageInView } = useInView({ threshold: 0.3 })
+    const { ref: footerLogoRef, inView: footerLogoInView } = useInView({ threshold: 0.3 })
+    const { ref: footerContentRef, inView: footerContentInView } = useInView({ threshold: 0.3 })
 
 
     useEffect(() => {
@@ -33,6 +37,18 @@ const NewFooter = () => {
     }, [imageInView, isScrollingDown])
 
 
+    useEffect(() => {
+        if (footerLogoInView && isScrollingDown) setFooterLogoRevealed(true)
+    }, [footerLogoInView, isScrollingDown])
+
+
+    useEffect(() => {
+        if (footerContentInView && isScrollingDown) setFooterContentRevealed(true)
+    }, [footerContentInView, isScrollingDown])
+
+
+
+
     return (
         <footer className="w-full bg-[#ff8000] relative overflow -z-10">
 
@@ -49,12 +65,24 @@ const NewFooter = () => {
             </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 ">
-                <div className="flex justify-center mb-8">
+                <div className="flex justify-center mb-8 transition-all duration-1000"
+                    ref={footerLogoRef}
+                    style={{
+                        opacity: footerLogoRevealed ? 1 : 0,
+                        transform: footerLogoRevealed ? "translateY(0)" : "translateY(30px)",
+                    }}
+                >
                     <img src='momo.png' alt='MOMOGUYS Logo' className="h-32  w-auto" />
 
                 </div>
 
-                <div className="flex justify-center gap-6 mb-12">
+                <div className="flex justify-center gap-6 mb-12 transition-all duration-1000"
+                    ref={footerContentRef}
+                    style={{
+                        opacity: footerContentRevealed ? 1 : 0,
+                        transform: footerContentRevealed ? "translateY(0)" : "translateY(30px)",
+                    }}
+                >
                     <a href="#facebook" className="text-white hover:text-red-600 transition-colors" aria-label="Facebook">
                         <FaFacebookF size={24} />
                     </a>
@@ -70,7 +98,14 @@ const NewFooter = () => {
                     </a>
                 </div>
 
-                <div className="flex flex-wrap justify-center gap-6 text-center mb-4 text-xl font-semibold text-white font-brando">
+                <div className="flex flex-wrap justify-center gap-6 text-center mb-4 text-xl font-semibold text-white font-brando transition-all duration-1000"
+                    ref={footerContentRef}
+                    style={{
+                        opacity: footerContentRevealed ? 1 : 0,
+                        transform: footerContentRevealed ? "translateY(0)" : "translateY(30px)",
+                        transitionDelay: "200ms",
+                    }}
+                >
                     <NavLink to="/contact" className="hover:text-red-600 transition-colors">
                         CONTACT US
                     </NavLink>
@@ -92,14 +127,28 @@ const NewFooter = () => {
                     </NavLink>
                 </div>
 
-                <div className="text-center mb-4">
+                <div className="text-center mb-4 transition-all duration-1000"
+                    ref={footerContentRef}
+                    style={{
+                        opacity: footerContentRevealed ? 1 : 0,
+                        transform: footerContentRevealed ? "translateY(0)" : "translateY(30px)",
+                        transitionDelay: "300ms",
+                    }}
+                >
                     <button className="text-sm font-semibold font-brando text-white hover:text-red-600 transition-colors">
                         COOKIE PREFERENCES
                     </button>
                 </div>
 
 
-                <div className="text-center text-lg  text-white">
+                <div className="text-center text-lg  text-white transition-all duration-1000"
+
+                    ref={footerContentRef}
+                    style={{
+                        opacity: footerContentRevealed ? 1 : 0,
+                        transform: footerContentRevealed ? "translateY(0)" : "translateY(30px)",
+                        transitionDelay: "300ms",
+                    }}>
                     <p>© 2025 MOMO GUYS Karnatakka, India, Inc.</p>
                 </div>
             </div>

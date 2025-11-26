@@ -1,4 +1,6 @@
+import { useEffect, useRef, useState } from 'react'
 import NeuButton from './button'
+import { useInView } from 'react-intersection-observer'
 
 export default function Liscense() {
     const certifications = [
@@ -28,6 +30,35 @@ export default function Liscense() {
             src: '/liscense/l5.svg'
         },
     ]
+    const [headingRevealed, setHeadingRevealed] = useState(false)
+    const [descriptionRevealed, setDescriptionRevealed] = useState(false)
+    const [certificationsRevealed, setCertificationsRevealed] = useState(false)
+
+    const lastScrollY = useRef(0)
+    const [isScrollingDown, setIsScrollingDown] = useState(true)
+
+    const { ref: headingRef, inView: headingInView } = useInView({ threshold: 0.3 })
+    const { ref: descriptionRef, inView: descriptionInView } = useInView({ threshold: 0.3 })
+    const { ref: certificationsRef, inView: certificationsInView } = useInView({ threshold: 0.2 })
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY
+            setIsScrollingDown(currentScrollY > lastScrollY.current)
+            lastScrollY.current = currentScrollY
+        }
+        window.addEventListener('scroll', handleScroll, { passive: true })
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [])
+    useEffect(() => {
+        if (headingInView && isScrollingDown) setHeadingRevealed(true)
+    }, [headingInView, isScrollingDown])
+    useEffect(() => {
+        if (descriptionInView && isScrollingDown) setDescriptionRevealed(true)
+    }, [descriptionInView, isScrollingDown])
+    useEffect(() => {
+        if (certificationsInView && isScrollingDown) setCertificationsRevealed(true)
+    }, [certificationsInView, isScrollingDown])
 
     return (
         <>
@@ -44,15 +75,40 @@ export default function Liscense() {
 
                 <div className="container mx-auto px-4 max-w-5xl">
                     <div className="text-center mb-12">
-                        <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold text-black font-turbinado text-foreground mb-6 text-balance">
+                        <h2
+                            ref={headingRef}
+                            className="text-4xl md:text-5xl lg:text-7xl font-bold text-black font-turbinado text-foreground mb-6 text-balance transition-all duration-1000"
+                            style={{
+                                opacity: headingRevealed ? 1 : 0,
+                                transform: headingRevealed ? "translateY(0)" : "translateY(30px)",
+
+                            }}
+                        >
                             Food Safety
                         </h2>
-                        <p className="text-lg lg:text-2xl text-muted-foreground text-black font-gothic max-w-2xl mx-auto leading-relaxed">
-                            All our products meet the highest global food safety standards. We are also halal certified and certified RSPO.
+                        <p
+                            ref={descriptionRef}
+
+                            className="text-lg lg:text-2xl text-muted-foreground text-black font-gothic max-w-3xl mx-auto leading-relaxed transition-all duration-1000"
+                            style={{
+                                opacity: descriptionRevealed ? 1 : 0,
+                                transform: descriptionRevealed ? "translateY(0)" : "translateY(30px)",
+                            }}
+                        >
+
+                            All our products meet the highest global food safety standards.We are also halal certified and certified RSPO.
                         </p>
                     </div>
 
-                    <div className="flex flex-wrap justify-center items-center gap-8 md:gap-10 mb-12">
+                    <div
+                        ref={certificationsRef}
+                        className="flex flex-wrap justify-center items-center gap-8 md:gap-10 mb-12 transition-all duration-1000"
+                        style={{
+                            opacity: certificationsRevealed ? 1 : 0,
+                            transform: certificationsRevealed ? "translateY(0)" : "translateY(30px)",
+                            transitionDelay: "100ms",
+                        }}
+                    >
                         {certifications.map((cert) => (
                             <div key={cert.id} className="flex  items-center justify-center">
                                 <img
@@ -64,13 +120,20 @@ export default function Liscense() {
                         ))}
                     </div>
 
-                    <div className="flex justify-center">
+                    <div className="flex justify-center"
+                        style={{
+                            opacity: certificationsRevealed ? 1 : 0,
+                            transform: certificationsRevealed ? "translateY(0)" : "translateY(30px)",
+                            transitionDelay: "100ms",
+
+                        }}
+                    >
                         <NeuButton shadow="#5CB12F" className="bg-[#5CB12F]  text-[#ececec]" color="#ececec">
                             View More
                         </NeuButton>
                     </div>
                 </div>
-            </section>
+            </section >
 
         </>
     )

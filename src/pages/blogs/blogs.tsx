@@ -1,6 +1,37 @@
 import OurRange from "@/components/our-range";
+import { useEffect, useRef, useState } from "react";
+import { useInView } from "react-intersection-observer";
 
 const BlogsPage = () => {
+    const [contentRevealed, setContentRevealed] = useState(false);
+    const [headingRevealed, setHeadingRevealed] = useState(false);
+
+    const lastScrollY = useRef(0)
+    const [isScrollingDown, setIsScrollingDown] = useState(true)
+
+    const { ref: contentRef, inView: contentInView } = useInView({ threshold: 0.3 })
+    const { ref: headingRef, inView: headingInView } = useInView({ threshold: 0.3 })
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY
+            setIsScrollingDown(currentScrollY > lastScrollY.current)
+            lastScrollY.current = currentScrollY
+        }
+
+        window.addEventListener("scroll", handleScroll, { passive: true })
+        return () => window.removeEventListener("scroll", handleScroll)
+    }, [])
+
+    useEffect(() => {
+        if (contentInView && isScrollingDown) setContentRevealed(true)
+    }, [contentInView, isScrollingDown])
+
+    useEffect(() => {
+        if (headingInView && isScrollingDown) setHeadingRevealed(true)
+    }, [headingInView, isScrollingDown])
+
+
+
     return (<>
 
 
@@ -47,11 +78,26 @@ const BlogsPage = () => {
         <section className="relative w-full bg-[#F9971F] py-16 md:py-24 overflow-hidden">
 
             <div className="relative z-10 max-w-3xl mx-auto px-6 text-center ">
-                <h1 className="text-4xl md:text-4xl leading-9 font-bold text-white font-brando mb-8 ">
+                <h1 className="text-4xl md:text-4xl leading-9 font-bold text-white font-brando mb-8 transition-all duration-1000"
+                    ref={headingRef}
+                    style={{
+                        opacity: headingRevealed ? 1 : 0,
+                        transform: headingRevealed ? "translateY(0)" : "translateY(30px)",
+                        transitionDelay: "50ms",
+                    }}
+                >
                     THE TASTIEST SNACK YOU CAN ENJOY IN A MUG.
                 </h1>
 
-                <div className="space-y-6 text-white font-gothic font-thin  text-lg md:text-xl leading-7">
+                <div
+                    ref={contentRef}
+                    className="space-y-6 text-white font-gothic font-thin  text-lg md:text-xl leading-7 transition-all duration-1000"
+                    style={{
+                        opacity: contentRevealed ? 1 : 0,
+                        transform: contentRevealed ? "translateY(0)" : "translateY(30px)",
+                        transitionDelay: "100ms",
+                    }}
+                >
                     <p>
                         Slow down for a few delicious minutes with Mug Shot. The Warm comforting flavour packed snack that good to
                         go in five minutes. Use your favourite Mug for the perfect pick me up.
