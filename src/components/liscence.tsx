@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import NeuButton from './button'
 import { useInView } from 'react-intersection-observer'
+// import NeuButton from './buttons/neu'
 
 export default function Liscense() {
     const certifications = [
@@ -128,9 +128,11 @@ export default function Liscense() {
 
                         }}
                     >
-                        <NeuButton shadow="#5CB12F" className="bg-[#5CB12F]  text-[#ececec]" color="#ececec">
-                            View More
-                        </NeuButton>
+                        {/* <NeuButton shadow="#5CB12F" className="bg-[#5CB12F]  text-[#ececec]" color="#ececec">
+                            
+                        </NeuButton> */}
+
+
                     </div>
                 </div>
             </section >

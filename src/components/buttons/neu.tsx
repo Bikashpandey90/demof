@@ -1,10 +1,8 @@
-const NeuButton = () => {
+const NeuButton = ({ text }: { text: string }) => {
     return (
-        <div className="bg-white min-h-[200px] flex items-center justify-center">
-            <button className="px-6 py-2 font-medium bg-indigo-500 text-white w-fit transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]">
-                View More
-            </button>
-        </div>
+        <button className="px-6 py-2 font-quicksand text-2xl border-2 border-[#D63D29] bg-white text-[#D63D29] rounded-3xl w-fit transition-all shadow-[4px_4px_0px_#D63D29] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px]">
+            {text}
+        </button>
     );
 };
 

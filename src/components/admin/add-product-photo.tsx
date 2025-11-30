@@ -7,7 +7,7 @@ import { Upload, X, GripVertical } from 'lucide-react'
 interface ImagePreview {
     id: string
     file: File | null
-    preview: string
+    url: string
     type: "image" | "svg"
 }
 
@@ -35,7 +35,7 @@ const AddProductPhoto = forwardRef(function AddProductPhoto(
                     const preview: ImagePreview = {
                         id: `${Date.now()}-${Math.random()}`,
                         file,
-                        preview: e.target?.result as string,
+                        url: e.target?.result as string,
                         type: file.type === "image/svg+xml" ? "svg" : "image",
                     }
                     setImages((prev) => [...prev, preview])
@@ -104,7 +104,7 @@ const AddProductPhoto = forwardRef(function AddProductPhoto(
             const loaded: ImagePreview[] = defaultImages.map((url) => ({
                 id: `${Date.now()}-${Math.random()}`,
                 file: null,
-                preview: url,
+                url: url,
                 type: "image" as const,
             }))
             setImages(loaded)
@@ -181,7 +181,7 @@ const AddProductPhoto = forwardRef(function AddProductPhoto(
                                     </div>
                                 ) : (
                                     <img
-                                        src={img.preview || "/placeholder.svg"}
+                                        src={img?.url || "/placeholder.svg"}
                                         alt="Product preview"
                                         className="w-full h-full object-contain"
                                     />

@@ -4,7 +4,7 @@ import { useRef } from "react"
 
 import { useState, useEffect } from "react"
 import { useInView } from "react-intersection-observer"
-import NeuButton from "./button"
+import NeuButton from "./buttons/neu"
 
 export default function FollowUs() {
     const posts = [
@@ -105,9 +105,10 @@ export default function FollowUs() {
                             transitionDelay: "300ms",
                         }}
                     >
-                        <NeuButton shadow="#DFBF0E" className="bg-[#DFBF0E]  text-white" color="#249F95">
+                        {/* <NeuButton shadow="#DFBF0E" className="bg-[#DFBF0E]  text-white" color="#249F95">
                             CONNECT
-                        </NeuButton>
+                        </NeuButton> */}
+                        <NeuButton text="Connect" />
                     </div>
 
                     <div

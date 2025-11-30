@@ -2,7 +2,7 @@
 
 import { useInView } from "react-intersection-observer"
 import { useState, useEffect, useRef } from "react"
-import NeuButton from "./button"
+import NeuButton from "./buttons/neu"
 
 export default function GetInTouch() {
     const [headingRevealed, setHeadingRevealed] = useState(false)
@@ -89,10 +89,11 @@ export default function GetInTouch() {
                                 }}
                             >
 
-                                <NeuButton shadow="#FF8A15" className="bg-[#FF8A15]  text-white" color="#C6211D">
+                                {/* <NeuButton shadow="#FF8A15" className="bg-[#FF8A15]  text-white" color="#C6211D">
 
 
-                                    CONTACT US</NeuButton>
+                                    CONTACT US</NeuButton> */}
+                                <NeuButton text="CONTACT US" />
                             </div>
                         </div>
                     </div>

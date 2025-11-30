@@ -32,6 +32,11 @@ export default {
 						'Bourton',
 						'sans-serif'
 					],
+				quicksand:
+					[
+						'QuickSand',
+						'sans-serif'
+					],
 
 
 			},

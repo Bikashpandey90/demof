@@ -183,7 +183,7 @@ const Card = ({ url, title, description }: ItemType) => {
 
     return (
         <div
-            className="group flex flex-col h-full  rounded-xl overflow-hidden bg-card hover:shadow-lg transition-shadow duration-300 flex-shrink-0 w-[250px] lg:w-[420px]"
+            className="group flex flex-col h-full  rounded-sm overflow-hidden bg-card hover:shadow-lg transition-shadow duration-300 flex-shrink-0 w-[250px] lg:w-[420px]"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >

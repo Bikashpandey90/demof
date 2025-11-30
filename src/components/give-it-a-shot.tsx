@@ -78,9 +78,9 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
     const [bowlRevealed, setBowlRevealed] = useState(false)
     const [tomatoesRevealed, setTomatoesRevealed] = useState(false)
 
-    const leftIndex = (currentIndex - 1 + categories.length) % categories.length
+    // const leftIndex = (currentIndex - 1 + categories.length) % categories.length
     const middleIndex = currentIndex
-    const rightIndex = (currentIndex + 1) % categories.length
+    // const rightIndex = (currentIndex + 1) % categories.length
 
     const wasInView = useRef({
         takeAShot: false,
@@ -232,7 +232,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                     />
                 )} */}
                 {/* {animationComplete && ( */}
-                <div className="absolute m-2 sm:m-4 md:mt-14 lg:mt-0 md:m-10 inset-0 mt-60 sm:mt-8 self-center justify-self-center scale-100 sm:scale-75 md:scale-[.65] z-20 pointer-events-none">
+                <div className="absolute m-2 sm:m-4 md:mt-14 lg:mb-72 md:m-10 inset-0  sm:mt-8 lg:mt-8 self-center justify-self-center scale-100  z-20 pointer-events-none">
                     {/* <SwooshSVG
                             innerColor={categories[middleIndex]?.secondaryColor}
                             outerColor={categories[middleIndex]?.primaryColor}
@@ -244,13 +244,13 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                 </div>
                 {/* )} */}
 
-                <div className="max-w-6xl mx-auto px-3 sm:px-4 w-full relative">
+                <div className="max-w-6xl mx-auto px-3 sm:px-4 w-full relative ">
                     <div className="mt-32 sm:mt-10 lg:mt-2 mb-8 md:mb-0 bg-black sm:mb-16 bg-transparent flex-col flex justify-center items-center">
-                        <div className="flex flex-col items-start justify-start   mt-2 lg:mt-8 sm:mt-6 mb-4">
+                        <div className="flex flex-col items-start justify-start mt-2 lg:mt-8 sm:mt-6 mb-4">
                             <span className="  font-brando rotate-[-10deg] sm:rotate-[-12deg] lg:rotate-[-10deg] text-white leading-10 text-[48px] sm:text-[42px] md:text-[72px] lg:text-[100px] flex   items-center justify-center max-w-full">
                                 INDIA's #1
                             </span>
-                            <span className="font-brando rotate-[-10deg] lg:-mt-7 sm:rotate-[-12deg] lg:rotate-[-10deg] text-white leading-2 text-[58px] sm:text-[56px] md:text-[96px] lg:text-[160px]  flex   items-center justify-center max-w-full">
+                            <span className="font-brando rotate-[-10deg] lg:-mt-7 sm:rotate-[-12deg] lg:rotate-[-10deg] text-white  xl:leading-2 lg:leading-2 text-[74px] sm:text-[56px] md:text-[96px] lg:text-[160px]  flex  items-center justify-center max-w-full">
                                 MOMO
                             </span>
                         </div>
@@ -258,7 +258,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
 
                     <div
                         ref={carouselRef}
-                        className="relative h-64 sm:h-80 md:h-96 flex items-center justify-center mb-12 sm:mb-20 cursor-grab active:cursor-grabbing select-none"
+                        className="relative h-64  sm:h-80 md:h-96 flex items-center justify-center mb-12 sm:mb-20 cursor-grab active:cursor-grabbing select-none"
                         onMouseDown={handleDragStart}
                         onMouseMove={handleDragMove}
                         onMouseUp={handleDragEnd}
@@ -269,7 +269,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                     >
                         <div className="flex flex-col justify-center items-center w-full">
                             <div className="relative w-full md:mt-20 justify-center gap-64 items-center flex max-w-md">
-                                <img
+                                {/* <img
                                     src={categories[leftIndex]?.image || "/placeholder.svg"}
                                     alt="left carousel item"
                                     className={`${isDragging ? 'carousel-slide-dragging' : 'carousel-slide'} w-[45%] h-[45%] object-cover mt-36 sm:mt-0 scale-[1.25] sm:scale-100 drop-shadow-2xl overflow place-self-end items-center z-20`}
@@ -277,7 +277,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                                         transform: `translateX(${isDragging ? dragOffset * 0.2 : 0}px)`,
                                     }}
                                     draggable={false}
-                                />
+                                /> */}
                                 <div className="flex justify-center items-center gap-4 sm:gap-8 px-2 sm:px-4 mb-2">
                                     <div
                                         className="relative h-56 sm:h-72 md:h-[360px] w-40 sm:w-60 md:w-72 flex items-center justify-center overflow"
@@ -302,7 +302,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                                         />
                                     </div>
                                 </div>
-                                <img
+                                {/* <img
                                     src={categories[rightIndex]?.image || "/placeholder.svg"}
                                     alt="right carousel item"
                                     className={`${isDragging ? 'carousel-slide-dragging' : 'carousel-slide'} w-[45%] h-[45%] mt-36 sm:mt-0 object-cover drop-shadow-2xl overflow place-self-end z-20`}
@@ -310,7 +310,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                                         transform: `translateX(${isDragging ? dragOffset * 0.2 : 0}px)`,
                                     }}
                                     draggable={false}
-                                />
+                                /> */}
                             </div>
 
                             <div className="flex items-center mt-20 sm:mt-0 justify-center gap-2 sm:gap-0 z-[40]">

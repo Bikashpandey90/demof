@@ -10,7 +10,9 @@ import { useNavigate } from 'react-router-dom'
 interface Product {
     _id: string
     name: string
-    images: [string]
+    images: [{
+        url: string
+    }]
     category: {
         title: string
     },
@@ -155,7 +157,7 @@ export default function ProductList() {
                                             <div className="text-3xl ">
 
                                                 <img
-                                                    src={product?.images[0]}
+                                                    src={product?.images[0]?.url || ''}
                                                     className='h-10 w-10 object-contain overflow'
                                                 />
                                             </div>

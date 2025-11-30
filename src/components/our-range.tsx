@@ -134,8 +134,8 @@ export default function OurRange({ activeCategory }: OurRangeProps) {
     }, [])
 
     return (
-        <section className="bg-[#C6211D] py-8 md:py-16 relative overflow-hidden">
-            <div className="w-full mx-auto">
+        <section className="bg-[#C6211D] py-8 md:py-16 relative overflow justify-center items-center flex">
+            <div className="w-full mx-auto max-w-7xl">
                 <h2
                     ref={headingRef}
                     className="text-5xl md:text-7xl leading-[3rem] md:leading-[6rem] font-bold text-white text-center mb-4 md:mb-8 drop-shadow-lg font-turbinado transition-all duration-1000"
@@ -173,29 +173,24 @@ export default function OurRange({ activeCategory }: OurRangeProps) {
                 </p>
 
                 <div className="md:hidden px-4 mb-4 relative mx-14 z-20">
-                    <div ref={dropdownRef} className="relative ">
+                    <div ref={dropdownRef} className="relative">
                         <button
                             onClick={handleDropdownToggle}
-                            style={{
-                                boxShadow: `2px 2px 0px #C6211D, 6px 6px 0px #D97706`,
-                                borderColor: "#C6211D",
-                            }}
-                            className="w-full bg-[#FF8000] text-white font-bold text-lg py-2 px-4 rounded-xl border-4 flex items-center justify-between hover:translate-x-1 hover:translate-y-1 transition-all uppercase tracking-wider"
+                            className="w-full px-6 py-2 font-quicksand text-2xl border-2 border-[#D63D29] bg-white text-[#D63D29] rounded-3xl  transition-all shadow-[4px_4px_0px_#D63D29] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] flex items-center justify-between uppercase tracking-wider"
                         >
                             {selectedCategory || "Select Category"}
                             <ChevronDown size={20} className={`transition-transform ${isDropdownOpen ? "rotate-180" : ""}`} />
                         </button>
-
                         {isDropdownOpen && (
-                            <div className="absolute top-full left-0 right-0 bg-white rounded-xl mt-2  ">
-                                {categories.map((category) => (
+                            <div className="absolute top-full left-0 right-0 bg-white rounded-3xl mt-2 border-2 border-[#D63D29] overflow-hidden">
+                                {categories.map((category, index) => (
                                     <button
                                         key={category._id}
                                         onClick={() => handleCategorySelect(category?.title)}
-                                        className={`w-full text-left px-4 py-3 font-bold text-lg transition-colors uppercase tracking-wider ${selectedCategory === category?.title
-                                            ? "bg-[#FF8000] text-white"
-                                            : "bg-[#FF8000] text-white hover:bg-gray-100"
-                                            } first:rounded-t-xl last:rounded-b-xl`}
+                                        className={`w-full text-left px-6 py-2 font-quicksand text-lg transition-all uppercase tracking-wider border-2 ${selectedCategory === category?.title
+                                            ? "bg-[#D63D29] text-white border-[#D63D29]"
+                                            : "bg-white text-[#D63D29] border-white hover:bg-gray-50"
+                                            } ${index === 0 ? "rounded-t-xl" : ""} ${index === categories.length - 1 ? "rounded-b-xl" : ""}`}
                                     >
                                         {category?.title}
                                     </button>
@@ -231,9 +226,9 @@ export default function OurRange({ activeCategory }: OurRangeProps) {
                                         onClick={() => navigate("/products/" + product.slug)}
                                     >
                                         <img
-                                            src={product.images[0] || "/placeholder.svg"}
+                                            src={product?.images[0]?.url || "/placeholder.svg"}
                                             alt={product.name}
-                                            className={`h-48 md:h-80 w-auto object-contain pointer-events-none
+                                            className={`h-48 md:h-80 w-auto object-cover pointer-events-none
                                                 ${sliderRevealed ? 'product-bounce' : ''}
                                                 `}
                                         />
@@ -259,27 +254,13 @@ export default function OurRange({ activeCategory }: OurRangeProps) {
                             <button
                                 key={category._id}
                                 onClick={() => setSelectedCategory(selectedCategory === category?.title ? null : category.title)}
+                                className="px-6 py-2 font-quicksand text-2xl border-2 border-[#D63D29] bg-white text-[#D63D29] rounded-3xl w-fit transition-all shadow-[4px_4px_0px_#D63D29] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] uppercase tracking-wider"
                                 style={{
-                                    boxShadow:
-                                        selectedCategory === category?.title
-                                            ? `2px 2px 0px #C6211D, 6px 6px 0px #D97706`
-                                            : `2px 2px 0px #C6211D, 6px 6px 0px transparent`,
-                                    borderColor: "#C6211D",
+                                    ...(selectedCategory === category?.title && {
+                                        backgroundColor: "#D63D29",
+                                        color: "white",
+                                    }),
                                 }}
-                                className={`
-                  px-6 py-2 
-                  text-lg md:text-2xl 
-                  font-bold 
-                  text-white 
-                  transition-all
-                  rounded-xl
-                  border-4
-                  hover:translate-x-1
-                  hover:translate-y-1
-                  uppercase
-                  tracking-wider
-                  ${selectedCategory === category?.title ? "bg-[#FF8000]" : "bg-[#C6211D]"}
-                `}
                             >
                                 {category?.title}
                             </button>

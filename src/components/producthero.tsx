@@ -2,12 +2,12 @@
 
 import { useParams } from "react-router-dom";
 import { useInView } from "react-intersection-observer"
-import NeuButton from "./button";
 import productSvc from "@/services/product.service";
 import { useEffect, useState, useRef } from "react";
 import IngridientTop from "./svg/ingridientTop";
 import IngridientBottom from "./svg/ingridientBottom";
 import DirectionBottom from "./svg/directionBottom";
+import NeuButton from "./buttons/neu";
 
 export interface ProductDetail {
     nutritionalInfo: NutritionalInfo;
@@ -23,7 +23,11 @@ export interface ProductDetail {
     vegNonVeg: string;
     ingridients: string;
     tagline: string;
-    images: string[];
+    images: [
+        {
+            url: string
+        }
+    ]
     directionImages: DirectionImage[];
     status: string;
     createdAt: string;
@@ -141,11 +145,11 @@ export default function ProductHero() {
                     >
                         <div className="relative w-full lg:max-w-[500px]">
                             <img
-                                src={product?.images[0]}
+                                src={product?.images[0].url}
                                 alt={product?.name}
                                 width={400}
                                 height={600}
-                                className="w-full h-auto drop-shadow-2xl"
+                                className="w-full h-auto drop-shadow-2xl "
                             />
                         </div>
                     </div>
@@ -192,7 +196,7 @@ export default function ProductHero() {
                                 transitionDelay: "200ms",
                             }}
                         >
-                            <NeuButton shadow={product?.primaryColor || "#172538"} className="bg-[#172538] text-[#416BA9]"
+                            {/* <NeuButton shadow={product?.primaryColor || "#172538"} className="bg-[#172538] text-[#416BA9]"
                                 style={{
                                     backgroundColor: product?.primaryColor || '#416BA9',
                                     color: product?.secondaryColor || '#416BA9'
@@ -201,7 +205,9 @@ export default function ProductHero() {
                                 }}
                                 color={product?.secondaryColor || "#416BA9"}>
                                 Buy It Now
-                            </NeuButton>
+                            </NeuButton> */}
+                            <NeuButton text="Buy it now"></NeuButton>
+
                         </div>
 
                         <div

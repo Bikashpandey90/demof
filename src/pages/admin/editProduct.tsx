@@ -18,7 +18,10 @@ interface ProductData {
         title: string
 
     }
-    images: string[]
+    images: [{
+        url: string,
+        position?: number
+    }]
     status: "active" | "inactive"
     tagline: string
     ingridients: string
@@ -154,21 +157,35 @@ export default function ProductEditPage() {
 
             payload.append("nutritionalInfo", JSON.stringify(data.nutritionalInfo))
 
-            images.forEach((img) => {
-                if (img.file) {
-                    payload.append("images", img.file) // new uploaded image
-                } else {
-                    // payload.append("existingImages", img.preview) // existing URLs
-                }
-            })
+            // images.forEach((img) => {
+            //     if (img.file) {
+            //         payload.append("images", img.file) // new uploaded image
+            //     } else {
+            //         // payload.append("existingImages", img.preview) // existing URLs
+            //     }
+            // })
+            const existingImages = images
+                .filter(img => !img.file)
+                .map((img, index) => ({ url: img.url, position: index }));
 
-            directionImages.forEach((img) => {
-                if (img.file) {
-                    payload.append("directionImages", img.file)
-                } else {
-                    // payload.append("existingDirectionImages", img.preview)
-                }
-            })
+            payload.append("images", JSON.stringify(existingImages));
+
+
+
+            const newImages = images.filter(img => img.file)
+            newImages.forEach(img => payload.append("images", img.file))
+
+            // directionImages.forEach((img) => {
+            //     if (img.file) {
+            //         payload.append("directionImages", img.file)
+            //     } else {
+            //         // payload.append("existingDirectionImages", img.preview)
+            //     }
+            // })
+            const existingDirectionImages = directionImages.filter(img => !img.file).map(img => img.preview || img.url)
+            const newDirectionImages = directionImages.filter(img => img.file)
+            existingDirectionImages.forEach(url => payload.append("existingDirectionImages", url))
+            newDirectionImages.forEach(img => payload.append("directionImages", img.file))
 
             const response = await productSvc.updateProduct(product?._id || '', payload as any)
             console.log("Product updated:", response)
@@ -223,7 +240,7 @@ export default function ProductEditPage() {
 
     const previewProduct = {
         name: product.name,
-        image: product.images[0],
+        image: product?.images[0]?.url || '',
         status: product.status,
         category: product.category?.title,
     }
@@ -242,7 +259,7 @@ export default function ProductEditPage() {
                     </div>
 
                     <div className="lg:col-span-2 space-y-6">
-                        <AddProductPhoto defaultImages={product?.images} ref={productImagesRef} heading="Update Product Images" />
+                        <AddProductPhoto defaultImages={product?.images?.map(img => typeof img === 'string' ? img : img.url)} ref={productImagesRef} heading="Update Product Images" />
 
                         <ProductInformation formData={formData} setFormData={setFormData} />
 
