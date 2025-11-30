@@ -11,7 +11,7 @@ const ButtonPage = () => {
         </div>
         <NeuFollowButton />
         <DotExpandButton />
-        <NeuButton />
+        <NeuButton text="Button Check" />
 
 
     </>)
