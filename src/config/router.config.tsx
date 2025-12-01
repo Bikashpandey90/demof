@@ -17,6 +17,7 @@ import CategoryEditPage from "@/pages/admin/editCategory";
 import ButtonPage from "@/pages/buttons/button";
 import ProductEditPage from "@/pages/admin/editProduct";
 import BlogsPage from "@/pages/blogs/blogs";
+import HomeCheck from "@/pages/rescheck/page";
 
 const Routing: FC = () => {
     const router = createBrowserRouter([
@@ -34,6 +35,9 @@ const Routing: FC = () => {
                 }, {
                     path: 'blogs',
                     element: <BlogsPage />
+                }, {
+                    path: 'rescheck',
+                    element: <HomeCheck />
                 }
             ]
         }, {
