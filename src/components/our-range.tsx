@@ -226,7 +226,7 @@ export default function OurRange({ activeCategory }: OurRangeProps) {
                                         onClick={() => navigate("/products/" + product.slug)}
                                     >
                                         <img
-                                            src={product?.images[0]?.url || "/placeholder.svg"}
+                                            src={product?.images?.[0]?.url ?? "/placeholder.svg"}
                                             alt={product.name}
                                             className={`h-48 md:h-80 w-auto object-cover pointer-events-none
                                                 ${sliderRevealed ? 'product-bounce' : ''}
