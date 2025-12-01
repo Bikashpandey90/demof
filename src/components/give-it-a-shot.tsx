@@ -367,7 +367,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                 <div className="relative mt-32 sm:mt-16 lg:mt-44 xl:mt-56 flex flex-col items-center justify-end h-48 sm:h-80 md:h-[300px] lg:h-[320px] z-10">
                     <img
                         ref={takeAShotRef}
-                        src="/takeamugshot.png"
+                        src="/enjoy2.png"
                         alt="take a mug shot"
                         className="absolute top-0 left-8 hidden md:hidden lg:block sm:block sm:left-20 md:left-10 lg:left-14 xl:left-36 sm:-top-8 md:-top-10 w-32 sm:w-48 md:w-[250px] lg:w-[350px] z-0 transition-all duration-500"
                         style={{

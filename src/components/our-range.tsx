@@ -254,11 +254,11 @@ export default function OurRange({ activeCategory }: OurRangeProps) {
                             <button
                                 key={category._id}
                                 onClick={() => setSelectedCategory(selectedCategory === category?.title ? null : category.title)}
-                                className="px-6 py-2 font-quicksand text-2xl border-2 border-[#D63D29] bg-white text-[#D63D29] rounded-3xl w-fit transition-all shadow-[4px_4px_0px_#D63D29] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] uppercase tracking-wider"
+                                className="px-6 py-2 font-quicksand text-2xl border-2 border-[#D63D29] bg-[#D63D29] text-white rounded-3xl w-fit transition-all shadow-[4px_4px_0px_#D63D29] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] uppercase tracking-wider"
                                 style={{
                                     ...(selectedCategory === category?.title && {
-                                        backgroundColor: "#D63D29",
-                                        color: "white",
+                                        backgroundColor: "white",
+                                        color: "#D63D29",
                                     }),
                                 }}
                             >

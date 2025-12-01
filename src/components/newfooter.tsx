@@ -55,7 +55,7 @@ const NewFooter = () => {
             <div className="bg-[url('/paper-bg.png')] bg-cover bg-center  sm:bg-cover flex items-center justify-center translate-y-[-50px] -z-10 py-20 sm:py-12">
                 <img
                     ref={imageRef}
-                    src="/betteroff.png"
+                    src="/betteroffmomo.png"
                     className="h-[100%] w-[100%] sm:h-[80%] sm:w-[80%] p-4 sm:p-16 md:p-32 self-center justify-self-center transition-all duration-1000"
                     style={{
                         opacity: imageRevealed ? 1 : 0,
