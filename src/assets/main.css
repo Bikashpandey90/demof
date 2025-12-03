@@ -134,6 +134,21 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Escuela';
+  src: url('/fonts/Escuela.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'EscuelaLight';
+  src: url('/fonts/EscuelaLight.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+
 
 
 .scrollbar-hide::-webkit-scrollbar {
@@ -178,4 +193,9 @@
 
 .product-bounce {
   animation: productBounce 0.6s ease-out forwards;
+}
+
+/* Hover bounce effect */
+.product-bounce-hover:hover {
+  animation: productBounce 0.7s ease-out forwards;
 }

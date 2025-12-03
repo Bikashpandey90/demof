@@ -22,6 +22,8 @@ export default function OurRange({ activeCategory }: OurRangeProps) {
     const sliderRef = useRef<HTMLDivElement>(null)
     const dropdownRef = useRef<HTMLDivElement>(null)
     const [products, setProducts] = useState<ProductDetail[]>([])
+    const [activeItem, setActiveItem] = useState<string | null>(null)
+
     const navigate = useNavigate()
 
     const [headingRevealed, setHeadingRevealed] = useState(false)
@@ -217,20 +219,26 @@ export default function OurRange({ activeCategory }: OurRangeProps) {
                             {filteredProducts.map((product) => (
                                 <div key={product._id} className="flex flex-col  items-center flex-shrink-0">
                                     <div
-                                        className="
+                                        className={`
         w-32 h-48 md:w-[220px] md:h-80
         flex items-center justify-center
         transition-all duration-300 ease-out
         active:scale-95
-    "
+           ${sliderRevealed ? 'product-bounce' : ''}
+    `}
                                         onClick={() => navigate("/products/" + product.slug)}
+                                        onMouseEnter={() => setActiveItem(product._id)}
+                                        onMouseLeave={() => setActiveItem(null)}
                                     >
                                         <img
                                             src={product?.images?.[0]?.url ?? "/placeholder.svg"}
                                             alt={product.name}
-                                            className={`h-48 md:h-80 w-auto object-cover pointer-events-none
-                                                ${sliderRevealed ? 'product-bounce' : ''}
+                                            className={`h-48 md:h-80 w-auto object-cover 
+                                             
+                                                 
+                                                ${activeItem === product._id ? 'hover:animate-bounce-custom' : ''}
                                                 `}
+
                                         />
                                     </div>
 
@@ -253,17 +261,19 @@ export default function OurRange({ activeCategory }: OurRangeProps) {
                         {categories.map((category) => (
                             <button
                                 key={category._id}
-                                onClick={() => setSelectedCategory(selectedCategory === category?.title ? null : category.title)}
-                                className="px-6 py-2 font-quicksand text-2xl border-2 border-[#D63D29] bg-[#D63D29] text-white rounded-3xl w-fit transition-all shadow-[4px_4px_0px_#D63D29] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] uppercase tracking-wider"
-                                style={{
-                                    ...(selectedCategory === category?.title && {
-                                        backgroundColor: "white",
-                                        color: "#D63D29",
-                                    }),
-                                }}
+                                onClick={() => setSelectedCategory(category.title)}
+                                className={`font-quicksand text-2xl uppercase tracking-wider transition-all duration-300
+        ${selectedCategory === category.title
+                                        ? "px-6 py-2  border-[#FF8000] bg-white text-[#FF8000] rounded-3xl shadow-[4px_4px_0px_#FF8000] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px]"
+                                        : "text-white opacity-80 hover:opacity-100 cursor-pointer"
+                                    }
+    `}
                             >
-                                {category?.title}
+                                {category.title}
                             </button>
+
+
+
                         ))}
                     </div>
                 </div>

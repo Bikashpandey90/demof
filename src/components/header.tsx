@@ -16,7 +16,7 @@ export default function Header() {
                     onClick={() => {
                         navigate('/')
                     }}>
-                    <div className={`w-[90px] p-2 z-50 lg:p sm:w-[150px] lg:w-[200px] md:w-[150px] h-auto sm:my-2 lg:mr-2 flex items-center justify-center  transition-all duration-500 
+                    <div className={`w-[90px] p-2 z-50 lg:p sm:w-[150px] lg:w-[200px] md:w-[150px] h-auto sm:my-2 lg:mr-2 flex items-center justify-center  transition-all duration-700 
                     `}
                         //  ${isMenuOpen ? " opacity-100 scale-100" : "opacity-0 scale-100"}
 

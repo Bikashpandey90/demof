@@ -1,15 +1,14 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { ArrowRightIcon } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi"
 import useMeasure from "react-use-measure"
 import IngridientTop from "./svg/ingridientTop"
-import { useNavigate } from "react-router-dom"
 import { useInView } from "react-intersection-observer"
+import NeuButton from "./buttons/neu"
 
-const CARD_WIDTH = 350
+const CARD_WIDTH = 280
 const MARGIN = 20
 const CARD_SIZE = CARD_WIDTH + MARGIN
 
@@ -21,12 +20,36 @@ const BREAKPOINTS = {
 const CardCarousel = () => {
     const [ref, { width }] = useMeasure()
     const [offset, setOffset] = useState(0)
+    const { ref: buttonRef, inView: buttonInView } = useInView({ threshold: 0.3 })
+    const [buttonRevealed, setButtonRevealed] = useState(false)
+
+
+    const [items] = useState([
+        {
+            id: 1,
+            image: "/post1.webp",
+            title: "Anya Hindmarch Ice Cream.",
+            description: "McVitie's will be returning to the Anya Hindmarch summer concept store...",
+        },
+        {
+            id: 2,
+            image: "/post2.webp",
+            title: "Introducing McVitie's Pink Digestives.",
+            description: "Bringing a burst of colour into the biscuit world, McVitie's Pink...",
+        },
+        {
+            id: 3,
+            image: "/post3.webp",
+            title: "McVitie's Chocolate Digestives...",
+            description: "McVitie's launched the Chocolate Digestives Experience, an immersive...",
+        },
+    ])
 
     const CARD_BUFFER = width > BREAKPOINTS.lg ? 3 : width > BREAKPOINTS.sm ? 2 : 1
 
     const CAN_SHIFT_LEFT = offset < 0
 
-    const CAN_SHIFT_RIGHT = Math.abs(offset) < CARD_SIZE * (items.length - CARD_BUFFER)
+    const CAN_SHIFT_RIGHT = Math.abs(offset) < CARD_SIZE * (items?.length - CARD_BUFFER)
 
     const shiftLeft = () => {
         if (!CAN_SHIFT_LEFT) {
@@ -41,9 +64,6 @@ const CardCarousel = () => {
         }
         setOffset((pv) => (pv -= CARD_SIZE))
     }
-
-
-
 
     const [headingRevealed, setHeadingRevealed] = useState(false)
     const [descriptionRevealed, setDescriptionRevealed] = useState(false)
@@ -79,21 +99,22 @@ const CardCarousel = () => {
         if (postsInView && isScrollingDown) setPostsRevealed(true)
     }, [postsInView, isScrollingDown])
 
+
+    useEffect(() => {
+        if (buttonInView && isScrollingDown) setButtonRevealed(true)
+    }, [buttonInView, isScrollingDown])
+
     return (
         <>
-
-            <div className="relative w-full "
-                style={{ backgroundColor: '#ececec' }}
-            >
-                <IngridientTop
-                    color={'#ff8000'}
-                />
+            <div className="relative w-full " style={{ backgroundColor: "#ececec" }}>
+                <IngridientTop color={"#ff8000"} />
             </div>
 
             <section className="bg-[#ff8000] " ref={ref}>
                 <div className="relative overflow-hidden p-4 ">
                     <div className="mx-auto max-w-6xl lg:my-16">
-                        <p className="mb-4 font-semibold text-white text-center font-turbinado text-8xl leading-[96px] transition-all duration-1000"
+                        <p
+                            className="mb-4 font-semibold text-white text-center font-turbinado text-8xl leading-[96px] transition-all duration-1000"
                             ref={headingRef}
                             style={{
                                 opacity: headingRevealed ? 1 : 0,
@@ -132,20 +153,33 @@ const CardCarousel = () => {
                                 }
                             }}
                             animate={{ x: offset }}
-                            className="flex gap-5 lg:gap-8 mb-10 cursor-grab active:cursor-grabbing select-none transition-all duration-1000"
+                            className="flex gap-5 lg:gap-8 mb-10 cursor-grab active:cursor-grabbing select-none justify-center items-center transition-all duration-1000"
                             ref={postsContainerRef}
                             style={{
                                 opacity: postsRevealed ? 1 : 0,
                                 transform: descriptionRevealed ? "translateY(0)" : "translateY(30px)",
                                 transitionDelay: "300ms",
                             }}
+                        >
+                            {items.map((item) => (
+                                <BrandStoryCards key={item.id} card={item} />
+                            ))}
 
+                        </motion.div>
+
+                        <div
+                            ref={buttonRef}
+                            className=" flex justify-center items-center"
+                            style={{
+                                opacity: buttonRevealed ? 1 : 0,
+                                transform: buttonRevealed ? "translateY(0)" : "translateY(30px)",
+                                transition: "all 1000ms",
+                                transitionDelay: "200ms",
+                            }}
                         >
 
-                            {items.map((item) => {
-                                return <Card key={item.id} {...item} />
-                            })}
-                        </motion.div>
+                            <NeuButton text="SEE MORE" />
+                        </div>
                     </div>
 
                     <>
@@ -171,141 +205,40 @@ const CardCarousel = () => {
                         </motion.button>
                     </>
                 </div>
-            </section >
+            </section>
         </>
     )
 }
 
+interface BrandStoryCard {
+    id: number
+    image: string
+    title: string
+    description: string
+}
 
-const Card = ({ url, title, description }: ItemType) => {
-    const [isHovered, setIsHovered] = useState(false)
-    const navigate = useNavigate()
+interface BrandStoryCardsProps {
+    card: BrandStoryCard
+}
 
+const BrandStoryCards = ({ card }: BrandStoryCardsProps) => {
     return (
-        <div
-            className="group flex flex-col h-full  rounded-sm overflow-hidden bg-card hover:shadow-lg transition-shadow duration-300 flex-shrink-0 w-[250px] lg:w-[420px]"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-        >
-            <div className="relative overflow-hidden h-56 bg-muted">
+        <div className="group bg-white rounded-3xl overflow-hidden transition-all duration-300  hover:-translate-y-2 w-[280px] flex-shrink-0 hover:shadow-2xl">
+            <div className="overflow-hidden bg-slate-100 h-64   rounded-3xl">
                 <img
-                    src={url || "/placeholder.svg"}
-                    alt={title}
-                    draggable={false}
-                    className={`w-full h-full object-cover transition-transform duration-300 ${isHovered ? "scale-105" : "scale-100"
-                        }`}
-
+                    src={card.image || "/placeholder.svg"}
+                    alt={card.title}
+                    className="w-full h-full object-cover transition-all duration-300 group-hover:scale-110 "
                 />
-                <div className="absolute top-4 left-4">
-                    {/* <span className="inline-block px-3 py-1 bg-primary text-primary-foreground text-xs font-semibold rounded-full">
-                        {category}
-                    </span> */}
-                </div>
             </div>
 
-            <div className="flex flex-col flex-grow p-5"
-
-            >
-
-                <h3 className="text-lg font-gothic  font-bold mb line-clamp-2 text-card-foreground group-hover:text-primary transition-colors">
-                    {title}
-                </h3>
-
-                <p className="text-sm text-muted-foreground mb-2 line-clamp-3 flex-grow font-gothic">{description}</p>
-
-                {/* <div className="flex items-center justify-between text-xs text-muted-foreground mb-4 flex-wrap gap-2">
-                    <div className="flex items-center gap-1">
-                        <CalendarIcon size={14} />
-                        <span className="font-gothic">{date}</span>
-                    </div>
-                    <span className="px-2 py-1 bg-muted rounded font-gothic">{readTime}</span>
-                </div> */}
-
-                <div className="flex items-center text-sm font-semibold text-primary group-hover:text-primary/80 transition-colors"
-                    onClick={() => {
-                        navigate('/blogs')
-
-                    }}>
-                    <span className="font-gothic">Read more</span>
-                    <ArrowRightIcon
-                        size={16}
-                        className={`ml-2 -rotate-45 transition-transform duration-300 ${isHovered ? "translate-x-1" : ""}`}
-                    />
-                </div>
+            <div className="px-4 pb-4 mt-8 mb-10">
+                <h3 className=" font-bold text-blue-900 mb-2 text-3xl font-escuela line-clamp-3">{card.title}</h3>
+                <p className="text-gray-600 text-base font-escuelalight  leading-relaxed line-clamp-3">{card.description}</p>
             </div>
         </div>
     )
 }
 
+
 export default CardCarousel
-
-type ItemType = {
-    id: number
-    url: string
-    category: string
-    title: string
-    description: string
-    date: string
-    readTime: string
-}
-
-const items: ItemType[] = [
-    {
-        id: 1,
-        title: "Getting Started with Next.js 16",
-        description:
-            "Learn the fundamentals of Next.js 16 and how to build modern web applications with React Server Components.",
-        category: "Next.js",
-        date: "Nov 15, 2025",
-        readTime: "5 min read",
-        url: "/posts/mug.jpeg",
-    },
-    {
-        id: 2,
-        title: "Mastering TypeScript for React",
-        description: "Deep dive into TypeScript best practices when building React components and managing complex state.",
-        category: "TypeScript",
-        date: "Nov 10, 2025",
-        readTime: "8 min read",
-        url: "/posts/pot.jpeg",
-    },
-    {
-        id: 3,
-        title: "Tailwind CSS Tips and Tricks",
-        description:
-            "Discover advanced Tailwind CSS techniques to create responsive and beautiful user interfaces efficiently.",
-        category: "CSS",
-        date: "Nov 5, 2025",
-        readTime: "6 min read",
-        url: "/posts/drink.jpeg",
-    },
-    {
-        id: 4,
-        title: "Building Performant Web Apps",
-        description:
-            "Optimize your Next.js application with image optimization, code splitting, and smart caching strategies.",
-        category: "Performance",
-        date: "Oct 28, 2025",
-        readTime: "7 min read",
-        url: "/posts/download.jpeg",
-    },
-    {
-        id: 5,
-        title: "Database Design Patterns",
-        description: "Explore essential database patterns and architecture decisions for building scalable applications.",
-        category: "Database",
-        date: "Oct 20, 2025",
-        readTime: "9 min read",
-        url: "/posts/bags.jpeg",
-    },
-    {
-        id: 6,
-        title: "React Server Components Explained",
-        description:
-            "Understand the power of React Server Components and how they can improve your application performance.",
-        category: "React",
-        date: "Oct 15, 2025",
-        readTime: "6 min read",
-        url: "/posts/mug.jpeg",
-    },
-]

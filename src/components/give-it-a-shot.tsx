@@ -232,7 +232,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                     />
                 )} */}
                 {/* {animationComplete && ( */}
-                <div className="absolute m-2 sm:m-4 md:mt-14 lg:mb-72 md:m-10 inset-0  sm:mt-8 lg:mt-8 self-center justify-self-center scale-100  z-20 pointer-events-none">
+                <div className="absolute m-2 sm:m-4 md:mt-14 lg:mb-0 xl:mb-72 md:m-10 inset-0  sm:mt-8 lg:mt-8 self-center justify-self-center scale-100  z-20 pointer-events-none">
                     {/* <SwooshSVG
                             innerColor={categories[middleIndex]?.secondaryColor}
                             outerColor={categories[middleIndex]?.primaryColor}
@@ -242,10 +242,10 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                         outerColor={categories[middleIndex]?.primaryColor}
                     />
                 </div>
-                {/* )} */}
+
 
                 <div className="max-w-6xl mx-auto px-3 sm:px-4 w-full relative ">
-                    <div className="mt-32 sm:mt-10 lg:mt-2 mb-8 md:mb-0 bg-black sm:mb-16 bg-transparent flex-col flex justify-center items-center">
+                    {/* <div className="mt-32 sm:mt-10 lg:mt-2 mb-8 md:mb-0 bg-black sm:mb-16 bg-transparent flex-col flex justify-center items-center">
                         <div className="flex flex-col items-start justify-start mt-2 lg:mt-8 sm:mt-6 mb-4">
                             <span className="  font-brando rotate-[-10deg] sm:rotate-[-12deg] lg:rotate-[-10deg] text-white leading-10 text-[48px] sm:text-[42px] md:text-[72px] lg:text-[100px] flex   items-center justify-center max-w-full">
                                 INDIA's #1
@@ -254,6 +254,9 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                                 MOMO
                             </span>
                         </div>
+                    </div> */}
+                    <div className="mt-32 sm:mt-10 -rotate-6 lg:mt-24 xl:mt-2 p-6 md:mt-24 mb-8 md:mb-0 bg-black sm:mb-16 bg-transparent flex justify-end items-center">
+                        <img src="/india.png" alt="Mug Shot sachet" className="scale-[2] sm:scale-100 md:scale-125" />
                     </div>
 
                     <div
@@ -367,9 +370,9 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                 <div className="relative mt-32 sm:mt-16 lg:mt-44 xl:mt-56 flex flex-col items-center justify-end h-48 sm:h-80 md:h-[300px] lg:h-[320px] z-10">
                     <img
                         ref={takeAShotRef}
-                        src="/enjoy2.png"
+                        src="/newenh.png"
                         alt="take a mug shot"
-                        className="absolute top-0 left-8 hidden md:hidden lg:block sm:block sm:left-20 md:left-10 lg:left-14 xl:left-36 sm:-top-8 md:-top-10 w-32 sm:w-48 md:w-[250px] lg:w-[350px] z-0 transition-all duration-500"
+                        className="absolute top-0 left-8 hidden md:hidden lg:block sm:block sm:left-20 md:left-10 lg:left-14 xl:left-36 sm:-top-8 md:-top-10 w-32 sm:w-48 md:w-[250px] lg:w-[350px] xl:w-[400px] z-0 transition-all duration-500"
                         style={{
                             opacity: takeAShotRevealed ? 1 : 0,
                             transform: takeAShotRevealed ? "translateY(0)" : "translateY(30px)",

@@ -14,12 +14,7 @@ export default function ProductForm() {
     const directionImagesRef = useRef<{ getImages: () => any[]; reset: () => void }>(null)
     const navigate = useNavigate()
 
-    const [product] = useState({
-        name: "Mug Shot Sachet",
-        category: "SACHETS",
-        image: "/mugshotsachet.png",
-        status: 'active'
-    })
+
 
     const [formData, setFormData] = useState({
         productName: "",
@@ -37,7 +32,8 @@ export default function ProductForm() {
             footer: "",
         },
         primaryColor: '#ff8000',
-        secondaryColor: '#ff8000'
+        secondaryColor: '#ff8000',
+        packetColor: ''
     })
 
 
@@ -132,7 +128,8 @@ export default function ProductForm() {
                         footer: "",
                     },
                     primaryColor: '#ff8000',
-                    secondaryColor: '#ff8000'
+                    secondaryColor: '#ff8000',
+                    packetColor: ""
                 })
                 productImagesRef.current?.reset()
                 directionImagesRef.current?.reset()
@@ -165,7 +162,12 @@ export default function ProductForm() {
             <div className="px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
                     <div className="lg:col-span-1">
-                        <ProductPreview product={product} />
+                        <ProductPreview product={{
+                            name: formData.productName || "Untitled Product",
+                            category: formData.category,
+                            image: productImagesRef.current?.getImages()?.[0]?.url || "/mugshotsachet.png",
+                            status: formData.status
+                        }} />
                     </div>
 
                     <div className="lg:col-span-2 space-y-6">
@@ -213,7 +215,8 @@ export default function ProductForm() {
                                             footer: "",
                                         },
                                         primaryColor: '#ff8000',
-                                        secondaryColor: '#ff8000'
+                                        secondaryColor: '#ff8000',
+                                        packetColor: ''
                                     })
                                     productImagesRef.current?.reset()
                                     directionImagesRef.current?.reset()

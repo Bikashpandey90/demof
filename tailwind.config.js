@@ -37,6 +37,16 @@ export default {
 						'QuickSand',
 						'sans-serif'
 					],
+				escuela:
+					[
+						'Escuela',
+						'sans-serif'
+					],
+				escuelalight:
+					[
+						'EscuelaLight',
+						'sans-serif'
+					],
 
 
 			},
@@ -114,13 +124,23 @@ export default {
 					to: {
 						height: '0'
 					}
-				}
+				},
+				'bounce-custom': {
+					'0%': { transform: 'translateY(0)' },
+					'30%': { transform: 'translateY(16px)' },
+					'60%': { transform: 'translateY(10px)' },
+					'100%': { transform: 'translateY(0)' },
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'bounce-custom': 'bounce-custom 0.7s ease-out',
 			}
-		}
+
+		},
+
+
 	},
 	plugins: [require("tailwindcss-animate")],
 }

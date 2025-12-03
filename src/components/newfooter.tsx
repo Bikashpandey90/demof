@@ -52,19 +52,27 @@ const NewFooter = () => {
     return (
         <footer className="w-full bg-[#ff8000] relative overflow -z-10">
 
-            <div className="bg-[url('/paper-bg.png')] bg-cover bg-center  sm:bg-cover flex items-center justify-center translate-y-[-50px] -z-10 py-20 sm:py-12">
+            <div className="bg-[url('/paper-bg2.png')] bg-cover bg-center  sm:bg-cover flex items-center justify-center translate-y-[-50px] -z-10 py-20 sm:py-12">
                 <img
                     ref={imageRef}
-                    src="/betteroffmomo.png"
-                    className="h-[100%] w-[100%] sm:h-[80%] sm:w-[80%] p-4 sm:p-16 md:p-32 self-center justify-self-center transition-all duration-1000"
+                    src="/newbetter.png"
+                    className="h-[100%] w-[100%] sm:h-[80%] sm:w-[80%]  p-4 sm:p-16 md:p-32 self-center justify-self-center transition-all duration-1000 "
                     style={{
                         opacity: imageRevealed ? 1 : 0,
                         transform: imageRevealed ? "translateY(0)" : "translateY(30px)",
                     }}
                 />
             </div>
+            <div className="w-full translate-y-[-50px]">
+                <div className="h-[12px] w-full bg-[#249F95]"></div>
+                <div className="h-[12px] w-full bg-[#D32F2F]"></div>
+            </div>
+
+
+
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 ">
+
                 <div className="flex justify-center mb-8 transition-all duration-1000"
                     ref={footerLogoRef}
                     style={{
@@ -72,7 +80,7 @@ const NewFooter = () => {
                         transform: footerLogoRevealed ? "translateY(0)" : "translateY(30px)",
                     }}
                 >
-                    <img src='momo.png' alt='MOMOGUYS Logo' className="h-32  w-auto" />
+                    <img src='momo.png' alt='MOMOGUYS Logo' className="h-32 w-auto hover:animate-bounce-custom z-50" />
 
                 </div>
 

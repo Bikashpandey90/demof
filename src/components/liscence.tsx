@@ -62,12 +62,7 @@ export default function Liscense() {
 
     return (
         <>
-            <img
-                src="/orange.svg"
-                alt="Top irregular edge"
-                className="bg-[#ececec]  w-full h-auto block scale-[1.2]  -mt-[1px] z-100 pointer-events-none"
-                style={{ display: "block", margin: 0, padding: 0, lineHeight: 0 }}
-            />
+       
 
 
             <section className="relative w-full bg-[#ececec] py-20 overflow-hidden">
