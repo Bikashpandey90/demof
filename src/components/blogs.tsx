@@ -1,68 +1,40 @@
 "use client"
 
-import { motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
 import useMeasure from "react-use-measure"
 import IngridientTop from "./svg/ingridientTop"
 import { useInView } from "react-intersection-observer"
 import NeuButton from "./buttons/neu"
-
-const CARD_WIDTH = 280
-const MARGIN = 20
-const CARD_SIZE = CARD_WIDTH + MARGIN
-
-const BREAKPOINTS = {
-    sm: 640,
-    lg: 1024,
-}
+import { useNavigate } from "react-router-dom"
 
 const CardCarousel = () => {
-    const [ref, { width }] = useMeasure()
-    const [offset, setOffset] = useState(0)
+    const [ref] = useMeasure()
     const { ref: buttonRef, inView: buttonInView } = useInView({ threshold: 0.3 })
     const [buttonRevealed, setButtonRevealed] = useState(false)
-
 
     const [items] = useState([
         {
             id: 1,
             image: "/post1.webp",
             title: "Anya Hindmarch Ice Cream.",
+            link: "/blogs",
             description: "McVitie's will be returning to the Anya Hindmarch summer concept store...",
         },
         {
             id: 2,
             image: "/post2.webp",
             title: "Introducing McVitie's Pink Digestives.",
+            link: "/blogs",
             description: "Bringing a burst of colour into the biscuit world, McVitie's Pink and...",
         },
         {
             id: 3,
             image: "/post3.webp",
             title: "McVitie's Chocolate Digestives...",
+            link: "/blogs",
             description: "McVitie's launched the Chocolate Digestives Experience, an immersive...",
         },
     ])
-
-    const CARD_BUFFER = width > BREAKPOINTS.lg ? 3 : width > BREAKPOINTS.sm ? 2 : 1
-
-    const CAN_SHIFT_LEFT = offset < 0
-
-    const CAN_SHIFT_RIGHT = Math.abs(offset) < CARD_SIZE * (items?.length - CARD_BUFFER)
-
-    const shiftLeft = () => {
-        if (!CAN_SHIFT_LEFT) {
-            return
-        }
-        setOffset((pv) => (pv += CARD_SIZE))
-    }
-
-    const shiftRight = () => {
-        if (!CAN_SHIFT_RIGHT) {
-            return
-        }
-        setOffset((pv) => (pv -= CARD_SIZE))
-    }
 
     const [headingRevealed, setHeadingRevealed] = useState(false)
     const [descriptionRevealed, setDescriptionRevealed] = useState(false)
@@ -97,7 +69,6 @@ const CardCarousel = () => {
     useEffect(() => {
         if (postsInView && isScrollingDown) setPostsRevealed(true)
     }, [postsInView, isScrollingDown])
-
 
     useEffect(() => {
         if (buttonInView && isScrollingDown) setButtonRevealed(true)
@@ -138,22 +109,10 @@ const CardCarousel = () => {
                             <br />
                             do better, or simply just make enquiries about the business.
                         </p>
-                        <motion.div
-                            drag="x"
-                            dragElastic={0.1}
-                            dragConstraints={{ left: -CARD_SIZE * (items.length - CARD_BUFFER), right: 0 }}
-                            onDragEnd={(event, info) => {
-                                const threshold = CARD_SIZE / 3
-                                console.log(event)
-                                if (info.offset.x < -threshold && CAN_SHIFT_RIGHT) {
-                                    shiftRight()
-                                } else if (info.offset.x > threshold && CAN_SHIFT_LEFT) {
-                                    shiftLeft()
-                                }
-                            }}
-                            animate={{ x: offset }}
-                            className="flex gap-5 lg:gap-8 mb-10 cursor-grab active:cursor-grabbing select-none justify-center items-center transition-all duration-1000"
+
+                        <div
                             ref={postsContainerRef}
+                            className="flex gap-5 lg:gap-8 mb-10 overflow-x-auto lg:overflow-visible scroll-smooth lg:justify-center lg:flex-nowrap transition-all duration-1000 scrollbar-hide"
                             style={{
                                 opacity: postsRevealed ? 1 : 0,
                                 transform: descriptionRevealed ? "translateY(0)" : "translateY(30px)",
@@ -163,8 +122,7 @@ const CardCarousel = () => {
                             {items.map((item) => (
                                 <BrandStoryCards key={item.id} card={item} />
                             ))}
-
-                        </motion.div>
+                        </div>
 
                         <div
                             ref={buttonRef}
@@ -176,12 +134,9 @@ const CardCarousel = () => {
                                 transitionDelay: "200ms",
                             }}
                         >
-
                             <NeuButton text="SEE MORE" />
                         </div>
                     </div>
-
-
                 </div>
             </section>
         </>
@@ -193,6 +148,7 @@ interface BrandStoryCard {
     image: string
     title: string
     description: string
+    link?: string
 }
 
 interface BrandStoryCardsProps {
@@ -200,9 +156,15 @@ interface BrandStoryCardsProps {
 }
 
 const BrandStoryCards = ({ card }: BrandStoryCardsProps) => {
+    const navigate = useNavigate()
     return (
         <div className="group bg-white rounded-3xl overflow-hidden transition-all duration-300  hover:-translate-y-2 w-[280px] flex-shrink-0 hover:shadow-2xl">
-            <div className="overflow-hidden bg-slate-100 h-64   rounded-3xl">
+            <div
+                className="overflow-hidden bg-slate-100 h-64   rounded-3xl"
+                onClick={() => {
+                    navigate(card?.link ?? "")
+                }}
+            >
                 <img
                     src={card.image || "/placeholder.svg"}
                     alt={card.title}
@@ -217,6 +179,5 @@ const BrandStoryCards = ({ card }: BrandStoryCardsProps) => {
         </div>
     )
 }
-
 
 export default CardCarousel

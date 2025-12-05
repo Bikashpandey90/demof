@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 
 import { Instagram, Facebook, Twitter } from 'lucide-react'
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import { SteamEffect } from "./steam-effect"
 
 interface AnimatedMenuProps {
@@ -16,8 +16,25 @@ export default function AnimatedMenu({ isOpen, onClose }: AnimatedMenuProps) {
     const [isFacebookHovered, setIsFacebookHovered] = useState(false)
     const [isInstagramHovered, setIsInstagramHovered] = useState(false)
     const [isTwitterHovered, setIsTwitterHovered] = useState(false)
+    const navigate = useNavigate()
 
 
+    const FeaturedProduct = ([
+
+        {
+            image: '/packet2.png',
+            name: "Darjeeling Chicken Momo",
+            link: '/products/darjeeling-chicken-momo'
+
+        },
+
+        {
+            image: '/packet3.png',
+            name: "Nepali Chicken Momo",
+            link: '/products/darjeeling-chicken-momo'
+
+        }
+    ])
 
     useEffect(() => {
         if (isOpen) {
@@ -81,10 +98,16 @@ export default function AnimatedMenu({ isOpen, onClose }: AnimatedMenuProps) {
                         transitionDelay: isOpen ? "200ms" : "0ms",
                     }}
                 >
-                    <div className="w-16 h-16 -rotate-6  lg:w-80  lg:h-80 md:w-24 md:h-24 hidden lg:block xl:block rounded-lg overflow">
+                    <div className="w-16 h-16 -rotate-6  lg:w-80  lg:h-80 md:w-24 md:h-24 hidden lg:block xl:block rounded-lg overflow"
+
+                        onClick={() => {
+                            onClose()
+                            navigate(FeaturedProduct[0].link)
+                        }}
+                    >
                         <img
-                            src="/packet2.png"
-                            alt="Product showcase"
+                            src={FeaturedProduct[0].image}
+                            alt={FeaturedProduct[0].name}
                             className="w-full h-full  object-contain"
                         />
                     </div>
@@ -97,10 +120,14 @@ export default function AnimatedMenu({ isOpen, onClose }: AnimatedMenuProps) {
                         transitionDelay: isOpen ? "250ms" : "0ms",
                     }}
                 >
-                    <div className="w-16 h-16 lg:w-80 lg:h-80 md:w-24 md:h-24  rounded-lg hidden lg:block xl:block  overflow ">
+                    <div className="w-16 h-16 lg:w-80 lg:h-80 md:w-24 md:h-24  rounded-lg hidden lg:block xl:block  overflow "
+                        onClick={() => {
+                            onClose()
+                            navigate(FeaturedProduct[1].link)
+                        }}>
                         <img
-                            src="/packet3.png"
-                            alt="Product showcase"
+                            src={FeaturedProduct[1].image}
+                            alt={FeaturedProduct[1].name}
                             className="w-full h-full object-contain"
                         />
                     </div>
