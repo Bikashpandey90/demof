@@ -40,7 +40,7 @@ export default function GetInTouch() {
     }, [buttonInView, isScrollingDown])
 
     return (
-        <>
+        <div className="w-full m-0 p-0 min-w-screen overflow">
             <img
                 src="/red-top.svg"
                 alt="Top irregular edge"
@@ -102,9 +102,9 @@ export default function GetInTouch() {
             <img
                 src="/red.svg"
                 alt="Bottom irregular edge"
-                className=" bg-transparent w-full h-auto block -mb-[1px] z-30 pointer-events-none"
-                style={{ display: "block", margin: 0, padding: 0, lineHeight: 0 }}
+                className=" bg-transparent max-w-none min-w-full  block -mb-[1px] z-30 pointer-events-none"
+                style={{ display: "block", width: "100%", height: "100%", margin: 0, padding: 0, lineHeight: 0 }}
             />
-        </>
+        </div>
     )
 }

@@ -66,4 +66,25 @@ export const HSLToHex = (h: number, s: number, l: number) => {
     b = Math.round((b + m) * 255)
     return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)
 }
+export function generateCategoryColors(baseColorHex: string) {
+    const { h, s, l } = hexToHSL(baseColorHex)
 
+    // Primary: lighten by 18%
+    const secondaryL = Math.min(l + 18, 100)
+    const secondaryColor = HSLToHex(h, s, secondaryL)
+
+    // Secondary: darken by 20%
+    const primaryL = Math.max(l - 20, 0)
+    const primaryColor = HSLToHex(h, s, primaryL)
+
+    // Background: lighten by 12% and reduce saturation by 10%
+    const bgL = Math.min(l + 12, 100)
+    const bgS = Math.max(s - 10, 0)
+    const backgroundColor = HSLToHex(h, bgS, bgL)
+
+    return {
+        primaryColor,
+        secondaryColor,
+        backgroundColor,
+    }
+}

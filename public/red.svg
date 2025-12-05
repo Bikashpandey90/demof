@@ -1,4 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="90.84" viewBox="0 0 1920 90.84">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="90.84"
+
+ preserveAspectRatio="none" viewBox="0 0 1920 90.84">
+ 
                   <defs>
                     <clipPath id="clip-path">
                       <rect id="Rectangle_44" data-name="Rectangle 44" width="1920" height="90.84" transform="translate(0 186)" fill="none"></rect>

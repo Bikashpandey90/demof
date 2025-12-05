@@ -44,7 +44,8 @@ export const AuthProvider = ({ children }: Readonly<{ children: React.ReactNode 
 
     if (isLoading)
         return (
-            <></>
+            <>
+            </>
 
         );
 

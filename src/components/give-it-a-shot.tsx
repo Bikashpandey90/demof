@@ -232,7 +232,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                     />
                 )} */}
                 {/* {animationComplete && ( */}
-                <div className="absolute m-2 sm:m-4 md:mt-14 lg:mb-0 xl:mb-72 md:m-10 inset-0  sm:mt-8 lg:mt-8 self-center justify-self-center scale-100  z-20 pointer-events-none">
+                <div className="absolute m-2 sm:m-4  md:mt-14 lg:mb-0 xl:mb-72 md:m-10 inset-0 sm:mt-8 lg:mt-8 self-center justify-self-center scale-100 z-20 pointer-events-none">
                     {/* <SwooshSVG
                             innerColor={categories[middleIndex]?.secondaryColor}
                             outerColor={categories[middleIndex]?.primaryColor}
@@ -255,7 +255,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                             </span>
                         </div>
                     </div> */}
-                    <div className="mt-32 sm:mt-10 -rotate-6 lg:mt-24 xl:mt-2 p-6 md:mt-24 mb-8 md:mb-0 bg-black sm:mb-16 bg-transparent flex justify-end items-center">
+                    <div className="mt-24 sm:mt-10 -rotate-6 lg:mt-24 xl:mt-2 p-6 md:mt-24 mb-8 md:mb-0 bg-black sm:mb-16 bg-transparent flex justify-end items-center">
                         <img src="/india.png" alt="Mug Shot sachet" className="scale-[2] sm:scale-100 md:scale-125" />
                     </div>
 
@@ -283,7 +283,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                                 /> */}
                                 <div className="flex justify-center items-center gap-4 sm:gap-8 px-2 sm:px-4 mb-2">
                                     <div
-                                        className="relative h-56 sm:h-72 md:h-[360px] w-40 sm:w-60 md:w-72 flex items-center justify-center overflow"
+                                        className="relative h-56  sm:h-72 md:h-[360px] w-40 sm:w-60 md:w-72 flex items-center justify-center overflow"
                                         key="carousel-container"
                                     >
                                         <img
@@ -376,7 +376,9 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                         style={{
                             opacity: takeAShotRevealed ? 1 : 0,
                             transform: takeAShotRevealed ? "translateY(0)" : "translateY(30px)",
+                            transitionDelay: '100ms'
                         }}
+
                     />
                     <img
                         ref={bowlRef}
@@ -399,7 +401,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                             opacity: tomatoesRevealed ? 1 : 0,
                             transform: tomatoesRevealed ? "translateY(0)" : "translateY(30px)",
                             transitionDuration: "1000ms",
-                            transitionDelay: "200ms",
+                            transitionDelay: "100ms",
                         }}
                     />
                 </div>

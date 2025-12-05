@@ -52,7 +52,7 @@ export default function FollowUs() {
     }, [postsInView, isScrollingDown])
 
     return (
-        <div className="bg-[#C6211D] w-full m-0 p-0 min-w-screen overflow-x-hidden">
+        <div className="bg-[#C6211D] w-full m-0 p-0 min-w-screen overflow">
             <img
                 src="/newblue.svg"
                 alt="Top irregular edge"
@@ -138,9 +138,12 @@ export default function FollowUs() {
             <img
                 src="/orange.svg"
                 alt="Top irregular edge"
-                className="bg-[#ececec] max-w-none min-w-full z-100 pointer-events-none"
-                style={{ display: "block", width: "100%", height: "auto", margin: 0, padding: 0, lineHeight: 0 }}
+                className="bg-[#ececec] max-w-none  object-fill min-w-full z-100 pointer-events-none"
+                style={{ display: "block", width: "100%", height: "100%", margin: 0, padding: 0, lineHeight: 0 }}
             />
+
+
+
 
         </div>
     )

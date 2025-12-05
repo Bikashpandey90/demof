@@ -1,9 +1,9 @@
 interface ProductPreviewProps {
     product: {
         name: string
-        category: string
         image: string
         status: string
+        category?: string
     }
 }
 
@@ -23,7 +23,7 @@ export default function ProductPreview({ product }: ProductPreviewProps) {
 
                 <div>
                     <h4 className="font-semibold text-gray-900">{product.name}</h4>
-                    <p className="text-sm text-gray-600 mt-1">{product.category}</p>
+                    {/* <p className="text-sm text-gray-600 mt-1">{product.category}</p> */}
                 </div>
 
 

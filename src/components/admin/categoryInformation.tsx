@@ -1,6 +1,8 @@
 "use client"
 
+import { generateCategoryColors } from "@/helper/helper"
 import { ColorPicker } from "../colorpicker/ColorPicker"
+import { FaEyeDropper } from "react-icons/fa"
 
 interface ProductInformationProps {
     formData: any
@@ -13,6 +15,22 @@ export default function CategoryInformation({ formData, setFormData }: ProductIn
             ...prev,
             [field]: value,
         }))
+    }
+
+    const pickPacketColor = async () => {
+        try {
+            if (!(window as any).EyeDropper) return alert("Your browser does not support color dropper.")
+            const eyeDropper = new (window as any).EyeDropper()
+            const result = await eyeDropper.open()
+            handleInputChange("packetColor", result.sRGBHex)
+
+            const { primaryColor, secondaryColor, backgroundColor } = generateCategoryColors(result.sRGBHex)
+            handleInputChange("primaryColor", primaryColor)
+            handleInputChange("secondaryColor", secondaryColor)
+            handleInputChange("backgroundColor", backgroundColor)
+        } catch (err) {
+            console.error(err)
+        }
     }
 
     return (
@@ -29,107 +47,116 @@ export default function CategoryInformation({ formData, setFormData }: ProductIn
                         onChange={(e) => handleInputChange("productName", e.target.value)}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
                     />
-
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
-                    <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    <select
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
                         value={formData.status}
                         onChange={(e) => handleInputChange("status", e.target.value)}
                     >
-                        <option value='inactive'>Inactive</option>
-                        <option value='active'>Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="active">Active</option>
                     </select>
                 </div>
-
             </div>
 
-            <div className="mb-6 grid lg:flex mt-4 gap- lg:justify-between">
-                <label className="block text-sm font-medium text-gray-700 mb">Primary Color</label>
-                <div className="flex gap-1">
-
-                    <ColorPicker
-                        defaultValue={formData.primaryColor}
-                        onChange={(color) => {
-                            let colorValue = typeof color === "string" ? color : (color?.toString?.() ?? "");
-                            let hex = colorValue;
-
-                            if (colorValue.startsWith("rgb")) {
-                                const [r, g, b] = colorValue
-                                    .replace(/^rgba?\(/, "")
-                                    .replace(/\)/, "")
-                                    .split(",")
-                                    .map((x) => parseInt(x.trim()));
-                                hex =
-                                    "#" +
-                                    [r, g, b]
-                                        .map((v) => v.toString(16).padStart(2, "0"))
-                                        .join("");
-                            }
-
-                            handleInputChange("primaryColor", hex);
-                        }}
-                    />
-
-
-                </div>
-                <label className="block text-sm font-medium text-gray-700 mb">Secondary Color</label>
-                <div className="flex gap-1">
-
-                    <ColorPicker
-                        defaultValue={formData.secondaryColor}
-                        onChange={(color) => {
-                            let colorValue = typeof color === "string" ? color : (color?.toString?.() ?? "");
-                            let hex = colorValue;
-
-                            if (colorValue.startsWith("rgb")) {
-                                const [r, g, b] = colorValue
-                                    .replace(/^rgba?\(/, "")
-                                    .replace(/\)/, "")
-                                    .split(",")
-                                    .map((x) => parseInt(x.trim()));
-                                hex =
-                                    "#" +
-                                    [r, g, b]
-                                        .map((v) => v.toString(16).padStart(2, "0"))
-                                        .join("");
-                            }
-
-                            handleInputChange("secondaryColor", hex);
-                        }}
-                    />
-                </div>
-                <label className="block text-sm font-medium text-gray-700 mb">Background Color</label>
-                <div className="flex gap-1">
-
-                    <ColorPicker
-                        defaultValue={formData.backgroundColor}
-                        onChange={(color) => {
-                            let colorValue = typeof color === "string" ? color : (color?.toString?.() ?? "");
-                            let hex = colorValue;
-
-                            if (colorValue.startsWith("rgb")) {
-                                const [r, g, b] = colorValue
-                                    .replace(/^rgba?\(/, "")
-                                    .replace(/\)/, "")
-                                    .split(",")
-                                    .map((x) => parseInt(x.trim()));
-                                hex =
-                                    "#" +
-                                    [r, g, b]
-                                        .map((v) => v.toString(16).padStart(2, "0"))
-                                        .join("");
-                            }
-
-                            handleInputChange("backgroundColor", hex);
-                        }}
-                    />
+            <div className="mb-6 grid lg:flex mt-4 gap-4 lg:justify-between">
+                <div className="mb-3">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Pick Packet Color:</label>
+                    <button
+                        type="button"
+                        onClick={pickPacketColor}
+                        className="px-4 py-2 flex-row flex gap-2 justify-center items-center bg-gray-200 rounded-lg hover:bg-gray-300"
+                    >
+                        <FaEyeDropper />
+                        Pick Color
+                    </button>
+                    {formData.packetColor && (
+                        <span
+                            className="inline-block w-8 h-8 rounded-full border ml-3"
+                            style={{ backgroundColor: formData.packetColor }}
+                        />
+                    )}
                 </div>
 
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb">Primary Color</label>
+                    <div className="flex gap-1">
+                        <ColorPicker
+                            defaultValue={formData.primaryColor}
+                            value={formData.primaryColor}
+                            onChange={(color) => {
+                                const colorValue = typeof color === "string" ? color : (color?.toString?.() ?? "")
+                                let hex = colorValue
+
+                                if (colorValue.startsWith("rgb")) {
+                                    const [r, g, b] = colorValue
+                                        .replace(/^rgba?\(/, "")
+                                        .replace(/\)/, "")
+                                        .split(",")
+                                        .map((x) => Number.parseInt(x.trim()))
+                                    hex = "#" + [r, g, b].map((v) => v.toString(16).padStart(2, "0")).join("")
+                                }
+
+                                handleInputChange("primaryColor", hex)
+                            }}
+                        />
+                    </div>
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb">Secondary Color</label>
+                    <div className="flex gap-1">
+                        <ColorPicker
+                            defaultValue={formData.secondaryColor}
+                            value={formData.secondaryColor}
+
+                            onChange={(color) => {
+                                const colorValue = typeof color === "string" ? color : (color?.toString?.() ?? "")
+                                let hex = colorValue
+
+                                if (colorValue.startsWith("rgb")) {
+                                    const [r, g, b] = colorValue
+                                        .replace(/^rgba?\(/, "")
+                                        .replace(/\)/, "")
+                                        .split(",")
+                                        .map((x) => Number.parseInt(x.trim()))
+                                    hex = "#" + [r, g, b].map((v) => v.toString(16).padStart(2, "0")).join("")
+                                }
+
+                                handleInputChange("secondaryColor", hex)
+                            }}
+                        />
+                    </div>
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb">Background Color</label>
+                    <div className="flex gap-1">
+                        <ColorPicker
+                            defaultValue={formData.backgroundColor}
+                            value={formData.backgroundColor}
+
+                            onChange={(color) => {
+                                const colorValue = typeof color === "string" ? color : (color?.toString?.() ?? "")
+                                let hex = colorValue
+
+                                if (colorValue.startsWith("rgb")) {
+                                    const [r, g, b] = colorValue
+                                        .replace(/^rgba?\(/, "")
+                                        .replace(/\)/, "")
+                                        .split(",")
+                                        .map((x) => Number.parseInt(x.trim()))
+                                    hex = "#" + [r, g, b].map((v) => v.toString(16).padStart(2, "0")).join("")
+                                }
+
+                                handleInputChange("backgroundColor", hex)
+                            }}
+                        />
+                    </div>
+                </div>
             </div>
-
-
-
-        </div >
+        </div>
     )
 }

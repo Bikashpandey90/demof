@@ -52,18 +52,18 @@ const NewFooter = () => {
     return (
         <footer className="w-full bg-[#ff8000] relative overflow -z-10">
 
-            <div className="bg-[url('/paper-bg2.png')] bg-cover bg-center  sm:bg-cover flex items-center justify-center translate-y-[-50px] -z-10 py-20 sm:py-12">
+            <div className="bg-[url('/paper-bg2.png')] bg-cover bg-center  sm:bg-cover flex items-center justify-center translate-y-[-70px] -z-10 py-20 sm:py-12">
                 <img
                     ref={imageRef}
-                    src="/newbetter.png"
-                    className="h-[100%] w-[100%] sm:h-[80%] sm:w-[80%]  p-4 sm:p-16 md:p-32 self-center justify-self-center transition-all duration-1000 "
+                    src="/ourbetter2.png"
+                    className="h-[100%] w-[100%] sm:h-[80%] sm:w-[80%] mt-10 p-4 sm:p-16 md:p-24 self-center justify-self-center transition-all duration-1000 "
                     style={{
                         opacity: imageRevealed ? 1 : 0,
                         transform: imageRevealed ? "translateY(0)" : "translateY(30px)",
                     }}
                 />
             </div>
-            <div className="w-full translate-y-[-50px]">
+            <div className="w-full translate-y-[-70px]">
                 <div className="h-[12px] w-full bg-[#249F95]"></div>
                 <div className="h-[12px] w-full bg-[#D32F2F]"></div>
             </div>

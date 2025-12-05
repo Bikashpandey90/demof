@@ -18,6 +18,7 @@ import ButtonPage from "@/pages/buttons/button";
 import ProductEditPage from "@/pages/admin/editProduct";
 import BlogsPage from "@/pages/blogs/blogs";
 import HomeCheck from "@/pages/rescheck/page";
+import { ItemsProvider } from "@/context/items-context";
 
 const Routing: FC = () => {
     const router = createBrowserRouter([
@@ -87,7 +88,9 @@ const Routing: FC = () => {
     return <>
         <QueryClientProvider client={queryClient}>
             <AuthProvider>
-                <RouterProvider router={router} />
+                <ItemsProvider>
+                    <RouterProvider router={router} />
+                </ItemsProvider>
             </AuthProvider>
         </QueryClientProvider>
     </>;

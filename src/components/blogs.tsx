@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi"
 import useMeasure from "react-use-measure"
 import IngridientTop from "./svg/ingridientTop"
 import { useInView } from "react-intersection-observer"
@@ -35,7 +34,7 @@ const CardCarousel = () => {
             id: 2,
             image: "/post2.webp",
             title: "Introducing McVitie's Pink Digestives.",
-            description: "Bringing a burst of colour into the biscuit world, McVitie's Pink...",
+            description: "Bringing a burst of colour into the biscuit world, McVitie's Pink and...",
         },
         {
             id: 3,
@@ -169,7 +168,7 @@ const CardCarousel = () => {
 
                         <div
                             ref={buttonRef}
-                            className=" flex justify-center items-center"
+                            className=" flex justify-center items-center mb-10"
                             style={{
                                 opacity: buttonRevealed ? 1 : 0,
                                 transform: buttonRevealed ? "translateY(0)" : "translateY(30px)",
@@ -182,28 +181,7 @@ const CardCarousel = () => {
                         </div>
                     </div>
 
-                    <>
-                        <motion.button
-                            initial={false}
-                            animate={{
-                                x: CAN_SHIFT_LEFT ? "0%" : "-100%",
-                            }}
-                            className="absolute left-0 top-[60%] z-30 rounded-r-xl bg-slate-100/30 p-3 pl-2 text-4xl text-white backdrop-blur-sm transition-[padding] hover:pl-3"
-                            onClick={shiftLeft}
-                        >
-                            <FiChevronLeft />
-                        </motion.button>
-                        <motion.button
-                            initial={false}
-                            animate={{
-                                x: CAN_SHIFT_RIGHT ? "0%" : "100%",
-                            }}
-                            className="absolute right-0 top-[60%] z-30 rounded-l-xl bg-slate-100/30 p-3 pr-2 text-4xl text-white backdrop-blur-sm transition-[padding] hover:pr-3"
-                            onClick={shiftRight}
-                        >
-                            <FiChevronRight />
-                        </motion.button>
-                    </>
+
                 </div>
             </section>
         </>

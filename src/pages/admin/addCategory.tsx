@@ -14,13 +14,13 @@ export default function CategoryForm() {
     const ingPhotoRef = useRef<{ getImages: () => any[]; reset: () => void }>(null)
 
 
-    const [product] = useState({
-        name: "Mug Shot Sachet",
-        image: "/mugshotsachet.png",
-        status: 'active',
-        category: "Sachets"
+    // const [product] = useState({
+    //     name: "Mug Shot Sachet",
+    //     image: "/mugshotsachet.png",
+    //     status: 'active',
+    //     category: "Sachets"
 
-    })
+    // })
 
     const [formData, setFormData] = useState({
         productName: "Mug Shot Sachet",
@@ -121,16 +121,31 @@ export default function CategoryForm() {
         }
     }
 
+    console.log(mainPhotoRef.current?.getImages()?.[0]?.url)
+
+
     return (
         <div className="min-h-screen bg-transparent">
             <div className="px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
                     <div className="lg:col-span-1">
-                        <CategoryPreview product={product} />
+                        <CategoryPreview product={
+                            {
+
+                                name: formData.productName || "Mug Shot Sachet",
+                                image: mainPhotoRef.current?.getImages()?.[0]?.preview || "/mugshotsachet.png",
+                                status: formData.status || 'active',
+
+                            }
+                        } />
                     </div>
 
                     <div className="lg:col-span-2 space-y-6">
-                        <AddCategoryPhoto ref={mainPhotoRef} heading={"Add Category Photos"} />
+                        <AddCategoryPhoto ref={mainPhotoRef} heading={"Add Category Photos"}
+
+
+
+                        />
 
                         <CategoryInformation
                             formData={formData}
