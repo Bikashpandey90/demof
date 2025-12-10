@@ -6,6 +6,7 @@ import HotTastyConvenient from "@/components/hot-tasty"
 import Liscense from "@/components/liscence"
 // import AnimatedMenu from "@/components/AnimatedMenu/AnimatedMenu"
 import OurRange from "@/components/our-range"
+import RecipesSection from "@/components/receipes"
 import { useRef, useState } from "react"
 
 const Home = () => {
@@ -37,6 +38,7 @@ const Home = () => {
 
                 <BlogPostCarousel />
                 <GetInTouch />
+                <RecipesSection />
             </main>
         </>
     )

@@ -8,7 +8,6 @@ import { useInView } from "react-intersection-observer";
 
 const NewFooter = () => {
 
-    const [imageRevealed, setImageRevealed] = useState(false)
     const [footerLogoRevealed, setFooterLogoRevealed] = useState(false)
     const [footerContentRevealed, setFooterContentRevealed] = useState(false)
 
@@ -16,7 +15,6 @@ const NewFooter = () => {
     const lastScrollY = useRef(0)
     const [isScrollingDown, setIsScrollingDown] = useState(true)
 
-    const { ref: imageRef, inView: imageInView } = useInView({ threshold: 0.3 })
     const { ref: footerLogoRef, inView: footerLogoInView } = useInView({ threshold: 0.3 })
     const { ref: footerContentRef, inView: footerContentInView } = useInView({ threshold: 0.3 })
 
@@ -32,9 +30,7 @@ const NewFooter = () => {
         return () => window.removeEventListener("scroll", handleScroll)
     }, [])
 
-    useEffect(() => {
-        if (imageInView && isScrollingDown) setImageRevealed(true)
-    }, [imageInView, isScrollingDown])
+
 
 
     useEffect(() => {
@@ -50,9 +46,9 @@ const NewFooter = () => {
 
 
     return (
-        <footer className="w-full bg-[#ff8000] relative overflow -z-10">
+        <footer className="w-full bg-[#ff8000] relative overflow ">
 
-            <div className="bg-[url('/paper-bg2.png')] bg-cover bg-center  sm:bg-cover flex items-center justify-center translate-y-[-70px] -z-10 py-20 sm:py-12">
+            {/* <div className="bg-[url('/paper-bg2.png')] bg-cover bg-center  sm:bg-cover flex items-center justify-center translate-y-[-70px] -z-10 py-20 sm:py-12">
                 <img
                     ref={imageRef}
                     src="/ourbetter2.png"
@@ -62,8 +58,8 @@ const NewFooter = () => {
                         transform: imageRevealed ? "translateY(0)" : "translateY(30px)",
                     }}
                 />
-            </div>
-            <div className="w-full translate-y-[-70px]">
+            </div> */}
+            <div className="w-full ">
                 <div className="h-[12px] w-full bg-[#249F95]"></div>
                 <div className="h-[12px] w-full bg-[#D32F2F]"></div>
             </div>

@@ -6,6 +6,8 @@ import IngridientTop from "./svg/ingridientTop"
 import { useInView } from "react-intersection-observer"
 import NeuButton from "./buttons/neu"
 import { useNavigate } from "react-router-dom"
+import { CiCalendar } from "react-icons/ci";
+
 
 const CardCarousel = () => {
     const [ref] = useMeasure()
@@ -18,6 +20,7 @@ const CardCarousel = () => {
             image: "/post1.webp",
             title: "Anya Hindmarch Ice Cream.",
             link: "/blogs",
+            date: "18th May 2025",
             description: "McVitie's will be returning to the Anya Hindmarch summer concept store...",
         },
         {
@@ -25,6 +28,7 @@ const CardCarousel = () => {
             image: "/post2.webp",
             title: "Introducing McVitie's Pink Digestives.",
             link: "/blogs",
+            date: "18th May 2025",
             description: "Bringing a burst of colour into the biscuit world, McVitie's Pink and...",
         },
         {
@@ -32,6 +36,7 @@ const CardCarousel = () => {
             image: "/post3.webp",
             title: "McVitie's Chocolate Digestives...",
             link: "/blogs",
+            date: "18th May 2025",
             description: "McVitie's launched the Chocolate Digestives Experience, an immersive...",
         },
     ])
@@ -149,6 +154,7 @@ interface BrandStoryCard {
     title: string
     description: string
     link?: string
+    date?: string
 }
 
 interface BrandStoryCardsProps {
@@ -158,9 +164,9 @@ interface BrandStoryCardsProps {
 const BrandStoryCards = ({ card }: BrandStoryCardsProps) => {
     const navigate = useNavigate()
     return (
-        <div className="group bg-white rounded-3xl overflow-hidden transition-all duration-300  hover:-translate-y-2 w-[280px] flex-shrink-0 hover:shadow-2xl">
+        <div className="group bg-white rounded-sm overflow transition-all duration-300  hover:-translate-y-2 w-[280px] flex-shrink-0 hover:shadow-2xl">
             <div
-                className="overflow-hidden bg-slate-100 h-64   rounded-3xl"
+                className="overflow-hidden rounded-t-sm bg-slate-100 h-64"
                 onClick={() => {
                     navigate(card?.link ?? "")
                 }}
@@ -168,13 +174,21 @@ const BrandStoryCards = ({ card }: BrandStoryCardsProps) => {
                 <img
                     src={card.image || "/placeholder.svg"}
                     alt={card.title}
-                    className="w-full h-full object-cover transition-all duration-300 group-hover:scale-110 "
+                    className="w-full h-full object-cover  transition-all duration-300 group-hover:scale-110 "
                 />
             </div>
 
             <div className="px-4 pb-4 mt-8 mb-10">
                 <h3 className=" font-bold text-blue-900 mb-2 text-3xl font-escuela line-clamp-3">{card.title}</h3>
                 <p className="text-gray-600 text-base font-escuelalight  leading-relaxed line-clamp-3">{card.description}</p>
+
+
+
+                <span className="text-gray-600 flex items-center  gap-2 text-base mt-2 font-escuelalight  leading-relaxed line-clamp-3">
+                    <CiCalendar />
+                    <p >{card?.date}</p>
+                </span>
+
             </div>
         </div>
     )

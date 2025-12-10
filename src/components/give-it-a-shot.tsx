@@ -78,9 +78,9 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
     const [bowlRevealed, setBowlRevealed] = useState(false)
     const [tomatoesRevealed, setTomatoesRevealed] = useState(false)
 
-    // const leftIndex = (currentIndex - 1 + categories.length) % categories.length
+    const leftIndex = (currentIndex - 1 + categories.length) % categories.length
     const middleIndex = currentIndex
-    // const rightIndex = (currentIndex + 1) % categories.length
+    const rightIndex = (currentIndex + 1) % categories.length
 
     const wasInView = useRef({
         takeAShot: false,
@@ -207,7 +207,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                 }
 
                 .carousel-slide {
-                    transition: all 700ms cubic-bezier(0.34, 1.56, 0.64, 1);
+                    transition: all 700ms ;
                 }
 
                 .carousel-slide-dragging {
@@ -244,7 +244,7 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                 </div>
 
 
-                <div className="max-w-6xl mx-auto px-3 sm:px-4 w-full relative ">
+                <div className="max-w-6xl mx-auto px-3  sm:px-4 w-full relative ">
                     {/* <div className="mt-32 sm:mt-10 lg:mt-2 mb-8 md:mb-0 bg-black sm:mb-16 bg-transparent flex-col flex justify-center items-center">
                         <div className="flex flex-col items-start justify-start mt-2 lg:mt-8 sm:mt-6 mb-4">
                             <span className="  font-brando rotate-[-10deg] sm:rotate-[-12deg] lg:rotate-[-10deg] text-white leading-10 text-[48px] sm:text-[42px] md:text-[72px] lg:text-[100px] flex   items-center justify-center max-w-full">
@@ -255,8 +255,8 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                             </span>
                         </div>
                     </div> */}
-                    <div className="mt-24 sm:mt-10 -rotate-6 lg:mt-24 xl:mt-2 p-6 md:mt-24 mb-8 md:mb-0 bg-black sm:mb-16 bg-transparent flex justify-end items-center">
-                        <img src="/india.png" alt="Mug Shot sachet" className="scale-[2] sm:scale-100 md:scale-125" />
+                    <div className="mt-24 sm:mt-10 -rotate-6 lg:mt-18 xl:mt-0 md:mt-24 mb-8 md:mb-0 bg-black sm:mb-16 bg-transparent flex justify-end items-center">
+                        <img src="/india.png" alt="Mug Shot sachet" className="scale-[2] sm:scale-100  md:scale-110" />
                     </div>
 
                     <div
@@ -272,18 +272,18 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                     >
                         <div className="flex flex-col justify-center items-center w-full">
                             <div className="relative w-full md:mt-20 justify-center gap-64 items-center flex max-w-md">
-                                {/* <img
+                                <img
                                     src={categories[leftIndex]?.image || "/placeholder.svg"}
                                     alt="left carousel item"
-                                    className={`${isDragging ? 'carousel-slide-dragging' : 'carousel-slide'} w-[45%] h-[45%] object-cover mt-36 sm:mt-0 scale-[1.25] sm:scale-100 drop-shadow-2xl overflow place-self-end items-center z-20`}
+                                    className={`${isDragging ? 'carousel-slide-dragging' : 'carousel-slide'} hidden lg:block w-[45%] h-[45%] object-cover mt-36 sm:mt-0 scale-[1.25] sm:scale-100 drop-shadow-2xl overflow place-self-end items-center z-20`}
                                     style={{
                                         transform: `translateX(${isDragging ? dragOffset * 0.2 : 0}px)`,
                                     }}
                                     draggable={false}
-                                /> */}
+                                />
                                 <div className="flex justify-center items-center gap-4 sm:gap-8 px-2 sm:px-4 mb-2">
                                     <div
-                                        className="relative h-56  sm:h-72 md:h-[360px] w-40 sm:w-60 md:w-72 flex items-center justify-center overflow"
+                                        className="relative h-56 sm:h-72 md:h-[360px] w-40 sm:w-60 md:w-72 flex items-center justify-center overflow"
                                         key="carousel-container"
                                     >
                                         <img
@@ -305,15 +305,15 @@ export default function GiveItAShot({ onCategoryClick }: GiveItAShotProps) {
                                         />
                                     </div>
                                 </div>
-                                {/* <img
+                                <img
                                     src={categories[rightIndex]?.image || "/placeholder.svg"}
                                     alt="right carousel item"
-                                    className={`${isDragging ? 'carousel-slide-dragging' : 'carousel-slide'} w-[45%] h-[45%] mt-36 sm:mt-0 object-cover drop-shadow-2xl overflow place-self-end z-20`}
+                                    className={`${isDragging ? 'carousel-slide-dragging' : 'carousel-slide'} hidden lg:block w-[45%] h-[45%] mt-36 sm:mt-0 object-cover drop-shadow-2xl overflow place-self-end z-20`}
                                     style={{
                                         transform: `translateX(${isDragging ? dragOffset * 0.2 : 0}px)`,
                                     }}
                                     draggable={false}
-                                /> */}
+                                />
                             </div>
 
                             <div className="flex items-center mt-20 sm:mt-0 justify-center gap-2 sm:gap-0 z-[40]">

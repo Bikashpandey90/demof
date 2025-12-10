@@ -9,14 +9,14 @@ export default function Header() {
 
     return (
         <header className="absolute left-0 top-0 w-full  bg-transparent sm:mt-0 mt-3 lg:mt-0 xl:mt-2 z-50 ">
-            <div className="  mx-auto lg:mx-20   px-4 sm:px-6 lg:px py-3 lg:py-0 sm:py-0 flex items-center justify-between">
+            <div className=" max-w-7xl  mx-auto    px-4 sm:px-6 lg:px py-3 lg:py-0 sm:py-0 flex items-center justify-between">
 
                 {/* Logo */}
                 <div className="flex items-center  gap-3"
                     onClick={() => {
                         navigate('/')
                     }}>
-                    <div className={`w-[90px] p-2 z-50 lg:p sm:w-[150px] lg:w-[200px] md:w-[150px] h-auto sm:my-2 lg:mr-2 flex items-center justify-center  transition-all duration-700 
+                    <div className={`w-[90px] p-2 z-50 lg:p sm:w-[150px] lg:w-[200px] md:w-[150px] h-auto sm:my-2 flex items-center justify-center  transition-all duration-700 
                     `}
                         //  ${isMenuOpen ? " opacity-100 scale-100" : "opacity-0 scale-100"}
 
@@ -36,7 +36,7 @@ export default function Header() {
                 {/* Hamburger Button */}
                 <button
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    className="mr-2  z-50  mb-2 sm:mb-3 md:mb-4 hover:opacity-80 transition-opacity"
+                    className="  z-50  mb-2 sm:mb-3 md:mb-4 hover:opacity-80 transition-opacity"
                     aria-label="Toggle menu"
                 >
                     <HamburgerIcon isOpen={isMenuOpen} />

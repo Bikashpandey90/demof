@@ -264,7 +264,7 @@ export default function OurRange({ activeCategory }: OurRangeProps) {
                                 onClick={() => setSelectedCategory(category.title)}
                                 className={`font-quicksand text-2xl uppercase tracking-wider transition-all duration-300
         ${selectedCategory === category.title
-                                        ? "px-6 py-2  border-[#FF8000] bg-white text-[#FF8000] rounded-3xl shadow-[4px_4px_0px_#FF8000] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px]"
+                                        ? "px-6 py-2  border-[#F5E200] bg-white text-[#F5E200] rounded-3xl shadow-[4px_4px_0px_#F5E200] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px]"
                                         : "text-white opacity-80 hover:opacity-100 cursor-pointer"
                                     }
     `}

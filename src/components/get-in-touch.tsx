@@ -102,7 +102,7 @@ export default function GetInTouch() {
             <img
                 src="/red.svg"
                 alt="Bottom irregular edge"
-                className=" bg-transparent max-w-none min-w-full  block -mb-[1px] z-30 pointer-events-none"
+                className=" bg-[#F8AD00] max-w-none min-w-full  block -mb-[1px] z-30 pointer-events-none"
                 style={{ display: "block", width: "100%", height: "100%", margin: 0, padding: 0, lineHeight: 0 }}
             />
         </div>
